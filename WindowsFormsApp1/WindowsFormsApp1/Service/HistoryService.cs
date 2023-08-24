@@ -49,27 +49,37 @@ namespace WindowsFormsApp1.Service
         public string QueryCreationTime(string loginId, int res)
         {
             string sql = $@"
-            INSERT INTO 
-                login_history (User_ID, Datetime, Rslt) 
-            VALUE 
-                ({loginId}, CURRENT_TIMESTAMP, {res})
-            ";
+                INSERT INTO 
+                    login_history
+                    (
+                        User_ID
+                        ,Datetime
+                        ,Rslt
+                    )
+                VALUES
+                (
+                    {loginId}
+                    ,CURRENT_TIMESTAMP
+                    ,{res}
+                );
+                ";
             return sql;
         }
         public string QueryCreationLatest3Cases(string loginId)
         {
             string sql = $@"
-            SELECT 
-                l.Rslt, l.Datetime 
-            FROM 
-                login_history AS l 
-            WHERE 
-                l.User_ID={loginId} 
-            ORDER BY 
-                l.Datetime DESC 
-            LIMIT 
-                3
-            ";
+                SELECT 
+                    l.Rslt
+                    ,l.Datetime 
+                FROM 
+                    login_history AS l 
+                WHERE 
+                    l.User_ID = {loginId} 
+                ORDER BY 
+                    l.Datetime DESC 
+                LIMIT 
+                    3;
+                ";
             return sql;
         }
     }
