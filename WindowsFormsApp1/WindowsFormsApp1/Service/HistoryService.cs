@@ -11,33 +11,20 @@ namespace WindowsFormsApp1.Service
     {
         public void DBAccessTimeStamp(string query)
         {
-            MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING
-);
-            try
+            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 // 接続の確立
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataReader reader = command.ExecuteReader();
+                return;
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return;
         }
         public List<History> DBAccessLatest3Cases(string query)
         {
             List<History> latest3Cases = new List<History>();
-            MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING
-);
-
-            try
+            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 // 接続の確立
                 connection.Open();
@@ -52,16 +39,8 @@ namespace WindowsFormsApp1.Service
                     tmp.Times = Convert.ToDateTime(reader["Datetime"]);
                     latest3Cases.Add(tmp);
                 }
+                return latest3Cases;
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return latest3Cases;
         }
         public TimeSpan LoginUnLockTime(DateTime time)
         {

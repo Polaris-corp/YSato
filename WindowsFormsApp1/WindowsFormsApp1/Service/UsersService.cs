@@ -9,9 +9,7 @@ namespace WindowsFormsApp1.Service
         public string DBAccessUsersList(string query)
         {
             string result = "";
-            MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING
-);
-            try
+            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 // 接続の確立
                 connection.Open();
@@ -22,24 +20,14 @@ namespace WindowsFormsApp1.Service
                 {
                     result = reader["ID"].ToString();
                 }
+                return result;
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return result;
         }
 
         public int DBAccessCheckPwd(string query)
         {
             int res = 0;
-            MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING
-);
-            try
+            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 // 接続の確立
                 connection.Open();
@@ -50,16 +38,8 @@ namespace WindowsFormsApp1.Service
                 {
                     res += Convert.ToInt32(reader["res"]);
                 }
+                return res;
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return res;
         }
         public string QueryCreationID(string loginId)
         {
