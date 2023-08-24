@@ -40,9 +40,9 @@ namespace WindowsFormsApp1
             try
             {
                 //IDの取得
-                string user = lc.DBAccessUsersList(loginId);
+                string userId = lc.DBAccessGetUsersId(loginId);
                 //IDチェック
-                if (user != loginId)
+                if (userId != loginId)
                 {
                     MessageBox.Show(ConstString.NOTUSERS_MESSAGE);
                     return;
