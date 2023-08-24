@@ -40,7 +40,7 @@ namespace WindowsFormsApp1
             try
             {
                 //IDの取得
-                string userId = lc.DBAccessGetUsersId(loginId);
+                string userId = lc.DBAccessGetUserId(loginId);
                 //IDチェック
                 if (userId != loginId)
                 {

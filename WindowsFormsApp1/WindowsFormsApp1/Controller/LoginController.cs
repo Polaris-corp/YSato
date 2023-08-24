@@ -10,9 +10,9 @@ namespace WindowsFormsApp1.Controller
     {
         Service.UsersService us = new Service.UsersService();
         Service.HistoryService hs = new Service.HistoryService();
-        public string DBAccessUsersList(string loginId)
+        public string DBAccessGetUserId(string loginId)
         {
-            return us.DBAccessUsersList(us.QueryCreationID(loginId));
+            return us.DBAccessGetUserId(us.QueryCreationID(loginId));
         }
         public int DBAccessCheckPwd(string loginId, string loginPassword)
         {

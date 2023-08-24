@@ -6,7 +6,7 @@ namespace WindowsFormsApp1.Service
 {
     public class UsersService
     {
-        public string DBAccessUsersList(string query)
+        public string DBAccessGetUserId(string query)
         {
             string result = "";
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
