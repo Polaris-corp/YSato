@@ -36,7 +36,7 @@ namespace WindowsFormsApp1.Service
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    res += Convert.ToInt32(reader["res"]);
+                    res += Convert.ToInt32(reader["ID"]);
                 }
                 return res;
             }
@@ -56,17 +56,13 @@ namespace WindowsFormsApp1.Service
         public string QueryCreationPwd(string loginId, string loginPassword)
         {
             string sql = $@"
-            SELECT 
-                u.ID, CASE 
-                    WHEN ( 
-                        u.ID = {loginId} 
-                        AND u.Pwd = {loginPassword} 
-                    ) 
-                        THEN true 
-                    ELSE false 
-                    END AS res 
-            FROM 
-                users AS u;
+            SELECT
+                u.ID
+            FROM
+                users AS u
+            WHERE
+                u.ID = {loginId}
+                AND u.Pwd = {loginPassword}; 
             ";
             return sql;
         }
