@@ -44,26 +44,26 @@ namespace WindowsFormsApp1.Service
         public string QueryCreationID(string loginId)
         {
             string sql = $@"
-            SELECT 
-                u.ID AS ID 
-            FROM 
-                users AS u 
-            WHERE 
-                ID = {loginId};
-            ";
+                SELECT 
+                    u.ID AS ID 
+                FROM 
+                    users AS u 
+                WHERE 
+                    ID = {loginId};
+                ";
             return sql;
         }
         public string QueryCreationPwd(string loginId, string loginPassword)
         {
             string sql = $@"
-            SELECT
-                u.ID
-            FROM
-                users AS u
-            WHERE
-                u.ID = {loginId}
-                AND u.Pwd = {loginPassword}; 
-            ";
+                SELECT
+                    u.ID
+                FROM
+                    users AS u
+                WHERE
+                    u.ID = {loginId}
+                    AND u.Pwd = {loginPassword}; 
+                ";
             return sql;
         }
 
