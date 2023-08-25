@@ -17,8 +17,7 @@ namespace WindowsFormsApp1.Service
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-                return;
+                command.ExecuteNonQuery();
             }
         }
         public List<History> DBAccessLatest3Cases(string query)
