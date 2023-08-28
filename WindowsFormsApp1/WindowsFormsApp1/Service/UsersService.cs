@@ -7,25 +7,25 @@ namespace WindowsFormsApp1.Service
     public class UsersService
     {
         /// <summary>
-        /// DBからUserIDを取得するメソッド
+        /// DBにログインIDと合致するUserIDが存在するか確認するメソッド
         /// </summary>
         /// <param name="query">SQLクエリ</param>
-        /// <returns>UserID</returns>
-        public string DBAccessGetUserId(string query)
+        /// <returns>合致するUserIDが存在するかの真偽</returns>
+        public bool DBAccessUserExistence(string query)
         {
-            string result = "";
+            bool existence = false;
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    result = reader["ID"].ToString();
+                    existence = reader.GetBoolean("ID");
                 }
-                return result;
             }
+            return existence;
         }
         /// <summary>
         /// IDとPwdの紐づき確認メソッド

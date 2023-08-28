@@ -11,13 +11,13 @@ namespace WindowsFormsApp1.Controller
         Service.UsersService us = new Service.UsersService();
         Service.HistoryService hs = new Service.HistoryService();
         /// <summary>
-        /// DBからUserIDを取得するコントローラー
+        /// DBにログインIDと合致するUserIDが存在するか確認するコントローラー
         /// </summary>
         /// <param name="loginId">ログインID</param>
-        /// <returns>UserID</returns>
-        public string DBAccessGetUserId(string loginId)
+        /// <returns>合致するUserIDが存在するかの真偽</returns>
+        public bool DBAccessUserExistence(string loginId)
         {
-            return us.DBAccessGetUserId(us.QueryCreationID(loginId));
+            return us.DBAccessUserExistence(us.QueryCreationID(loginId));
         }
         /// <summary>
         /// IDとPwdの紐づき確認コントローラー
