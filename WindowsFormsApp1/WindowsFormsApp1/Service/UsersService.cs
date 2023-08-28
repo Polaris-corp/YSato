@@ -6,12 +6,16 @@ namespace WindowsFormsApp1.Service
 {
     public class UsersService
     {
+        /// <summary>
+        /// DBからUserIDを取得するメソッド
+        /// </summary>
+        /// <param name="query">SQLクエリ</param>
+        /// <returns>UserID</returns>
         public string DBAccessGetUserId(string query)
         {
             string result = "";
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
-                // 接続の確立
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -23,7 +27,11 @@ namespace WindowsFormsApp1.Service
                 return result;
             }
         }
-
+        /// <summary>
+        /// IDとPwdの紐づき確認メソッド
+        /// </summary>
+        /// <param name="query">SQLクエリ</param>
+        /// <returns>UserID</returns>
         public int DBAccessCheckPwd(string query)
         {
             int res = 0;
@@ -41,6 +49,11 @@ namespace WindowsFormsApp1.Service
                 return res;
             }
         }
+        /// <summary>
+        /// UserID取得用SQLクエリ生成メソッド
+        /// </summary>
+        /// <param name="loginId">ログインID</param>
+        /// <returns>SQLクエリ</returns>
         public string QueryCreationID(string loginId)
         {
             string sql = $@"
@@ -53,6 +66,12 @@ namespace WindowsFormsApp1.Service
                 ";
             return sql;
         }
+        /// <summary>
+        /// UserIDとPwdの紐づき確認用SQLクエリ生成メソッド
+        /// </summary>
+        /// <param name="loginId">ログインID</param>
+        /// <param name="loginPassword">ログインパスワード</param>
+        /// <returns>SQLクエリ</returns>
         public string QueryCreationPwd(string loginId, string loginPassword)
         {
             string sql = $@"
