@@ -17,6 +17,11 @@ namespace WindowsFormsApp1.Properties
     {
 
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        internal readonly string LOGDIR_PATH = "./logs/";
+        internal readonly string LOGFILE_NAME = "consoleerrormessage";
+        internal readonly int LOG_LEVEL = 3;
+        internal readonly long LOGFILE_MAXSIZE = 10485760;
+        internal readonly int LOGFILE_PERIOD = 30;
 
         public static Settings Default
         {

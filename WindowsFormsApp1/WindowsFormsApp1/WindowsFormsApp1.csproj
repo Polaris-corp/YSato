@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="ConstString.cs" />
     <Compile Include="Controller\LoginController.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>

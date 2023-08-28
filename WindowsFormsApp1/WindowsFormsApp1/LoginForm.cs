@@ -33,6 +33,7 @@ namespace WindowsFormsApp1
         /// 紐づき有のUserID
         /// </summary>
         private int matchUserID = 0;
+        Logger logger = Logger.GetInstance();
 
         private void login_Click(object sender, EventArgs e)
         {
@@ -89,8 +90,7 @@ namespace WindowsFormsApp1
             catch(Exception ex)
             {
                 MessageBox.Show(ConstString.ERROR_MESSAGE);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                logger.Error(ex);
             }
         }
     }
