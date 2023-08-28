@@ -22,7 +22,8 @@ namespace WindowsFormsApp1.Service
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    existence = reader.GetBoolean("");
+                    existence = reader.GetBoolean("ID");
+
                 }
             }
             return existence;
