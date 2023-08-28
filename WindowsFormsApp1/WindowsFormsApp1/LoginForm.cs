@@ -21,10 +21,18 @@ namespace WindowsFormsApp1
         }
 
         Controller.LoginController lc = new Controller.LoginController();
-        // 接続文字列
+        /// <summary>
+        /// ログインID
+        /// </summary>
         private string loginId = "";
+        /// <summary>
+        /// ログインパスワード
+        /// </summary>
         private string loginPassword = "";
-        private int matchUser = 0;
+        /// <summary>
+        /// 紐づき有のUserID
+        /// </summary>
+        private int matchUserID = 0;
 
         private void login_Click(object sender, EventArgs e)
         {
@@ -48,9 +56,9 @@ namespace WindowsFormsApp1
                     return;
                 }
                 //IDとPwdの紐づきのデータの受け取り
-                matchUser = lc.DBAccessCheckPwd(loginId, loginPassword);
+                matchUserID = lc.DBAccessCheckPwd(loginId, loginPassword);
                 //IDとPwdが紐づいたユーザーがいるかどうかのチェック
-                if (matchUser == 0)
+                if (matchUserID == 0)
                 {
                     MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
                     lc.DBAccessTimeStamp(loginId, 0);
