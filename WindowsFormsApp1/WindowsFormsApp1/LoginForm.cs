@@ -66,8 +66,8 @@ namespace WindowsFormsApp1
                 ////IDのヒストリー直近3件取得
                 List<History> history = lc.DBAccessLatest3Cases(loginId);
                 //直近3件のログイン失敗チェック
-                TimeSpan minus5 = TimeSpan.FromMinutes(5);
-                if (history.Count == 3 && history[0].Times - history[2].Times <= minus5)
+                TimeSpan minutes5 = TimeSpan.FromMinutes(5);
+                if (history.Count == 3 && history[0].Times - history[2].Times <= minutes5)
                 {
                     int sum = 0;
 
@@ -75,7 +75,7 @@ namespace WindowsFormsApp1
                     {
                         sum += history[i].Result;
                     }
-                    if (sum == 0 && DateTime.Now - history[0].Times <= minus5)
+                    if (sum == 0 && DateTime.Now - history[0].Times <= minutes5)
                     {
                         //直近のログイン失敗から何分経過しているか
                         TimeSpan t = lc.LoginUnLockTime(history[0].Times);
