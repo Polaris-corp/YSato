@@ -21,25 +21,24 @@ namespace WindowsFormsApp1
         }
 
         Controller.LoginController lc = new Controller.LoginController();
-        /// <summary>
-        /// ログインID
-        /// </summary>
-        private string loginId = "";
-        /// <summary>
-        /// ログインパスワード
-        /// </summary>
-        private string loginPassword = "";
-        /// <summary>
-        /// 紐づき有のUserID
-        /// </summary>
-        private int matchUserID = 0;
         Logger logger = Logger.GetInstance();
 
         private void login_Click(object sender, EventArgs e)
         {
+
             //IDとPwdを受け取る
-            loginId = textBox1.Text;
-            loginPassword = textBox2.Text;
+            /// <summary>
+            /// ログインID
+            /// </summary>
+            string loginId = textBox1.Text;
+            /// <summary>
+            /// ログインパスワード
+            /// </summary>
+            string loginPassword = textBox2.Text;
+            /// <summary>
+            /// 紐づき有のUserID
+            /// </summary>
+            int matchUserId = 0;
             //入力チェック
             if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
             {
@@ -56,9 +55,9 @@ namespace WindowsFormsApp1
                     return;
                 }
                 //IDとPwdの紐づきのデータの受け取り
-                matchUserID = lc.DBAccessCheckPwd(loginId, loginPassword);
+                matchUserId = lc.DBAccessCheckPwd(loginId, loginPassword);
                 //IDとPwdが紐づいたユーザーがいるかどうかのチェック
-                if (matchUserID == 0)
+                if (matchUserId == 0)
                 {
                     MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
                     lc.DBAccessTimeStamp(loginId, 0);
@@ -87,7 +86,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show(ConstString.LOGIN_MESSAGE);
                 lc.DBAccessTimeStamp(loginId, 1);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ConstString.ERROR_MESSAGE);
                 logger.Error(ex);
