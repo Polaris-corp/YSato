@@ -12,32 +12,29 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すメソッド
         /// </summary>
-        /// <param name="query">SQLクエリ</param>
-        public void DBAccessTimeStamp(string query)
+        /// <param name="loginId">ログインID</param>
+        /// <param name="flg">ログイン成否</param>
+        public void DBAccessTimeStamp(string loginId, int flg)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-                return;
+                CommandCreationTime(loginId, flg, connection).ExecuteNonQuery();
             }
         }
         /// <summary>
         /// 直近3件のログイン履歴を取得するメソッド
         /// </summary>
-        /// <param name="query">SQLクエリ</param>
+        /// <param name="loginId">ログインID</param>
         /// <returns>ログイン履歴(直近3件)</returns>
-        public List<History> DBAccessLatest3Cases(string query)
+        public List<History> DBAccessLatest3Cases(string loginId)
         {
             List<History> latest3Cases = new List<History>();
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
+                MySqlDataReader reader = CommandCreationLatest3Cases(loginId, connection).ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -59,14 +56,15 @@ namespace WindowsFormsApp1.Service
             return time.AddMinutes(5) - DateTime.Now;
         }
         /// <summary>
-        /// ログイン履歴記録用SQLクエリ生成メソッド
+        /// ログイン履歴記録用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <param name="res">ログイン成否</param>
-        /// <returns>SQLクエリ</returns>
-        public string QueryCreationTime(string loginId, int res)
+        /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
+        /// <returns>SQLコマンド</returns>
+        public MySqlCommand CommandCreationTime(string loginId, int res, MySqlConnection connection)
         {
-            string sql = $@"
+            string query = $@"
                 INSERT INTO 
                     login_history
                     (
@@ -76,34 +74,40 @@ namespace WindowsFormsApp1.Service
                     )
                 VALUES
                 (
-                    {loginId}
+                    @loginId
                     ,CURRENT_TIMESTAMP
-                    ,{res}
+                    ,@res
                 );
                 ";
-            return sql;
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@loginId", loginId);
+            command.Parameters.AddWithValue("@res", res);
+            return command;
         }
         /// <summary>
-        /// 直近3件のログイン履歴取得用SQLクエリ生成メソッド
+        /// 直近3件のログイン履歴取得用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="loginId">ログインID</param>
-        /// <returns>SQLクエリ</returns>
-        public string QueryCreationLatest3Cases(string loginId)
+        /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
+        /// <returns>SQLコマンド</returns>
+        public MySqlCommand CommandCreationLatest3Cases(string loginId, MySqlConnection connection)
         {
-            string sql = $@"
+            string query = $@"
                 SELECT 
                     l.Rslt
                     ,l.Datetime 
                 FROM 
                     login_history AS l 
                 WHERE 
-                    l.User_ID = {loginId} 
+                    l.User_ID = @loginId 
                 ORDER BY 
                     l.Datetime DESC 
                 LIMIT 
                     3;
                 ";
-            return sql;
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@loginId", loginId);
+            return command;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace WindowsFormsApp1.Controller
         /// <returns>合致するUserIDが存在するかの真偽</returns>
         public bool DBAccessUserExistence(string loginId)
         {
-            return us.DBAccessUserExistence(us.QueryCreationID(loginId));
+            return us.DBAccessUserExistence(loginId);
         }
         /// <summary>
         /// IDとPwdの紐づき確認コントローラー
@@ -27,7 +27,7 @@ namespace WindowsFormsApp1.Controller
         /// <returns>UserID</returns>
         public int DBAccessCheckPwd(string loginId, string loginPassword)
         {
-            return us.DBAccessCheckPwd(us.QueryCreationPwd(loginId,loginPassword));
+            return us.DBAccessCheckPwd(loginId,loginPassword);
         }
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すコントローラー
@@ -36,7 +36,7 @@ namespace WindowsFormsApp1.Controller
         /// <param name="flg">ログイン成否</param>
         public void DBAccessTimeStamp(string loginId, int flg)
         {
-            hs.DBAccessTimeStamp(hs.QueryCreationTime(loginId, flg));
+            hs.DBAccessTimeStamp(loginId, flg);
         }
         /// <summary>
         /// 直近3件のログイン履歴を取得するコントローラー
@@ -45,7 +45,7 @@ namespace WindowsFormsApp1.Controller
         /// <returns>ログイン履歴(直近3件)</returns>
         public List<History> DBAccessLatest3Cases(string loginId)
         {
-            return hs.DBAccessLatest3Cases(hs.QueryCreationLatest3Cases(loginId));
+            return hs.DBAccessLatest3Cases(loginId);
         }
         /// <summary>
         /// ログイン不可時の残り時間表示コントローラー
