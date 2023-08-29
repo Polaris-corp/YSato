@@ -39,7 +39,7 @@ namespace WindowsFormsApp1.Controller
             hs.DBAccessTimeStamp(loginId, flg);
         }
         /// <summary>
-        /// 直近3件のログイン履歴を取得するコントローラー
+        /// 直近3件(降順)のログイン履歴を取得するコントローラー
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <returns>ログイン履歴(直近3件)</returns>

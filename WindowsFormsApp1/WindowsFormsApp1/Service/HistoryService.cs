@@ -23,7 +23,7 @@ namespace WindowsFormsApp1.Service
             }
         }
         /// <summary>
-        /// 直近3件のログイン履歴を取得するメソッド
+        /// 直近3件(降順)のログイン履歴を取得するメソッド
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <returns>ログイン履歴(直近3件)</returns>
@@ -85,7 +85,7 @@ namespace WindowsFormsApp1.Service
             return command;
         }
         /// <summary>
-        /// 直近3件のログイン履歴取得用SQLコマンド生成メソッド
+        /// 直近3件(降順)のログイン履歴取得用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
