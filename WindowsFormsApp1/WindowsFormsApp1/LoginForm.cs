@@ -27,17 +27,8 @@ namespace WindowsFormsApp1
         {
 
             //IDとPwdを受け取る
-            /// <summary>
-            /// ログインID
-            /// </summary>
             string loginId = textBox1.Text;
-            /// <summary>
-            /// ログインパスワード
-            /// </summary>
             string loginPassword = textBox2.Text;
-            /// <summary>
-            /// 紐づき有のUserID
-            /// </summary>
             int matchUserId = 0;
             //入力チェック
             if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
