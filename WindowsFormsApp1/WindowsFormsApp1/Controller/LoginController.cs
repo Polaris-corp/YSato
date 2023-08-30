@@ -25,8 +25,8 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
-        /// <returns>UserID</returns>
-        public int DBAccessCheckPwd(string userId, string loginPassword)
+        /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
+        public bool DBAccessCheckPwd(string userId, string loginPassword)
         {
             return us.DBAccessCheckPwd(userId,loginPassword);
         }

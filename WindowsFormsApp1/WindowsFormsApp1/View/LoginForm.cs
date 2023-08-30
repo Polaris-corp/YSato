@@ -31,7 +31,7 @@ namespace WindowsFormsApp1.View
             DateTime dateTimeNow = DateTime.Now;
             string userId = textBox1.Text;
             string loginPassword = textBox2.Text;
-            int matchUserId = 0;
+
             //入力チェック
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(loginPassword))
             {
@@ -48,18 +48,20 @@ namespace WindowsFormsApp1.View
                     MessageBox.Show(ConstString.NOTUSERS_MESSAGE);
                     return;
                 }
+
                 //IDとPwdの紐づきのデータの受け取り
-                matchUserId = lc.DBAccessCheckPwd(userId, loginPassword);
                 //IDとPwdが紐づいたユーザーがいるかどうかのチェック
-                if (matchUserId == 0)
+                if (!lc.DBAccessCheckPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
                     lc.DBAccessTimeStamp(userId, 0 ,dateTimeNow);
                     return;
                 }
+
                 //ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得
                 HistoryModel history = lc.DBAccessGetResultAndLoginTime(userId);
-                //直近3件のログイン失敗チェック
+
+                //直近3件のログイン失敗経過時間のチェック
                 TimeSpan minutes5 = TimeSpan.FromMinutes(5);
                 if (history.LoginFailureCount == 3 && history.NewestTimes - history.OldestTimes <= minutes5)
                 {

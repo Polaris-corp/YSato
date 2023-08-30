@@ -13,7 +13,6 @@ namespace WindowsFormsApp1.Service
         /// <returns>合致するUserIDが存在するかの真偽</returns>
         public bool DBAccessUserExistence(string userId)
         {
-            bool existence = false;
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
@@ -21,30 +20,29 @@ namespace WindowsFormsApp1.Service
                 MySqlDataReader reader = CommandCreationID(userId, connection).ExecuteReader();
                 if (reader.Read())
                 {
-                    existence = reader.GetBoolean("ID");
+                    return true;
                 }
             }
-            return existence;
+            return false;
         }
         /// <summary>
         /// IDとPwdの紐づき確認メソッド
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
-        /// <returns>UserID</returns>
-        public int DBAccessCheckPwd(string userId, string loginPassword)
+        /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
+        public bool DBAccessCheckPwd(string userId, string loginPassword)
         {
-            int res = 0;
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 // 接続の確立
                 connection.Open();
                 MySqlDataReader reader = CommandCreationPwd(userId, loginPassword, connection).ExecuteReader();
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    res += Convert.ToInt32(reader["ID"]);
+                    return true;
                 }
-                return res;
+                return false;
             }
         }
         /// <summary>
