@@ -14,39 +14,39 @@ namespace WindowsFormsApp1.Controller
         /// <summary>
         /// DBにログインIDと合致するUserIDが存在するか確認するコントローラー
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <returns>合致するUserIDが存在するかの真偽</returns>
-        public bool DBAccessUserExistence(string loginId)
+        public bool DBAccessUserExistence(string userId)
         {
-            return us.DBAccessUserExistence(loginId);
+            return us.DBAccessUserExistence(userId);
         }
         /// <summary>
         /// IDとPwdの紐づき確認コントローラー
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>UserID</returns>
-        public int DBAccessCheckPwd(string loginId, string loginPassword)
+        public int DBAccessCheckPwd(string userId, string loginPassword)
         {
-            return us.DBAccessCheckPwd(loginId,loginPassword);
+            return us.DBAccessCheckPwd(userId,loginPassword);
         }
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すコントローラー
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string loginId, int flg, DateTime dateTimeNow)
+        public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
         {
-            hs.DBAccessTimeStamp(loginId, flg, dateTimeNow);
+            hs.DBAccessTimeStamp(userId, flg, dateTimeNow);
         }
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessGetResultAndLoginTime(string loginId)
+        public HistoryModel DBAccessGetResultAndLoginTime(string userId)
         {
-            return hs.DBAccessGetResultAndLoginTime(loginId);
+            return hs.DBAccessGetResultAndLoginTime(userId);
         }
         /// <summary>
         /// ログイン不可時の残り時間表示コントローラー

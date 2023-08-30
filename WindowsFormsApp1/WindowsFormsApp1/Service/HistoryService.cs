@@ -10,29 +10,29 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すメソッド
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string loginId, int flg, DateTime dateTimeNow)
+        public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
-                CommandCreationTime(loginId, flg, connection, dateTimeNow).ExecuteNonQuery();
+                CommandCreationTime(userId, flg, connection, dateTimeNow).ExecuteNonQuery();
             }
         }
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するメソッド
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessGetResultAndLoginTime(string loginId)
+        public HistoryModel DBAccessGetResultAndLoginTime(string userId)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 HistoryModel resultAndLoginTime = new HistoryModel();
                 connection.Open();
 
-                MySqlDataReader reader = CommandCreationGetResultAndLoginTime(loginId, connection).ExecuteReader();
+                MySqlDataReader reader = CommandCreationGetResultAndLoginTime(userId, connection).ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -55,11 +55,11 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// ログイン履歴記録用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <param name="res">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationTime(string loginId, int res, MySqlConnection connection, DateTime dateTimeNow)
+        public MySqlCommand CommandCreationTime(string userId, int res, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
                 INSERT INTO 
@@ -77,7 +77,7 @@ namespace WindowsFormsApp1.Service
                 );
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", loginId);
+            command.Parameters.AddWithValue("@loginId", userId);
             command.Parameters.AddWithValue("@dateTimeNow", dateTimeNow);
             command.Parameters.AddWithValue("@res", res);
             return command;
@@ -85,10 +85,10 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// 直近3件のログイン履歴取得用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="loginId">ログインID</param>
+        /// <param name="userId">ログインID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationGetResultAndLoginTime(string loginId, MySqlConnection connection)
+        public MySqlCommand CommandCreationGetResultAndLoginTime(string userId, MySqlConnection connection)
         {
             string query = $@"
                 SELECT
@@ -113,7 +113,7 @@ namespace WindowsFormsApp1.Service
                     t.Rslt = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", loginId);
+            command.Parameters.AddWithValue("@loginId", userId);
             return command;
         }
     }

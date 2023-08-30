@@ -29,11 +29,11 @@ namespace WindowsFormsApp1.View
         {
             //IDとPwdを受け取る
             DateTime dateTimeNow = DateTime.Now;
-            string loginId = textBox1.Text;
+            string userId = textBox1.Text;
             string loginPassword = textBox2.Text;
             int matchUserId = 0;
             //入力チェック
-            if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(loginPassword))
             {
                 MessageBox.Show(ConstString.EMPTY_MESSAGE);
                 return;
@@ -43,22 +43,22 @@ namespace WindowsFormsApp1.View
             {
                 //IDの取得
                 //IDチェック
-                if (!lc.DBAccessUserExistence(loginId))
+                if (!lc.DBAccessUserExistence(userId))
                 {
                     MessageBox.Show(ConstString.NOTUSERS_MESSAGE);
                     return;
                 }
                 //IDとPwdの紐づきのデータの受け取り
-                matchUserId = lc.DBAccessCheckPwd(loginId, loginPassword);
+                matchUserId = lc.DBAccessCheckPwd(userId, loginPassword);
                 //IDとPwdが紐づいたユーザーがいるかどうかのチェック
                 if (matchUserId == 0)
                 {
                     MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
-                    lc.DBAccessTimeStamp(loginId, 0 ,dateTimeNow);
+                    lc.DBAccessTimeStamp(userId, 0 ,dateTimeNow);
                     return;
                 }
                 //ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得
-                HistoryModel history = lc.DBAccessGetResultAndLoginTime(loginId);
+                HistoryModel history = lc.DBAccessGetResultAndLoginTime(userId);
                 //直近3件のログイン失敗チェック
                 TimeSpan minutes5 = TimeSpan.FromMinutes(5);
                 if (history.LoginFailureCount == 3 && history.NewestTimes - history.OldestTimes <= minutes5)
@@ -72,7 +72,7 @@ namespace WindowsFormsApp1.View
                     }
                 }
                 MessageBox.Show(ConstString.LOGIN_MESSAGE);
-                lc.DBAccessTimeStamp(loginId, 1, dateTimeNow);
+                lc.DBAccessTimeStamp(userId, 1, dateTimeNow);
             }
             catch (Exception ex)
             {
