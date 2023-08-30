@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WindowsFormsApp1.Properties;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.Common
 {
     class Logger
     {

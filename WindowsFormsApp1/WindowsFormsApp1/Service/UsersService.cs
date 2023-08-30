@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using MySqlConnector;
+using WindowsFormsApp1.Common;
 
 namespace WindowsFormsApp1.Service
 {

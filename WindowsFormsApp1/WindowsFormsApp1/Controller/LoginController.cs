@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1.Model;
 
 namespace WindowsFormsApp1.Controller
 {
@@ -39,13 +40,13 @@ namespace WindowsFormsApp1.Controller
             hs.DBAccessTimeStamp(loginId, flg);
         }
         /// <summary>
-        /// 直近3件(降順)のログイン履歴を取得するコントローラー
+        /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー
         /// </summary>
         /// <param name="loginId">ログインID</param>
-        /// <returns>ログイン履歴(直近3件)</returns>
-        public List<History> DBAccessLatest3Cases(string loginId)
+        /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
+        public HistoryModel DBAccessGetResultAndLoginTime(string loginId)
         {
-            return hs.DBAccessLatest3Cases(loginId);
+            return hs.DBAccessGetResultAndLoginTime(loginId);
         }
         /// <summary>
         /// ログイン不可時の残り時間表示コントローラー

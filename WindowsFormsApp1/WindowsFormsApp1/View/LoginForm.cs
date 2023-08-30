@@ -10,8 +10,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlConnector;
+using WindowsFormsApp1.Common;
+using WindowsFormsApp1.Model;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.View
 {
     public partial class LoginForm : Form
     {
@@ -36,6 +38,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show(ConstString.EMPTY_MESSAGE);
                 return;
             }
+
             try
             {
                 //IDの取得
@@ -54,23 +57,17 @@ namespace WindowsFormsApp1
                     lc.DBAccessTimeStamp(loginId, 0);
                     return;
                 }
-                ////IDのヒストリー直近3件取得
-                List<History> history = lc.DBAccessLatest3Cases(loginId);
+                //ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得
+                HistoryModel history = lc.DBAccessGetResultAndLoginTime(loginId);
                 //直近3件のログイン失敗チェック
                 TimeSpan minutes5 = TimeSpan.FromMinutes(5);
-                if (history.Count == 3 && history[0].Times - history[2].Times <= minutes5)
+                if (history.LoginFailureCount == 3 && history.NewestTimes - history.OldestTimes <= minutes5)
                 {
-                    int sum = 0;
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        sum += history[i].Result;
-                    }
-                    if (sum == 0 && DateTime.Now - history[0].Times <= minutes5)
+                    if (DateTime.Now - history.NewestTimes <= minutes5)
                     {
                         //直近のログイン失敗から何分経過しているか
-                        TimeSpan t = lc.LoginUnLockTime(history[0].Times);
-                        MessageBox.Show(string.Format(ConstString.LOGIN_IMPOSSIBLE, t.ToString(@"mm\分ss\秒")));
+                        TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes);
+                        MessageBox.Show(string.Format(ConstString.LOGIN_IMPOSSIBLE, unLockTime.ToString(@"mm\分ss\秒")));
                         return;
                     }
                 }

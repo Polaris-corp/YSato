@@ -1,9 +1,7 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using MySqlConnector;
+using WindowsFormsApp1.Common;
+using WindowsFormsApp1.Model;
 
 namespace WindowsFormsApp1.Service
 {
@@ -23,27 +21,26 @@ namespace WindowsFormsApp1.Service
             }
         }
         /// <summary>
-        /// 直近3件(降順)のログイン履歴を取得するメソッド
+        /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するメソッド
         /// </summary>
         /// <param name="loginId">ログインID</param>
-        /// <returns>ログイン履歴(直近3件)</returns>
-        public List<History> DBAccessLatest3Cases(string loginId)
+        /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
+        public HistoryModel DBAccessGetResultAndLoginTime(string loginId)
         {
-            List<History> latest3Cases = new List<History>();
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
+                HistoryModel resultAndLoginTime = new HistoryModel();
                 connection.Open();
 
-                MySqlDataReader reader = CommandCreationLatest3Cases(loginId, connection).ExecuteReader();
+                MySqlDataReader reader = CommandCreationGetResultAndLoginTime(loginId, connection).ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    History tmp = new History();
-                    tmp.Result = Convert.ToInt32(reader["Rslt"]);
-                    tmp.Times = Convert.ToDateTime(reader["Datetime"]);
-                    latest3Cases.Add(tmp);
+                    resultAndLoginTime.LoginFailureCount = Convert.ToInt32(reader["cnt"]);
+                    resultAndLoginTime.NewestTimes = (DateTime)reader["new"];
+                    resultAndLoginTime.OldestTimes = (DateTime)reader["old"];
                 }
-                return latest3Cases;
+                return resultAndLoginTime;
             }
         }
         /// <summary>
@@ -90,20 +87,29 @@ namespace WindowsFormsApp1.Service
         /// <param name="loginId">ログインID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationLatest3Cases(string loginId, MySqlConnection connection)
+        public MySqlCommand CommandCreationGetResultAndLoginTime(string loginId, MySqlConnection connection)
         {
             string query = $@"
-                SELECT 
-                    l.Rslt
-                    ,l.Datetime 
-                FROM 
-                    login_history AS l 
-                WHERE 
-                    l.User_ID = @loginId 
-                ORDER BY 
-                    l.Datetime DESC 
-                LIMIT 
-                    3;
+                SELECT
+                    count(*) as cnt
+                    ,MAX(T.Datetime) as new
+                    ,MIN(T.Datetime) as old
+                FROM
+                    (
+                    SELECT
+                        l.Rslt
+                        , l.Datetime
+                    FROM
+                        login_history AS l
+                    WHERE
+                        l.User_ID = @loginId
+                    ORDER BY
+                        l.Datetime DESC
+                    LIMIT
+                        3
+                    ) as t
+                WHERE
+                    t.Rslt = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@loginId", loginId);

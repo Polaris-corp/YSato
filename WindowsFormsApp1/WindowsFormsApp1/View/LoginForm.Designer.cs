@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsFormsApp1
+namespace WindowsFormsApp1.View
 {
     partial class LoginForm
     {
