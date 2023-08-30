@@ -35,9 +35,9 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string loginId, int flg)
+        public void DBAccessTimeStamp(string loginId, int flg, DateTime dateTimeNow)
         {
-            hs.DBAccessTimeStamp(loginId, flg);
+            hs.DBAccessTimeStamp(loginId, flg, dateTimeNow);
         }
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー
@@ -53,9 +53,9 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="time">近々のログイン失敗時間</param>
         /// <returns>ログイン可になるまでの残り時間</returns>
-        public TimeSpan LoginUnLockTime(DateTime time)
+        public TimeSpan LoginUnLockTime(DateTime time, DateTime dateTimeNow)
         {
-            return hs.LoginUnLockTime(time);
+            return hs.LoginUnLockTime(time, dateTimeNow);
         }
     }
 }

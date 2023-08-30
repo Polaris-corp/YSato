@@ -27,8 +27,8 @@ namespace WindowsFormsApp1.View
 
         private void login_Click(object sender, EventArgs e)
         {
-
             //IDとPwdを受け取る
+            DateTime dateTimeNow = DateTime.Now;
             string loginId = textBox1.Text;
             string loginPassword = textBox2.Text;
             int matchUserId = 0;
@@ -54,7 +54,7 @@ namespace WindowsFormsApp1.View
                 if (matchUserId == 0)
                 {
                     MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
-                    lc.DBAccessTimeStamp(loginId, 0);
+                    lc.DBAccessTimeStamp(loginId, 0 ,dateTimeNow);
                     return;
                 }
                 //ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得
@@ -63,16 +63,16 @@ namespace WindowsFormsApp1.View
                 TimeSpan minutes5 = TimeSpan.FromMinutes(5);
                 if (history.LoginFailureCount == 3 && history.NewestTimes - history.OldestTimes <= minutes5)
                 {
-                    if (DateTime.Now - history.NewestTimes <= minutes5)
+                    if (dateTimeNow - history.NewestTimes <= minutes5)
                     {
                         //直近のログイン失敗から何分経過しているか
-                        TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes);
+                        TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes,dateTimeNow);
                         MessageBox.Show(string.Format(ConstString.LOGIN_IMPOSSIBLE, unLockTime.ToString(@"mm\分ss\秒")));
                         return;
                     }
                 }
                 MessageBox.Show(ConstString.LOGIN_MESSAGE);
-                lc.DBAccessTimeStamp(loginId, 1);
+                lc.DBAccessTimeStamp(loginId, 1, dateTimeNow);
             }
             catch (Exception ex)
             {

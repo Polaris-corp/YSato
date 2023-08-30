@@ -12,12 +12,12 @@ namespace WindowsFormsApp1.Service
         /// </summary>
         /// <param name="loginId">ログインID</param>
         /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string loginId, int flg)
+        public void DBAccessTimeStamp(string loginId, int flg, DateTime dateTimeNow)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
             {
                 connection.Open();
-                CommandCreationTime(loginId, flg, connection).ExecuteNonQuery();
+                CommandCreationTime(loginId, flg, connection, dateTimeNow).ExecuteNonQuery();
             }
         }
         /// <summary>
@@ -48,9 +48,9 @@ namespace WindowsFormsApp1.Service
         /// </summary>
         /// <param name="time">近々のログイン失敗時間</param>
         /// <returns>ログイン可になるまでの残り時間</returns>
-        public TimeSpan LoginUnLockTime(DateTime time)
+        public TimeSpan LoginUnLockTime(DateTime time, DateTime dateTimeNow)
         {
-            return time.AddMinutes(5) - DateTime.Now;
+            return time.AddMinutes(5) - dateTimeNow;
         }
         /// <summary>
         /// ログイン履歴記録用SQLコマンド生成メソッド
@@ -59,7 +59,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="res">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationTime(string loginId, int res, MySqlConnection connection)
+        public MySqlCommand CommandCreationTime(string loginId, int res, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
                 INSERT INTO 
@@ -72,12 +72,13 @@ namespace WindowsFormsApp1.Service
                 VALUES
                 (
                     @loginId
-                    ,CURRENT_TIMESTAMP
+                    ,@dateTimeNow
                     ,@res
                 );
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@loginId", loginId);
+            command.Parameters.AddWithValue("@dateTimeNow", dateTimeNow);
             command.Parameters.AddWithValue("@res", res);
             return command;
         }
