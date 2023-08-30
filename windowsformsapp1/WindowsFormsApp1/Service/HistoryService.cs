@@ -56,10 +56,10 @@ namespace WindowsFormsApp1.Service
         /// ログイン履歴記録用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="userId">ユーザーID</param>
-        /// <param name="res">ログイン成否</param>
+        /// <param name="result">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationTime(string userId, int res, MySqlConnection connection, DateTime dateTimeNow)
+        public MySqlCommand CommandCreationTime(string userId, int result, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
                 INSERT INTO 
@@ -69,17 +69,17 @@ namespace WindowsFormsApp1.Service
                         ,Datetime
                         ,Rslt
                     )
-                VALUES
-                (
-                    @loginId
-                    ,@dateTimeNow
-                    ,@res
-                );
+                    VALUES
+                    (
+                        @userId
+                        ,@dateTimeNow
+                        ,@rslt
+                    );
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", userId);
+            command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@dateTimeNow", dateTimeNow);
-            command.Parameters.AddWithValue("@res", res);
+            command.Parameters.AddWithValue("@rslt", result);
             return command;
         }
         /// <summary>
@@ -103,7 +103,7 @@ namespace WindowsFormsApp1.Service
                     FROM
                         login_history AS l
                     WHERE
-                        l.User_ID = @loginId
+                        l.User_ID = @userId
                     ORDER BY
                         l.Datetime DESC
                     LIMIT
@@ -113,7 +113,7 @@ namespace WindowsFormsApp1.Service
                     t.Rslt = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", userId);
+            command.Parameters.AddWithValue("@userId", userId);
             return command;
         }
     }

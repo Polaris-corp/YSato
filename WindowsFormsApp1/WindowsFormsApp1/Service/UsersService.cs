@@ -61,10 +61,10 @@ namespace WindowsFormsApp1.Service
                 FROM 
                     users AS u 
                 WHERE 
-                    ID = @loginId;
+                    ID = @userId;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", userId);
+            command.Parameters.AddWithValue("@userId", userId);
             return command;
         }
         /// <summary>
@@ -82,11 +82,11 @@ namespace WindowsFormsApp1.Service
                 FROM
                     users AS u
                 WHERE
-                    u.ID = @loginId
+                    u.ID = @userId
                     AND u.Pwd = @loginPassword; 
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@loginId", userId);
+            command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@loginPassword", loginPassword);
             return command;
         }
