@@ -9,7 +9,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// DBにログインIDと合致するUserIDが存在するか確認するメソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <returns>合致するUserIDが存在するかの真偽</returns>
         public bool DBAccessUserExistence(string userId)
         {
@@ -29,7 +29,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// IDとPwdの紐づき確認メソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>UserID</returns>
         public int DBAccessCheckPwd(string userId, string loginPassword)
@@ -50,7 +50,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// UserID取得用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
         public MySqlCommand CommandCreationID(string userId, MySqlConnection connection)
@@ -70,7 +70,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// UserIDとPwdの紐づき確認用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>

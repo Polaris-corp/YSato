@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.Controller
         /// <summary>
         /// DBにログインIDと合致するUserIDが存在するか確認するコントローラー
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <returns>合致するUserIDが存在するかの真偽</returns>
         public bool DBAccessUserExistence(string userId)
         {
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1.Controller
         /// <summary>
         /// IDとPwdの紐づき確認コントローラー
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>UserID</returns>
         public int DBAccessCheckPwd(string userId, string loginPassword)
@@ -33,7 +33,7 @@ namespace WindowsFormsApp1.Controller
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すコントローラー
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="flg">ログイン成否</param>
         public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
         {
@@ -42,7 +42,7 @@ namespace WindowsFormsApp1.Controller
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
         public HistoryModel DBAccessGetResultAndLoginTime(string userId)
         {

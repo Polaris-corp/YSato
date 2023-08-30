@@ -10,7 +10,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すメソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="flg">ログイン成否</param>
         public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
         {
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するメソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
         public HistoryModel DBAccessGetResultAndLoginTime(string userId)
         {
@@ -55,7 +55,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// ログイン履歴記録用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="res">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
@@ -85,7 +85,7 @@ namespace WindowsFormsApp1.Service
         /// <summary>
         /// 直近3件のログイン履歴取得用SQLコマンド生成メソッド
         /// </summary>
-        /// <param name="userId">ログインID</param>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
         public MySqlCommand CommandCreationGetResultAndLoginTime(string userId, MySqlConnection connection)
