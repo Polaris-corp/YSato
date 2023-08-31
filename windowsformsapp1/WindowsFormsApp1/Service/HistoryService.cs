@@ -83,7 +83,7 @@ namespace WindowsFormsApp1.Service
             return command;
         }
         /// <summary>
-        /// 直近3件のログイン履歴取得用SQLコマンド生成メソッド
+        /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
@@ -93,15 +93,15 @@ namespace WindowsFormsApp1.Service
             string query = $@"
                 SELECT
                     count(*) as cnt
-                    ,MAX(T.Datetime) as new
-                    ,MIN(T.Datetime) as old
+                    ,MAX(t.Datetime) as new
+                    ,MIN(t.Datetime) as old
                 FROM
                     (
                     SELECT
                         l.Rslt
                         , l.Datetime
                     FROM
-                        login_history AS l
+                        login_history as l
                     WHERE
                         l.User_ID = @userId
                     ORDER BY
