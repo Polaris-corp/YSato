@@ -36,9 +36,12 @@ namespace WindowsFormsApp1.Service
 
                 if (reader.Read())
                 {
-                    resultAndLoginTime.LoginFailureCount = Convert.ToInt32(reader["cnt"]);
-                    resultAndLoginTime.NewestTimes = (DateTime)reader["new"];
-                    resultAndLoginTime.OldestTimes = (DateTime)reader["old"];
+                    resultAndLoginTime.LoginFailureCount = reader.GetInt32("cnt");
+                    if (!reader.IsDBNull(1))
+                    {
+                        resultAndLoginTime.NewestTimes = reader.GetDateTime("new");
+                        resultAndLoginTime.OldestTimes = reader.GetDateTime("old");
+                    }
                 }
                 return resultAndLoginTime;
             }
