@@ -12,7 +12,7 @@ namespace WindowsFormsApp1.Service
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="result">ログイン成否</param>
-        public void DBAccessTimeStamp(string userId, int result, DateTime dateTimeNow)
+        public void DBAccessTimeStamp(int userId, int result, DateTime dateTimeNow)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
@@ -25,7 +25,7 @@ namespace WindowsFormsApp1.Service
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessGetResultAndLoginTime(string userId)
+        public HistoryModel DBAccessGetResultAndLoginTime(int userId)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
@@ -59,7 +59,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="result">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationTime(string userId, int result, MySqlConnection connection, DateTime dateTimeNow)
+        public MySqlCommand CommandCreationTime(int userId, int result, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
                 INSERT INTO 
@@ -88,7 +88,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationGetResultAndLoginTime(string userId, MySqlConnection connection)
+        public MySqlCommand CommandCreationGetResultAndLoginTime(int userId, MySqlConnection connection)
         {
             string query = $@"
                 SELECT

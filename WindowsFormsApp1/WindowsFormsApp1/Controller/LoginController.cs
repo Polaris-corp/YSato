@@ -16,7 +16,7 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <returns>合致するUserIDが存在するかの真偽</returns>
-        public bool DBAccessUserExistence(string userId)
+        public bool DBAccessUserExistence(int userId)
         {
             return us.DBAccessUserExistence(userId);
         }
@@ -26,7 +26,7 @@ namespace WindowsFormsApp1.Controller
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
-        public bool DBAccessCheckPwd(string userId, string loginPassword)
+        public bool DBAccessCheckPwd(int userId, string loginPassword)
         {
             return us.DBAccessCheckPwd(userId,loginPassword);
         }
@@ -35,7 +35,7 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="result">ログイン成否</param>
-        public void DBAccessTimeStamp(string userId, int result, DateTime dateTimeNow)
+        public void DBAccessTimeStamp(int userId, int result, DateTime dateTimeNow)
         {
             hs.DBAccessTimeStamp(userId, result, dateTimeNow);
         }
@@ -44,7 +44,7 @@ namespace WindowsFormsApp1.Controller
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessGetResultAndLoginTime(string userId)
+        public HistoryModel DBAccessGetResultAndLoginTime(int userId)
         {
             return hs.DBAccessGetResultAndLoginTime(userId);
         }

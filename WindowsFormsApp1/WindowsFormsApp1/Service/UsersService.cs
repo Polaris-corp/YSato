@@ -11,7 +11,7 @@ namespace WindowsFormsApp1.Service
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <returns>合致するUserIDが存在するかの真偽</returns>
-        public bool DBAccessUserExistence(string userId)
+        public bool DBAccessUserExistence(int userId)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
@@ -31,7 +31,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
-        public bool DBAccessCheckPwd(string userId, string loginPassword)
+        public bool DBAccessCheckPwd(int userId, string loginPassword)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
@@ -51,7 +51,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationID(string userId, MySqlConnection connection)
+        public MySqlCommand CommandCreationID(int userId, MySqlConnection connection)
         {
             string query = $@"
                 SELECT 
@@ -72,7 +72,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="loginPassword">ログインパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationPwd(string userId, string loginPassword, MySqlConnection connection)
+        public MySqlCommand CommandCreationPwd(int userId, string loginPassword, MySqlConnection connection)
         {
             string query = $@"
                 SELECT

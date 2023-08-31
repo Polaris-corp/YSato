@@ -29,13 +29,18 @@ namespace WindowsFormsApp1.View
         {
             //IDとPwdを受け取る
             DateTime dateTimeNow = DateTime.Now;
-            string userId = textBox1.Text;
+            string loginId = textBox1.Text;
             string loginPassword = textBox2.Text;
 
             //入力チェック
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(loginPassword))
+            if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
             {
                 MessageBox.Show(ConstString.EmptyMessage);
+                return;
+            }
+            if (!int.TryParse(loginId, out int userId))
+            {
+                MessageBox.Show(ConstString.NotIdNumberMessage);
                 return;
             }
 
