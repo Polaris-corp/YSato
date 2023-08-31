@@ -37,11 +37,8 @@ namespace WindowsFormsApp1.Service
                 if (reader.Read())
                 {
                     resultAndLoginTime.LoginFailureCount = reader.GetInt32("cnt");
-                    if (!reader.IsDBNull(1))
-                    {
-                        resultAndLoginTime.NewestTimes = reader.GetDateTime("new");
-                        resultAndLoginTime.OldestTimes = reader.GetDateTime("old");
-                    }
+                    resultAndLoginTime.NewestTimes = reader.GetDateTime("new");
+                    resultAndLoginTime.OldestTimes = reader.GetDateTime("old");
                 }
                 return resultAndLoginTime;
             }
@@ -96,8 +93,16 @@ namespace WindowsFormsApp1.Service
             string query = $@"
                 SELECT
                     count(*) as cnt
-                    ,MAX(t.Datetime) as new
-                    ,MIN(t.Datetime) as old
+                    ,IFNULL
+                        (
+                        MAX(t.Datetime)
+                        , CURRENT_TIMESTAMP()
+                        ) as new
+                    ,IFNULL
+                        (
+                        MIN(t.Datetime)
+                        , CURRENT_TIMESTAMP()
+                        ) as old
                 FROM
                     (
                     SELECT
