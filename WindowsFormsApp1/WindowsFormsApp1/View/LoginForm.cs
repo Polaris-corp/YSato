@@ -35,7 +35,7 @@ namespace WindowsFormsApp1.View
             //入力チェック
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(loginPassword))
             {
-                MessageBox.Show(ConstString.EMPTY_MESSAGE);
+                MessageBox.Show(ConstString.EmptyMessage);
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace WindowsFormsApp1.View
                 //IDチェック
                 if (!lc.DBAccessUserExistence(userId))
                 {
-                    MessageBox.Show(ConstString.NOTUSERS_MESSAGE);
+                    MessageBox.Show(ConstString.NotusersMessage);
                     return;
                 }
 
@@ -53,7 +53,7 @@ namespace WindowsFormsApp1.View
                 //IDとPwdが紐づいたユーザーがいるかどうかのチェック
                 if (!lc.DBAccessCheckPwd(userId, loginPassword))
                 {
-                    MessageBox.Show(ConstString.NOT_PWD_MATCH_MESSAGE);
+                    MessageBox.Show(ConstString.NotPwdMatchMessage);
                     lc.DBAccessTimeStamp(userId, 0 ,dateTimeNow);
                     return;
                 }
@@ -69,16 +69,16 @@ namespace WindowsFormsApp1.View
                     {
                         //直近のログイン失敗から何分経過しているか
                         TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes,dateTimeNow);
-                        MessageBox.Show(string.Format(ConstString.LOGIN_IMPOSSIBLE, unLockTime.ToString(@"mm\分ss\秒")));
+                        MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
                         return;
                     }
                 }
-                MessageBox.Show(ConstString.LOGIN_MESSAGE);
+                MessageBox.Show(ConstString.LoginMessagE);
                 lc.DBAccessTimeStamp(userId, 1, dateTimeNow);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ConstString.ERROR_MESSAGE);
+                MessageBox.Show(ConstString.ErrorMessage);
                 logger.Error(ex);
             }
         }

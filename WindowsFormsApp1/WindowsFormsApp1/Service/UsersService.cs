@@ -13,7 +13,7 @@ namespace WindowsFormsApp1.Service
         /// <returns>合致するUserIDが存在するかの真偽</returns>
         public bool DBAccessUserExistence(string userId)
         {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 connection.Open();
 
@@ -33,7 +33,7 @@ namespace WindowsFormsApp1.Service
         /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
         public bool DBAccessCheckPwd(string userId, string loginPassword)
         {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 // 接続の確立
                 connection.Open();

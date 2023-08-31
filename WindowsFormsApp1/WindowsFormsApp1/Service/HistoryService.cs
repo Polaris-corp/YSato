@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.Service
         /// <param name="flg">ログイン成否</param>
         public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
         {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 connection.Open();
                 CommandCreationTime(userId, flg, connection, dateTimeNow).ExecuteNonQuery();
@@ -27,7 +27,7 @@ namespace WindowsFormsApp1.Service
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
         public HistoryModel DBAccessGetResultAndLoginTime(string userId)
         {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.CONNECTION_STRING))
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 HistoryModel resultAndLoginTime = new HistoryModel();
                 connection.Open();
