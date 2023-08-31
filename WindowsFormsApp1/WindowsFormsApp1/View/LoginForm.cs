@@ -54,7 +54,7 @@ namespace WindowsFormsApp1.View
                 if (!lc.DBAccessCheckPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NotPwdMatchMessage);
-                    lc.DBAccessTimeStamp(userId, 0 ,dateTimeNow);
+                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
                     return;
                 }
 
@@ -62,20 +62,23 @@ namespace WindowsFormsApp1.View
                 HistoryModel history = lc.DBAccessGetResultAndLoginTime(userId);
 
                 //直近3件のログイン失敗経過時間のチェック
-                TimeSpan minutes5 = TimeSpan.FromMinutes(5);
-                if (history.LoginFailureCount == 3 && history.NewestTimes - history.OldestTimes <= minutes5)
+                if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
                 {
-                    if (dateTimeNow - history.NewestTimes <= minutes5)
+                    if (history.NewestTimes - history.OldestTimes <= ConstTime.LoginFailureThreshold)
                     {
-                        //直近のログイン失敗から何分経過しているか
-                        TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes,dateTimeNow);
-                        MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
-                        return;
+                        if (dateTimeNow - history.NewestTimes <= ConstTime.LoginFailureThreshold)
+                        {
+                            //直近のログイン失敗から何分経過しているか
+                            TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes, dateTimeNow);
+                            MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
+                            return;
+                        }
                     }
                 }
                 MessageBox.Show(ConstString.LoginMessagE);
-                lc.DBAccessTimeStamp(userId, 1, dateTimeNow);
+                lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ConstString.ErrorMessage);

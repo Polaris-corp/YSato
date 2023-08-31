@@ -69,7 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ConstNumber.cs" />
     <Compile Include="Common\ConstString.cs" />
+    <Compile Include="Common\ConstTime.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="View\LoginForm.cs">
