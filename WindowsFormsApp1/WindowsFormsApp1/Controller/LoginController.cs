@@ -34,10 +34,10 @@ namespace WindowsFormsApp1.Controller
         /// DBのHistoryTable内にログイン履歴を残すコントローラー
         /// </summary>
         /// <param name="userId">ユーザーID</param>
-        /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
+        /// <param name="result">ログイン成否</param>
+        public void DBAccessTimeStamp(string userId, int result, DateTime dateTimeNow)
         {
-            hs.DBAccessTimeStamp(userId, flg, dateTimeNow);
+            hs.DBAccessTimeStamp(userId, result, dateTimeNow);
         }
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー

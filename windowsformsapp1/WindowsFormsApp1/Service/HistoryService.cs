@@ -11,13 +11,13 @@ namespace WindowsFormsApp1.Service
         /// DBのHistoryTable内にログイン履歴を残すメソッド
         /// </summary>
         /// <param name="userId">ユーザーID</param>
-        /// <param name="flg">ログイン成否</param>
-        public void DBAccessTimeStamp(string userId, int flg, DateTime dateTimeNow)
+        /// <param name="result">ログイン成否</param>
+        public void DBAccessTimeStamp(string userId, int result, DateTime dateTimeNow)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 connection.Open();
-                CommandCreationTime(userId, flg, connection, dateTimeNow).ExecuteNonQuery();
+                CommandCreationTime(userId, result, connection, dateTimeNow).ExecuteNonQuery();
             }
         }
         /// <summary>
