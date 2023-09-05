@@ -35,7 +35,7 @@ namespace WindowsFormsApp2
             this.IDlabel = new System.Windows.Forms.Label();
             this.Namelabel = new System.Windows.Forms.Label();
             this.Pwdlabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.executebutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -93,21 +93,22 @@ namespace WindowsFormsApp2
             this.Pwdlabel.TabIndex = 5;
             this.Pwdlabel.Text = "Password";
             // 
-            // button1
+            // executebutton
             // 
-            this.button1.Location = new System.Drawing.Point(501, 257);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(202, 122);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "登録";
-            this.button1.UseVisualStyleBackColor = true;
+            this.executebutton.Location = new System.Drawing.Point(501, 257);
+            this.executebutton.Name = "executebutton";
+            this.executebutton.Size = new System.Drawing.Size(202, 122);
+            this.executebutton.TabIndex = 6;
+            this.executebutton.Text = "登録";
+            this.executebutton.UseVisualStyleBackColor = true;
+            this.executebutton.Click += new System.EventHandler(this.executebutton_Click);
             // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.executebutton);
             this.Controls.Add(this.Pwdlabel);
             this.Controls.Add(this.Namelabel);
             this.Controls.Add(this.IDlabel);
@@ -130,6 +131,6 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.Label IDlabel;
         private System.Windows.Forms.Label Namelabel;
         private System.Windows.Forms.Label Pwdlabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button executebutton;
     }
 }
