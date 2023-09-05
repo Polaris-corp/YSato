@@ -16,42 +16,42 @@ namespace WindowsFormsApp2
     public partial class RegistrationForm : Form
     {
 
-        public RegistrationForm()
+        public RegistrationForm(RegistrationModel model)
         {
             InitializeComponent();
             executebutton.Text = ConstString.RegistrationString;
+            this.model = model;
         }
-        public RegistrationForm(bool flg)
+        public RegistrationForm(RegistrationModel model, bool flg)
         {
             InitializeComponent();
             executebutton.Text = ConstString.ChangeString;
             this.flg = flg;
+            this.model = model;
         }
         RegistrationController rc = new RegistrationController();
+        RegistrationModel model;
         bool flg = false;
-        public RegistrationModel model { get; set; }
+
 
         public void RegistrationForm_Load(object sender, EventArgs e)
         {
-            //if (!flg)
-            //{
                 textBox1.Text = model.UserId;
                 textBox2.Text = model.Name;
                 textBox3.Text = model.Pwd;
-            //}
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
             string name = textBox2.Text;
             string pwd = textBox3.Text;
-            if (!flg)
+            if (flg)
             {
-                rc.InsertAccount(name, pwd);
+                rc.UpdateAccount(Convert.ToInt32(model.UserId), name, pwd);
             }
             else
             {
-                rc.UpdateAccount(Convert.ToInt32(model.UserId), name, pwd);
+                rc.InsertAccount(name, pwd);
             }
             this.Close();
         }

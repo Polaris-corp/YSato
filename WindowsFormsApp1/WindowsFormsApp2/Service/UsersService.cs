@@ -21,24 +21,6 @@ namespace WindowsFormsApp2.Service
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 adapter.Fill(dt);
                 return dt;
-                //using (MySqlDataReader reader = command.ExecuteReader())
-                //{
-                //    return reader;
-                    //int count = reader.FieldCount;
-                    //dataGridView1.ColumnCount = count;
-                    //for (int i = 0; i < count; i++)
-                    //{
-                    //    string name = reader.GetName(i);
-                    //    dataGridView1.Columns[i].HeaderText = name;
-                    //    dataGridView1.Columns[i].Name = name;
-                    //}
-                    //while (reader.Read())
-                    //{
-                    //    object[] row = new object[count];
-                    //    reader.GetValues(row);
-                    //    dataGridView1.Rows.Add(row);
-                    //}
-                //}
             }
 
         }

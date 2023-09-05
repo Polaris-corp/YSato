@@ -24,45 +24,30 @@ namespace WindowsFormsApp2
 
         private void UsersTableViewForm_Load(object sender, EventArgs e)
         {
-            GetDataUsersTable();
+            LoadUserData();
         }
 
         private void RegistrationButton_Click(object sender, EventArgs e)
         {
             RegistrationModel model = new RegistrationModel();
-            if (model != null)
-            {
-                RegistrationForm registrationForm = new RegistrationForm();
-                registrationForm.model = model;
-                registrationForm.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show(Common.ConstString.NullString);
-            }
-
+            RegistrationForm registrationForm = new RegistrationForm(model);
+            registrationForm.ShowDialog();
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-            RegistrationModel model = new RegistrationModel();
-            model.UserId = selectedRow.Cells["ID"].Value.ToString();
-            model.Name = selectedRow.Cells["Name"].Value.ToString();
-            model.Pwd = selectedRow.Cells["Pwd"].Value.ToString();
-            if (model != null)
+            RegistrationModel model = new RegistrationModel
             {
-                RegistrationForm registrationForm = new RegistrationForm(true);
-                registrationForm.model = model;
-                registrationForm.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show(Common.ConstString.NullString);
-            }
+                UserId = selectedRow.Cells["ID"].Value.ToString(),
+                Name = selectedRow.Cells["Name"].Value.ToString(),
+                Pwd = selectedRow.Cells["Pwd"].Value.ToString()
+            };
+            RegistrationForm registrationForm = new RegistrationForm(model, true);
+            registrationForm.ShowDialog();
         }
 
-        private void GetDataUsersTable()
+        private void LoadUserData()
         {
             dt = uc.ReadUsersTable();
             dataGridView1.DataSource = dt;
