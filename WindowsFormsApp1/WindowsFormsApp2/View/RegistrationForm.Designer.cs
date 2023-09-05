@@ -29,9 +29,9 @@ namespace WindowsFormsApp2
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.UserIdTextBox = new System.Windows.Forms.TextBox();
+            this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.PwdTextBox = new System.Windows.Forms.TextBox();
             this.IDlabel = new System.Windows.Forms.Label();
             this.Namelabel = new System.Windows.Forms.Label();
             this.Pwdlabel = new System.Windows.Forms.Label();
@@ -40,27 +40,27 @@ namespace WindowsFormsApp2
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.Location = new System.Drawing.Point(158, 124);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(186, 27);
-            this.textBox1.TabIndex = 0;
+            this.UserIdTextBox.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.UserIdTextBox.Location = new System.Drawing.Point(158, 124);
+            this.UserIdTextBox.Name = "textBox1";
+            this.UserIdTextBox.Size = new System.Drawing.Size(186, 27);
+            this.UserIdTextBox.TabIndex = 0;
             // 
             // textBox2
             // 
-            this.textBox2.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox2.Location = new System.Drawing.Point(158, 199);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(186, 27);
-            this.textBox2.TabIndex = 1;
+            this.NameTextBox.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.NameTextBox.Location = new System.Drawing.Point(158, 199);
+            this.NameTextBox.Name = "textBox2";
+            this.NameTextBox.Size = new System.Drawing.Size(186, 27);
+            this.NameTextBox.TabIndex = 1;
             // 
             // textBox3
             // 
-            this.textBox3.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox3.Location = new System.Drawing.Point(158, 279);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(186, 27);
-            this.textBox3.TabIndex = 2;
+            this.PwdTextBox.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.PwdTextBox.Location = new System.Drawing.Point(158, 279);
+            this.PwdTextBox.Name = "textBox3";
+            this.PwdTextBox.Size = new System.Drawing.Size(186, 27);
+            this.PwdTextBox.TabIndex = 2;
             // 
             // IDlabel
             // 
@@ -112,9 +112,9 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.Pwdlabel);
             this.Controls.Add(this.Namelabel);
             this.Controls.Add(this.IDlabel);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.PwdTextBox);
+            this.Controls.Add(this.NameTextBox);
+            this.Controls.Add(this.UserIdTextBox);
             this.Name = "RegistrationForm";
             this.Text = "RegistrationForm";
             this.Load += new System.EventHandler(this.RegistrationForm_Load);
@@ -125,9 +125,9 @@ namespace WindowsFormsApp2
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox UserIdTextBox;
+        private System.Windows.Forms.TextBox NameTextBox;
+        private System.Windows.Forms.TextBox PwdTextBox;
         private System.Windows.Forms.Label IDlabel;
         private System.Windows.Forms.Label Namelabel;
         private System.Windows.Forms.Label Pwdlabel;

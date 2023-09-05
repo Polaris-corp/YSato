@@ -36,15 +36,15 @@ namespace WindowsFormsApp2
 
         public void RegistrationForm_Load(object sender, EventArgs e)
         {
-                textBox1.Text = model.UserId;
-                textBox2.Text = model.Name;
-                textBox3.Text = model.Pwd;
+                UserIdTextBox.Text = model.UserId;
+                NameTextBox.Text = model.Name;
+                PwdTextBox.Text = model.Pwd;
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            string name = textBox2.Text;
-            string pwd = textBox3.Text;
+            string name = NameTextBox.Text;
+            string pwd = PwdTextBox.Text;
             if (flg)
             {
                 rc.UpdateAccount(Convert.ToInt32(model.UserId), name, pwd);
