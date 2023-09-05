@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Common;
+using WindowsFormsApp2.Controller;
 using WindowsFormsApp2.Model;
 
 namespace WindowsFormsApp2
@@ -19,36 +19,12 @@ namespace WindowsFormsApp2
         {
             InitializeComponent();
         }
+        UsersTableViewController uc = new UsersTableViewController();
+        DataTable dt = new DataTable();
 
         private void UsersTableViewForm_Load(object sender, EventArgs e)
         {
-            string query = "SELECT * FROM users";
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.MultiSelect = false;
-            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
-            {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    int count = reader.FieldCount;
-                    dataGridView1.ColumnCount = count;
-                    for (int i = 0; i < count; i++)
-                    {
-                        string name = reader.GetName(i);
-                        dataGridView1.Columns[i].HeaderText = name;
-                        dataGridView1.Columns[i].Name = name;
-                    }
-                    while (reader.Read())
-                    {
-                        object[] row = new object[count];
-                        reader.GetValues(row);
-                        dataGridView1.Rows.Add(row);
-                    }
-                }
-            }
+            GetDataUsersTable();
         }
 
         private void registrationbutton_Click(object sender, EventArgs e)
@@ -76,7 +52,7 @@ namespace WindowsFormsApp2
             model.Pwd = selectedRow.Cells["Pwd"].Value.ToString();
             if (model != null)
             {
-                RegistrationForm registrationForm = new RegistrationForm();
+                RegistrationForm registrationForm = new RegistrationForm(true);
                 registrationForm.model = model;
                 registrationForm.ShowDialog();
             }
@@ -86,8 +62,10 @@ namespace WindowsFormsApp2
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void GetDataUsersTable()
         {
+            dt = uc.ReadUsersTable();
+            dataGridView1.DataSource = dt;
         }
     }
 }
