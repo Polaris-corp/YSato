@@ -57,7 +57,7 @@ namespace WindowsFormsApp2
             this.registrationbutton.TabIndex = 1;
             this.registrationbutton.Text = "登録";
             this.registrationbutton.UseVisualStyleBackColor = true;
-            this.registrationbutton.Click += new System.EventHandler(this.registrationbutton_Click);
+            this.registrationbutton.Click += new System.EventHandler(this.RegistrationButton_Click);
             // 
             // changebutton
             // 
@@ -67,7 +67,7 @@ namespace WindowsFormsApp2
             this.changebutton.TabIndex = 2;
             this.changebutton.Text = "変更";
             this.changebutton.UseVisualStyleBackColor = true;
-            this.changebutton.Click += new System.EventHandler(this.changebutton_Click);
+            this.changebutton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
             // UsersTableViewForm
             // 

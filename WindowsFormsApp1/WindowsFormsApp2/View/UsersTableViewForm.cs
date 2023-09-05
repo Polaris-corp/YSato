@@ -27,7 +27,7 @@ namespace WindowsFormsApp2
             GetDataUsersTable();
         }
 
-        private void registrationbutton_Click(object sender, EventArgs e)
+        private void RegistrationButton_Click(object sender, EventArgs e)
         {
             RegistrationModel model = new RegistrationModel();
             if (model != null)
@@ -43,7 +43,7 @@ namespace WindowsFormsApp2
 
         }
 
-        private void changebutton_Click(object sender, EventArgs e)
+        private void ChangeButton_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
             RegistrationModel model = new RegistrationModel();

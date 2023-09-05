@@ -101,7 +101,7 @@ namespace WindowsFormsApp2
             this.executebutton.TabIndex = 6;
             this.executebutton.Text = "登録";
             this.executebutton.UseVisualStyleBackColor = true;
-            this.executebutton.Click += new System.EventHandler(this.executebutton_Click);
+            this.executebutton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
             // RegistrationForm
             // 

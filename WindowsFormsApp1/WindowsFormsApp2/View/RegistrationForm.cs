@@ -41,7 +41,7 @@ namespace WindowsFormsApp2
             //}
         }
 
-        private void executebutton_Click(object sender, EventArgs e)
+        private void ExecuteButton_Click(object sender, EventArgs e)
         {
             string name = textBox2.Text;
             string pwd = textBox3.Text;
