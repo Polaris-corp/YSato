@@ -50,7 +50,7 @@ namespace WindowsFormsApp1.View
                 //IDチェック
                 if (!lc.DBAccessUserExistence(userId))
                 {
-                    MessageBox.Show(ConstString.NotusersMessage);
+                    MessageBox.Show(ConstString.NotUsersMessage);
                     return;
                 }
 
@@ -80,7 +80,7 @@ namespace WindowsFormsApp1.View
                         }
                     }
                 }
-                MessageBox.Show(ConstString.LoginMessagE);
+                MessageBox.Show(ConstString.LoginMessage);
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
             }
 
