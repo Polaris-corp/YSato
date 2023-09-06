@@ -26,6 +26,8 @@ namespace WindowsFormsApp2
             else
             {
                 ExecuteButton.Text = ConstString.RegistrationString;
+                IdLabel.Visible = false;
+                UserIdTextBox.Visible = false;
             }
             this.isChangeExecuteButton = isChangeButton;
             this.model = model;
