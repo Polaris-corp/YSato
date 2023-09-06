@@ -139,7 +139,7 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.UserIdTextBox);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "RegistrationForm";
-            this.Text = "RegistrationForm";
+            this.Text = "ユーザーの登録と変更";
             this.Load += new System.EventHandler(this.RegistrationForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

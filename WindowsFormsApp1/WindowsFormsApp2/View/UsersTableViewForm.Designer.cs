@@ -95,7 +95,7 @@ namespace WindowsFormsApp2
             this.Controls.Add(this.dataGridView1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UsersTableViewForm";
-            this.Text = "Form1";
+            this.Text = "ユーザー情報一覧";
             this.Load += new System.EventHandler(this.UsersTableViewForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
