@@ -22,16 +22,16 @@ namespace WindowsFormsApp2
             executebutton.Text = ConstString.RegistrationString;
             this.model = model;
         }
-        public RegistrationForm(RegistrationModel model, bool flg)
+        public RegistrationForm(RegistrationModel model, bool isChangeExecuteButton)
         {
             InitializeComponent();
             executebutton.Text = ConstString.ChangeString;
-            this.flg = flg;
+            this.isChangeExecuteButton = isChangeExecuteButton;
             this.model = model;
         }
         RegistrationController rc = new RegistrationController();
         RegistrationModel model;
-        bool flg = false;
+        bool isChangeExecuteButton = false;
 
 
         public void RegistrationForm_Load(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace WindowsFormsApp2
         {
             string name = NameTextBox.Text;
             string pwd = PwdTextBox.Text;
-            if (flg)
+            if (isChangeExecuteButton)
             {
                 rc.UpdateAccount(Convert.ToInt32(model.UserId), name, pwd);
             }
