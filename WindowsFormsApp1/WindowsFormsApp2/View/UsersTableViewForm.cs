@@ -52,7 +52,7 @@ namespace WindowsFormsApp2
 
         private void RenewalButton_Click(object sender, EventArgs e)
         {
-
+            LoadUserData();
         }
 
         private void LoadUserData()
