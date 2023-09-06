@@ -32,6 +32,7 @@ namespace WindowsFormsApp2
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.RegistrationButton = new System.Windows.Forms.Button();
             this.ChangeButton = new System.Windows.Forms.Button();
+            this.RenewalButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,7 +41,7 @@ namespace WindowsFormsApp2
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(173, 26);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
@@ -52,8 +53,8 @@ namespace WindowsFormsApp2
             // 
             // RegistrationButton
             // 
-            this.RegistrationButton.Location = new System.Drawing.Point(31, 66);
-            this.RegistrationButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RegistrationButton.Location = new System.Drawing.Point(31, 26);
+            this.RegistrationButton.Margin = new System.Windows.Forms.Padding(2);
             this.RegistrationButton.Name = "RegistrationButton";
             this.RegistrationButton.Size = new System.Drawing.Size(112, 87);
             this.RegistrationButton.TabIndex = 1;
@@ -63,8 +64,8 @@ namespace WindowsFormsApp2
             // 
             // ChangeButton
             // 
-            this.ChangeButton.Location = new System.Drawing.Point(31, 196);
-            this.ChangeButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ChangeButton.Location = new System.Drawing.Point(31, 135);
+            this.ChangeButton.Margin = new System.Windows.Forms.Padding(2);
             this.ChangeButton.Name = "ChangeButton";
             this.ChangeButton.Size = new System.Drawing.Size(112, 87);
             this.ChangeButton.TabIndex = 2;
@@ -72,15 +73,27 @@ namespace WindowsFormsApp2
             this.ChangeButton.UseVisualStyleBackColor = true;
             this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
+            // RenewalButton
+            // 
+            this.RenewalButton.Location = new System.Drawing.Point(31, 245);
+            this.RenewalButton.Margin = new System.Windows.Forms.Padding(2);
+            this.RenewalButton.Name = "RenewalButton";
+            this.RenewalButton.Size = new System.Drawing.Size(112, 87);
+            this.RenewalButton.TabIndex = 3;
+            this.RenewalButton.Text = "更新";
+            this.RenewalButton.UseVisualStyleBackColor = true;
+            this.RenewalButton.Click += new System.EventHandler(this.RenewalButton_Click);
+            // 
             // UsersTableViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.RenewalButton);
             this.Controls.Add(this.ChangeButton);
             this.Controls.Add(this.RegistrationButton);
             this.Controls.Add(this.dataGridView1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UsersTableViewForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.UsersTableViewForm_Load);
@@ -94,6 +107,7 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button RegistrationButton;
         private System.Windows.Forms.Button ChangeButton;
+        private System.Windows.Forms.Button RenewalButton;
     }
 }
 

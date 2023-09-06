@@ -40,6 +40,14 @@ namespace WindowsFormsApp2.Service
                 CommandCreationUpdateAccount(userId, name, pwd, connection).ExecuteNonQuery();
             }
         }
+        public void DeleteAccount(int userId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
+            {
+                connection.Open();
+                CommandCreationDeleteAccount(userId, connection).ExecuteNonQuery();
+            }
+        }
         public MySqlCommand CommandCreationUsersTable(MySqlConnection connection)
         {
             string query = $@"
@@ -88,6 +96,19 @@ namespace WindowsFormsApp2.Service
             command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@pwd", pwd);
+            return command;
+        }
+        public MySqlCommand CommandCreationDeleteAccount(int userId, MySqlConnection connection)
+        {
+            string query = $@"
+                DELETE
+                FROM
+                    users
+                WHERE
+                    ID = @userId;
+                ";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@userId", userId);
             return command;
         }
     }

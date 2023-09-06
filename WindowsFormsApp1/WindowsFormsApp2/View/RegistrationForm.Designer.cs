@@ -120,6 +120,7 @@ namespace WindowsFormsApp2
             this.DeleteButton.TabIndex = 7;
             this.DeleteButton.Text = "削除";
             this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Visible = false;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // RegistrationForm

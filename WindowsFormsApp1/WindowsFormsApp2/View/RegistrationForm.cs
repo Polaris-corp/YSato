@@ -15,19 +15,19 @@ namespace WindowsFormsApp2
 {
     public partial class RegistrationForm : Form
     {
-        public RegistrationForm(RegistrationModel model, bool isChangeExecuteButton)
+        public RegistrationForm(RegistrationModel model, bool isChangeButton)
         {
             InitializeComponent();
-            if (isChangeExecuteButton)
+            if (isChangeButton)
             {
                 ExecuteButton.Text = ConstString.ChangeString;
-
+                DeleteButton.Visible = isChangeButton;
             }
             else
             {
                 ExecuteButton.Text = ConstString.RegistrationString;
             }
-            this.isChangeExecuteButton = isChangeExecuteButton;
+            this.isChangeExecuteButton = isChangeButton;
             this.model = model;
         }
         RegistrationController rc = new RegistrationController();
@@ -60,7 +60,9 @@ namespace WindowsFormsApp2
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-
+            int userId = Convert.ToInt32(UserIdTextBox.Text);
+            rc.DeleteAccount(userId);
+            this.Close();
         }
     }
 }

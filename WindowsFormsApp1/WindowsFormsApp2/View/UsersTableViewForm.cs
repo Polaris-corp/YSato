@@ -21,7 +21,7 @@ namespace WindowsFormsApp2
         }
         UsersTableViewController uc = new UsersTableViewController();
         DataTable dt = new DataTable();
-        bool isChangeExecuteButton = false;
+        bool isChangeButton = false;
 
         private void UsersTableViewForm_Load(object sender, EventArgs e)
         {
@@ -30,15 +30,15 @@ namespace WindowsFormsApp2
 
         private void RegistrationButton_Click(object sender, EventArgs e)
         {
-            isChangeExecuteButton = false;
+            isChangeButton = false;
             RegistrationModel model = new RegistrationModel();
-            RegistrationForm registrationForm = new RegistrationForm(model, isChangeExecuteButton);
+            RegistrationForm registrationForm = new RegistrationForm(model, isChangeButton);
             registrationForm.ShowDialog();
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
         {
-            isChangeExecuteButton = true;
+            isChangeButton = true;
             DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
             RegistrationModel model = new RegistrationModel
             {
@@ -46,8 +46,13 @@ namespace WindowsFormsApp2
                 Name = selectedRow.Cells["Name"].Value.ToString(),
                 Pwd = selectedRow.Cells["Pwd"].Value.ToString()
             };
-            RegistrationForm registrationForm = new RegistrationForm(model, isChangeExecuteButton);
+            RegistrationForm registrationForm = new RegistrationForm(model, isChangeButton);
             registrationForm.ShowDialog();
+        }
+
+        private void RenewalButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void LoadUserData()
@@ -55,6 +60,7 @@ namespace WindowsFormsApp2
             dt = uc.ReadUsersTable();
             dataGridView1.DataSource = dt;
         }
+
     }
 }
 
