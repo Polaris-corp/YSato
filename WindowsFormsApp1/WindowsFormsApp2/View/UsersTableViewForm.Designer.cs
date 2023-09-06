@@ -30,8 +30,8 @@ namespace WindowsFormsApp2
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.registrationbutton = new System.Windows.Forms.Button();
-            this.changebutton = new System.Windows.Forms.Button();
+            this.RegistrationButton = new System.Windows.Forms.Button();
+            this.ChangeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,33 +49,33 @@ namespace WindowsFormsApp2
             this.dataGridView1.Size = new System.Drawing.Size(505, 383);
             this.dataGridView1.TabIndex = 0;
             // 
-            // registrationbutton
+            // RegistrationButton
             // 
-            this.registrationbutton.Location = new System.Drawing.Point(54, 83);
-            this.registrationbutton.Name = "registrationbutton";
-            this.registrationbutton.Size = new System.Drawing.Size(149, 109);
-            this.registrationbutton.TabIndex = 1;
-            this.registrationbutton.Text = "登録";
-            this.registrationbutton.UseVisualStyleBackColor = true;
-            this.registrationbutton.Click += new System.EventHandler(this.RegistrationButton_Click);
+            this.RegistrationButton.Location = new System.Drawing.Point(54, 83);
+            this.RegistrationButton.Name = "RegistrationButton";
+            this.RegistrationButton.Size = new System.Drawing.Size(149, 109);
+            this.RegistrationButton.TabIndex = 1;
+            this.RegistrationButton.Text = "登録";
+            this.RegistrationButton.UseVisualStyleBackColor = true;
+            this.RegistrationButton.Click += new System.EventHandler(this.RegistrationButton_Click);
             // 
-            // changebutton
+            // ChangeButton
             // 
-            this.changebutton.Location = new System.Drawing.Point(54, 245);
-            this.changebutton.Name = "changebutton";
-            this.changebutton.Size = new System.Drawing.Size(149, 109);
-            this.changebutton.TabIndex = 2;
-            this.changebutton.Text = "変更";
-            this.changebutton.UseVisualStyleBackColor = true;
-            this.changebutton.Click += new System.EventHandler(this.ChangeButton_Click);
+            this.ChangeButton.Location = new System.Drawing.Point(54, 245);
+            this.ChangeButton.Name = "ChangeButton";
+            this.ChangeButton.Size = new System.Drawing.Size(149, 109);
+            this.ChangeButton.TabIndex = 2;
+            this.ChangeButton.Text = "変更";
+            this.ChangeButton.UseVisualStyleBackColor = true;
+            this.ChangeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
             // UsersTableViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.changebutton);
-            this.Controls.Add(this.registrationbutton);
+            this.Controls.Add(this.ChangeButton);
+            this.Controls.Add(this.RegistrationButton);
             this.Controls.Add(this.dataGridView1);
             this.Name = "UsersTableViewForm";
             this.Text = "Form1";
@@ -88,8 +88,8 @@ namespace WindowsFormsApp2
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button registrationbutton;
-        private System.Windows.Forms.Button changebutton;
+        private System.Windows.Forms.Button RegistrationButton;
+        private System.Windows.Forms.Button ChangeButton;
     }
 }
 

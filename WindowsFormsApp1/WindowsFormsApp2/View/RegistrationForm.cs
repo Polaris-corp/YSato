@@ -20,12 +20,12 @@ namespace WindowsFormsApp2
             InitializeComponent();
             if (isChangeExecuteButton)
             {
-                executebutton.Text = ConstString.ChangeString;
+                ExecuteButton.Text = ConstString.ChangeString;
 
             }
             else
             {
-                executebutton.Text = ConstString.RegistrationString;
+                ExecuteButton.Text = ConstString.RegistrationString;
             }
             this.isChangeExecuteButton = isChangeExecuteButton;
             this.model = model;
