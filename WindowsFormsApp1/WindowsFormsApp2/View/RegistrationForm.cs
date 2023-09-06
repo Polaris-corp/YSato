@@ -15,30 +15,31 @@ namespace WindowsFormsApp2
 {
     public partial class RegistrationForm : Form
     {
-
-        public RegistrationForm(RegistrationModel model)
-        {
-            InitializeComponent();
-            executebutton.Text = ConstString.RegistrationString;
-            this.model = model;
-        }
         public RegistrationForm(RegistrationModel model, bool isChangeExecuteButton)
         {
             InitializeComponent();
-            executebutton.Text = ConstString.ChangeString;
+            if (isChangeExecuteButton)
+            {
+                executebutton.Text = ConstString.ChangeString;
+
+            }
+            else
+            {
+                executebutton.Text = ConstString.RegistrationString;
+            }
             this.isChangeExecuteButton = isChangeExecuteButton;
             this.model = model;
         }
         RegistrationController rc = new RegistrationController();
         RegistrationModel model;
-        bool isChangeExecuteButton = false;
+        bool isChangeExecuteButton;
 
 
         public void RegistrationForm_Load(object sender, EventArgs e)
         {
-                UserIdTextBox.Text = model.UserId;
-                NameTextBox.Text = model.Name;
-                PwdTextBox.Text = model.Pwd;
+            UserIdTextBox.Text = model.UserId;
+            NameTextBox.Text = model.Name;
+            PwdTextBox.Text = model.Pwd;
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
