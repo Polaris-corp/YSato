@@ -108,7 +108,7 @@ namespace WindowsFormsApp2
             this.btnExecute.TabIndex = 6;
             this.btnExecute.Text = "登録";
             this.btnExecute.UseVisualStyleBackColor = true;
-            this.btnExecute.Click += new System.EventHandler(this.ExecuteButton_Click);
+            this.btnExecute.Click += new System.EventHandler(this.BtnExecute_Click);
             // 
             // btnDelete
             // 
@@ -120,7 +120,7 @@ namespace WindowsFormsApp2
             this.btnDelete.Text = "削除";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Visible = false;
-            this.btnDelete.Click += new System.EventHandler(this.DeleteButton_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // RegisterForm
             // 
@@ -138,7 +138,7 @@ namespace WindowsFormsApp2
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "RegisterForm";
             this.Text = "ユーザーの登録と変更";
-            this.Load += new System.EventHandler(this.RegistrationForm_Load);
+            this.Load += new System.EventHandler(this.RegisterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

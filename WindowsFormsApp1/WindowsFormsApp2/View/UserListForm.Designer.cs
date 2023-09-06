@@ -60,7 +60,7 @@ namespace WindowsFormsApp2
             this.btnRegister.TabIndex = 1;
             this.btnRegister.Text = "登録";
             this.btnRegister.UseVisualStyleBackColor = true;
-            this.btnRegister.Click += new System.EventHandler(this.RegistrationButton_Click);
+            this.btnRegister.Click += new System.EventHandler(this.BtnRegister_Click);
             // 
             // btnChange
             // 
@@ -71,7 +71,7 @@ namespace WindowsFormsApp2
             this.btnChange.TabIndex = 2;
             this.btnChange.Text = "変更";
             this.btnChange.UseVisualStyleBackColor = true;
-            this.btnChange.Click += new System.EventHandler(this.ChangeButton_Click);
+            this.btnChange.Click += new System.EventHandler(this.BtnChange_Click);
             // 
             // btnRenewal
             // 
@@ -82,7 +82,7 @@ namespace WindowsFormsApp2
             this.btnRenewal.TabIndex = 3;
             this.btnRenewal.Text = "更新";
             this.btnRenewal.UseVisualStyleBackColor = true;
-            this.btnRenewal.Click += new System.EventHandler(this.RenewalButton_Click);
+            this.btnRenewal.Click += new System.EventHandler(this.BtnRenewal_Click);
             // 
             // UserListForm
             // 
@@ -96,7 +96,7 @@ namespace WindowsFormsApp2
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserListForm";
             this.Text = "ユーザー情報一覧";
-            this.Load += new System.EventHandler(this.UsersTableViewForm_Load);
+            this.Load += new System.EventHandler(this.UserListForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.userListGridView)).EndInit();
             this.ResumeLayout(false);
 

@@ -26,7 +26,7 @@ namespace WindowsFormsApp1.View
         Controller.LoginController lc = new Controller.LoginController();
         Logger logger = Logger.GetInstance();
 
-        private void login_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             //IDとPwdを受け取る
             DateTime dateTimeNow = DateTime.Now;

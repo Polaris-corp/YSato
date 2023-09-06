@@ -37,14 +37,14 @@ namespace WindowsFormsApp2
         bool isChangeExecuteButton;
 
 
-        public void RegistrationForm_Load(object sender, EventArgs e)
+        public void RegisterForm_Load(object sender, EventArgs e)
         {
             txtUserId.Text = model.UserId;
             txtName.Text = model.Name;
             txtPwd.Text = model.Pwd;
         }
 
-        private void ExecuteButton_Click(object sender, EventArgs e)
+        private void BtnExecute_Click(object sender, EventArgs e)
         {
             string name = txtName.Text;
             string pwd = txtPwd.Text;
@@ -60,7 +60,7 @@ namespace WindowsFormsApp2
             this.Close();
         }
 
-        private void DeleteButton_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             int userId = Convert.ToInt32(txtUserId.Text);
             rc.DeleteAccount(userId);

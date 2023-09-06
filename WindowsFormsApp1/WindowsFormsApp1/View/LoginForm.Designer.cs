@@ -45,7 +45,7 @@ namespace WindowsFormsApp1.View
             this.btnLogin.TabIndex = 0;
             this.btnLogin.Text = "ログイン";
             this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.Click += new System.EventHandler(this.login_Click);
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // txtUserId
             // 

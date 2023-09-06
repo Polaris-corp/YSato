@@ -23,12 +23,12 @@ namespace WindowsFormsApp2
         DataTable dt = new DataTable();
         bool isChangeButton = false;
 
-        private void UsersTableViewForm_Load(object sender, EventArgs e)
+        private void UserListForm_Load(object sender, EventArgs e)
         {
             LoadUserData();
         }
 
-        private void RegistrationButton_Click(object sender, EventArgs e)
+        private void BtnRegister_Click(object sender, EventArgs e)
         {
             isChangeButton = false;
             RegistrationModel model = new RegistrationModel();
@@ -36,7 +36,7 @@ namespace WindowsFormsApp2
             registrationForm.ShowDialog();
         }
 
-        private void ChangeButton_Click(object sender, EventArgs e)
+        private void BtnChange_Click(object sender, EventArgs e)
         {
             isChangeButton = true;
             DataGridViewRow selectedRow = userListGridView.SelectedRows[0];
@@ -50,7 +50,7 @@ namespace WindowsFormsApp2
             registrationForm.ShowDialog();
         }
 
-        private void RenewalButton_Click(object sender, EventArgs e)
+        private void BtnRenewal_Click(object sender, EventArgs e)
         {
             LoadUserData();
         }
