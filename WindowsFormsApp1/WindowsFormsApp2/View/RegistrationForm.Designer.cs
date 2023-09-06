@@ -45,6 +45,7 @@ namespace WindowsFormsApp2
             this.UserIdTextBox.Location = new System.Drawing.Point(118, 99);
             this.UserIdTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.UserIdTextBox.Name = "UserIdTextBox";
+            this.UserIdTextBox.ReadOnly = true;
             this.UserIdTextBox.Size = new System.Drawing.Size(140, 23);
             this.UserIdTextBox.TabIndex = 0;
             // 
