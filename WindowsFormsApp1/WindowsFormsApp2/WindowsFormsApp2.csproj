@@ -74,25 +74,25 @@
     <Compile Include="Controller\UsersTableViewController.cs" />
     <Compile Include="Model\RegistrationModel.cs" />
     <Compile Include="Service\UsersService.cs" />
-    <Compile Include="View\RegistrationForm.cs">
+    <Compile Include="View\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\RegistrationForm.Designer.cs">
-      <DependentUpon>RegistrationForm.cs</DependentUpon>
+    <Compile Include="View\RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\UsersTableViewForm.cs">
+    <Compile Include="View\UserListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\UsersTableViewForm.Designer.cs">
-      <DependentUpon>UsersTableViewForm.cs</DependentUpon>
+    <Compile Include="View\UserListForm.Designer.cs">
+      <DependentUpon>UserListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="View\RegistrationForm.resx">
-      <DependentUpon>RegistrationForm.cs</DependentUpon>
+    <EmbeddedResource Include="View\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\UsersTableViewForm.resx">
-      <DependentUpon>UsersTableViewForm.cs</DependentUpon>
+    <EmbeddedResource Include="View\UserListForm.resx">
+      <DependentUpon>UserListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

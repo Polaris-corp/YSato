@@ -30,8 +30,8 @@ namespace WindowsFormsApp1.View
         {
             //IDとPwdを受け取る
             DateTime dateTimeNow = DateTime.Now;
-            string loginId = textBox1.Text;
-            string loginPassword = textBox2.Text;
+            string loginId = txtUserId.Text;
+            string loginPassword = txtPwd.Text;
 
             //入力チェック
             if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
@@ -82,7 +82,7 @@ namespace WindowsFormsApp1.View
                     }
                 }
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
-                UsersTableViewForm utvf = new UsersTableViewForm();
+                UserListForm utvf = new UserListForm();
                 utvf.ShowDialog();
             }
 

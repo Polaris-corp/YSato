@@ -13,21 +13,21 @@ using WindowsFormsApp2.Model;
 
 namespace WindowsFormsApp2
 {
-    public partial class RegistrationForm : Form
+    public partial class RegisterForm : Form
     {
-        public RegistrationForm(RegistrationModel model, bool isChangeButton)
+        public RegisterForm(RegistrationModel model, bool isChangeButton)
         {
             InitializeComponent();
             if (isChangeButton)
             {
-                ExecuteButton.Text = ConstString.ChangeString;
-                DeleteButton.Visible = isChangeButton;
+                btnExecute.Text = ConstString.ChangeString;
+                btnDelete.Visible = isChangeButton;
             }
             else
             {
-                ExecuteButton.Text = ConstString.RegistrationString;
-                IdLabel.Visible = false;
-                UserIdTextBox.Visible = false;
+                btnExecute.Text = ConstString.RegistrationString;
+                lblUserId.Visible = false;
+                txtUserId.Visible = false;
             }
             this.isChangeExecuteButton = isChangeButton;
             this.model = model;
@@ -39,18 +39,18 @@ namespace WindowsFormsApp2
 
         public void RegistrationForm_Load(object sender, EventArgs e)
         {
-            UserIdTextBox.Text = model.UserId;
-            NameTextBox.Text = model.Name;
-            PwdTextBox.Text = model.Pwd;
+            txtUserId.Text = model.UserId;
+            txtName.Text = model.Name;
+            txtPwd.Text = model.Pwd;
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            string name = NameTextBox.Text;
-            string pwd = PwdTextBox.Text;
+            string name = txtName.Text;
+            string pwd = txtPwd.Text;
             if (isChangeExecuteButton)
             {
-                int userId = Convert.ToInt32(UserIdTextBox.Text);
+                int userId = Convert.ToInt32(txtUserId.Text);
                 rc.UpdateAccount(userId, name, pwd);
             }
             else
@@ -62,7 +62,7 @@ namespace WindowsFormsApp2
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            int userId = Convert.ToInt32(UserIdTextBox.Text);
+            int userId = Convert.ToInt32(txtUserId.Text);
             rc.DeleteAccount(userId);
             this.Close();
         }

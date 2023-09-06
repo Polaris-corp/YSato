@@ -13,9 +13,9 @@ using WindowsFormsApp2.Model;
 
 namespace WindowsFormsApp2
 {
-    public partial class UsersTableViewForm : Form
+    public partial class UserListForm : Form
     {
-        public UsersTableViewForm()
+        public UserListForm()
         {
             InitializeComponent();
         }
@@ -32,21 +32,21 @@ namespace WindowsFormsApp2
         {
             isChangeButton = false;
             RegistrationModel model = new RegistrationModel();
-            RegistrationForm registrationForm = new RegistrationForm(model, isChangeButton);
+            RegisterForm registrationForm = new RegisterForm(model, isChangeButton);
             registrationForm.ShowDialog();
         }
 
         private void ChangeButton_Click(object sender, EventArgs e)
         {
             isChangeButton = true;
-            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+            DataGridViewRow selectedRow = userListGridView.SelectedRows[0];
             RegistrationModel model = new RegistrationModel
             {
                 UserId = selectedRow.Cells["ID"].Value.ToString(),
                 Name = selectedRow.Cells["Name"].Value.ToString(),
                 Pwd = selectedRow.Cells["Pwd"].Value.ToString()
             };
-            RegistrationForm registrationForm = new RegistrationForm(model, isChangeButton);
+            RegisterForm registrationForm = new RegisterForm(model, isChangeButton);
             registrationForm.ShowDialog();
         }
 
@@ -58,7 +58,7 @@ namespace WindowsFormsApp2
         private void LoadUserData()
         {
             dt = uc.ReadUsersTable();
-            dataGridView1.DataSource = dt;
+            userListGridView.DataSource = dt;
         }
 
     }
