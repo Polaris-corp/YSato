@@ -56,7 +56,9 @@ namespace WindowsFormsApp2.Service
                     ,Name
                     ,Pwd
                 FROM
-                    users;
+                    users
+                WHERE
+                    Deleted = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             return command;
@@ -101,9 +103,10 @@ namespace WindowsFormsApp2.Service
         public MySqlCommand CommandCreationDeleteAccount(int userId, MySqlConnection connection)
         {
             string query = $@"
-                DELETE
-                FROM
-                    users
+                UPDATE
+                    users 
+                SET
+                    Deleted = 1 
                 WHERE
                     ID = @userId;
                 ";
