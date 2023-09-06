@@ -1,11 +1,11 @@
 ﻿using MySqlConnector;
-using WindowsFormsApp1.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using WindowsFormsApp2.Common;
 
 namespace WindowsFormsApp2.Service
 {
