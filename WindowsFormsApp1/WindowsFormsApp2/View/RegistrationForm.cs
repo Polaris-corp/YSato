@@ -44,17 +44,23 @@ namespace WindowsFormsApp2
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
+            int userId = Convert.ToInt32(UserIdTextBox.Text);
             string name = NameTextBox.Text;
             string pwd = PwdTextBox.Text;
             if (isChangeExecuteButton)
             {
-                rc.UpdateAccount(Convert.ToInt32(model.UserId), name, pwd);
+                rc.UpdateAccount(userId, name, pwd);
             }
             else
             {
                 rc.InsertAccount(name, pwd);
             }
             this.Close();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
