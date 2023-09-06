@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MySqlConnector;
 using WindowsFormsApp1.Common;
 using WindowsFormsApp1.Model;
+using WindowsFormsApp2;
 
 namespace WindowsFormsApp1.View
 {
@@ -80,8 +81,9 @@ namespace WindowsFormsApp1.View
                         }
                     }
                 }
-                MessageBox.Show(ConstString.LoginMessage);
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
+                UsersTableViewForm utvf = new UsersTableViewForm();
+                utvf.ShowDialog();
             }
 
             catch (Exception ex)
