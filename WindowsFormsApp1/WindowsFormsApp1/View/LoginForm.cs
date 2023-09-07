@@ -9,10 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySqlConnector;
 using WindowsFormsApp1.Common;
 using WindowsFormsApp1.Model;
-using WindowsFormsApp2;
 
 namespace WindowsFormsApp1.View
 {
@@ -82,8 +80,7 @@ namespace WindowsFormsApp1.View
                     }
                 }
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
-                UserListForm utvf = new UserListForm();
-                utvf.ShowDialog();
+                MessageBox.Show(ConstString.LoginMessage);
             }
 
             catch (Exception ex)
