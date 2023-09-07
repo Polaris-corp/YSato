@@ -69,11 +69,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ConstNumber.cs" />
     <Compile Include="Common\ConstString.cs" />
+    <Compile Include="Common\ConstOthers.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\RegistrationController.cs" />
     <Compile Include="Controller\UsersTableViewController.cs" />
+    <Compile Include="Model\HistoryModel.cs" />
     <Compile Include="Model\RegistrationModel.cs" />
+    <Compile Include="Service\HistoryService.cs" />
     <Compile Include="Service\UsersService.cs" />
+    <Compile Include="View\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +100,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="View\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
