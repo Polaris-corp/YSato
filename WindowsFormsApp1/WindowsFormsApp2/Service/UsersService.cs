@@ -166,7 +166,8 @@ namespace WindowsFormsApp2.Service
                 FROM 
                     users AS u 
                 WHERE 
-                    ID = @userId;
+                    u.ID = @userId
+                    AND u.Deleted = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
@@ -188,7 +189,7 @@ namespace WindowsFormsApp2.Service
                     users AS u
                 WHERE
                     u.ID = @userId
-                    AND u.Pwd = @loginPassword; 
+                    AND u.Pwd = @loginPassword;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
