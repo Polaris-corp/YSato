@@ -41,13 +41,13 @@ namespace WindowsFormsApp2.View
             {
                 if (!lc.DBAccessUserExistence(userId))
                 {
-                    MessageBox.Show(ConstString.NotUsersMessage);
+                    MessageBox.Show(ConstString.NotMatchMessage);
                     return;
                 }
 
                 if (!lc.DBAccessCheckPwd(userId, loginPassword))
                 {
-                    MessageBox.Show(ConstString.NotPwdMatchMessage);
+                    MessageBox.Show(ConstString.NotMatchMessage);
                     lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
                     return;
                 }
