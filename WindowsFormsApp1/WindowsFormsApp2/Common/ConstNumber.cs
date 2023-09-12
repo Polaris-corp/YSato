@@ -11,5 +11,7 @@ namespace WindowsFormsApp2.Common
         public const int NgInMySql = 0;
         public const int OkInMySql = 1;
         public const int MaxLoginFailures = 3;
+        public const int NormalDisplay = 0;
+        public const int DeletedDisplay = 1;
     }
 }

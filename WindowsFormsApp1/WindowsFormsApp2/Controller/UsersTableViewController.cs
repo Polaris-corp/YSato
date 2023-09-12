@@ -16,5 +16,9 @@ namespace WindowsFormsApp2.Controller
         {
             return us.ReadUsersTable();
         }
+        public DataTable ReadUsersTable(int deletedType)
+        {
+            return us.ReadUsersTable(deletedType);
+        }
     }
 }

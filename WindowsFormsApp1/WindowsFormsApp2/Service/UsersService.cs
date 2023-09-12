@@ -22,6 +22,18 @@ namespace WindowsFormsApp2.Service
                 adapter.Fill(dt);
                 return dt;
             }
+        }
+        public DataTable ReadUsersTable(int deletedType)
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
+            {
+                MySqlCommand command = CommandCreationUsersTable(deletedType, connection);
+                DataTable dt = new DataTable();
+                connection.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                adapter.Fill(dt);
+                return dt;
+            }
 
         }
         public void InsertAccount(string name, string pwd)
@@ -76,11 +88,25 @@ namespace WindowsFormsApp2.Service
                     ,Name
                     ,Pwd
                 FROM
-                    users
-                WHERE
-                    Deleted = 0;
+                    users;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
+            return command;
+        }
+        public MySqlCommand CommandCreationUsersTable(int deletedType, MySqlConnection connection)
+        {
+            string query = $@"
+                SELECT
+                    ID
+                    ,Name
+                    ,Pwd
+                FROM
+                    users
+                WHERE
+                    Deleted = @deleted;
+                ";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@deleted", deletedType);
             return command;
         }
         public MySqlCommand CommandCreationInsertAccount(string name, string pwd, MySqlConnection connection)
@@ -160,3 +186,4 @@ namespace WindowsFormsApp2.Service
         }
     }
 }
+

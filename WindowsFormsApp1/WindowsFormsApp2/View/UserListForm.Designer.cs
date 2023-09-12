@@ -33,6 +33,7 @@ namespace WindowsFormsApp2
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnChange = new System.Windows.Forms.Button();
             this.btnRenewal = new System.Windows.Forms.Button();
+            this.cmbViewType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.userListGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,7 +41,7 @@ namespace WindowsFormsApp2
             // 
             this.userListGridView.AllowUserToAddRows = false;
             this.userListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.userListGridView.Location = new System.Drawing.Point(231, 32);
+            this.userListGridView.Location = new System.Drawing.Point(231, 56);
             this.userListGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.userListGridView.MultiSelect = false;
             this.userListGridView.Name = "userListGridView";
@@ -48,7 +49,7 @@ namespace WindowsFormsApp2
             this.userListGridView.RowHeadersWidth = 51;
             this.userListGridView.RowTemplate.Height = 24;
             this.userListGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.userListGridView.Size = new System.Drawing.Size(505, 382);
+            this.userListGridView.Size = new System.Drawing.Size(505, 358);
             this.userListGridView.TabIndex = 0;
             // 
             // btnRegister
@@ -84,11 +85,26 @@ namespace WindowsFormsApp2
             this.btnRenewal.UseVisualStyleBackColor = true;
             this.btnRenewal.Click += new System.EventHandler(this.BtnRenewal_Click);
             // 
+            // cmbViewType
+            // 
+            this.cmbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbViewType.FormattingEnabled = true;
+            this.cmbViewType.Items.AddRange(new object[] {
+            "通常表示",
+            "削除済み",
+            "全件表示"});
+            this.cmbViewType.Location = new System.Drawing.Point(615, 28);
+            this.cmbViewType.Name = "cmbViewType";
+            this.cmbViewType.Size = new System.Drawing.Size(121, 23);
+            this.cmbViewType.TabIndex = 4;
+            this.cmbViewType.SelectedIndexChanged += new System.EventHandler(this.CmbViewType_SelectedIndexChanged);
+            // 
             // UserListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 451);
+            this.Controls.Add(this.cmbViewType);
             this.Controls.Add(this.btnRenewal);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.btnRegister);
@@ -108,6 +124,7 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button btnRenewal;
+        private System.Windows.Forms.ComboBox cmbViewType;
     }
 }
 

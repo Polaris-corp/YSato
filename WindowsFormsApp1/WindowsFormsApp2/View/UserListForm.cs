@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp2.Common;
 using WindowsFormsApp2.Controller;
 using WindowsFormsApp2.Model;
 
@@ -25,6 +26,7 @@ namespace WindowsFormsApp2
 
         private void UserListForm_Load(object sender, EventArgs e)
         {
+            cmbViewType.SelectedIndex = ConstNumber.NormalDisplay;
             LoadUserData();
         }
 
@@ -57,10 +59,25 @@ namespace WindowsFormsApp2
 
         private void LoadUserData()
         {
-            dt = uc.ReadUsersTable();
+            if (cmbViewType.SelectedIndex == ConstNumber.NormalDisplay)
+            {
+                dt = uc.ReadUsersTable(ConstNumber.NormalDisplay);
+            }
+            else if (cmbViewType.SelectedIndex == ConstNumber.DeletedDisplay)
+            {
+                dt = uc.ReadUsersTable(ConstNumber.DeletedDisplay);
+            }
+            else
+            {
+                dt = uc.ReadUsersTable();
+            }
             userListGridView.DataSource = dt;
         }
 
+        private void CmbViewType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadUserData();
+        }
     }
 }
 
