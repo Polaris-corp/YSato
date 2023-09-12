@@ -39,14 +39,7 @@ namespace WindowsFormsApp2.View
 
             try
             {
-                if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
-                {
-                    MessageBox.Show(ConstString.NotMatchMessage);
-                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
-                    return;
-                }
-
-                HistoryModel history = lc.DBAccessGetResultAndLoginTime(userId);
+                HistoryModel history = lc.DBAccessLoginNotPossibleTime();
 
                 if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
                 {
@@ -60,6 +53,14 @@ namespace WindowsFormsApp2.View
                         }
                     }
                 }
+
+                if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
+                {
+                    MessageBox.Show(ConstString.NotMatchMessage);
+                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
+                    return;
+                }
+
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
                 UserListForm usf = new UserListForm();
                 usf.ShowDialog();

@@ -48,6 +48,29 @@ namespace WindowsFormsApp2.Service
             }
         }
         /// <summary>
+        /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するメソッド
+        /// </summary>
+        /// <param name="userId">ユーザーID</param>
+        /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
+        public HistoryModel DBAccessLoginNotPossibleTime()
+        {
+            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
+            {
+                HistoryModel resultAndLoginTime = new HistoryModel();
+                connection.Open();
+
+                MySqlDataReader reader = CommandCreationLoginNotPossibleTime(connection).ExecuteReader();
+
+                if (reader.Read())
+                {
+                    resultAndLoginTime.LoginFailureCount = reader.GetInt32("cnt");
+                    resultAndLoginTime.NewestTimes = reader.GetDateTime("new");
+                    resultAndLoginTime.OldestTimes = reader.GetDateTime("old");
+                }
+                return resultAndLoginTime;
+            }
+        }
+        /// <summary>
         /// ログイン不可時の残り時間取得メソッド
         /// </summary>
         /// <param name="time">近々のログイン失敗時間</param>
@@ -126,6 +149,44 @@ namespace WindowsFormsApp2.Service
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
+            return command;
+        }
+        /// <summary>
+        /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得用SQLコマンド生成メソッド
+        /// </summary>
+        /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
+        /// <returns>SQLコマンド</returns>
+        public MySqlCommand CommandCreationLoginNotPossibleTime(MySqlConnection connection)
+        {
+            string query = $@"
+                SELECT
+                    count(*) as cnt
+                    ,IFNULL
+                        (
+                        MAX(t.Datetime)
+                        , CURRENT_TIMESTAMP()
+                        ) as new
+                    ,IFNULL
+                        (
+                        MIN(t.Datetime)
+                        , CURRENT_TIMESTAMP()
+                        ) as old
+                FROM
+                    (
+                    SELECT
+                        l.Rslt
+                        , l.Datetime
+                    FROM
+                        login_history as l
+                    ORDER BY
+                        l.Datetime DESC
+                    LIMIT
+                        3
+                    ) as t
+                WHERE
+                    t.Rslt = 0;
+                ";
+            MySqlCommand command = new MySqlCommand(query, connection);
             return command;
         }
     }

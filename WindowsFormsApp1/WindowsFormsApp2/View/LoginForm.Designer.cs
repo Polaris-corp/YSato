@@ -34,6 +34,7 @@ namespace WindowsFormsApp2.View
             this.lblUserId = new System.Windows.Forms.Label();
             this.txtUserId = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.lblWarningStatement = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblPwd
@@ -74,7 +75,7 @@ namespace WindowsFormsApp2.View
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(353, 217);
+            this.btnLogin.Location = new System.Drawing.Point(353, 260);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(139, 88);
@@ -83,11 +84,21 @@ namespace WindowsFormsApp2.View
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
+            // lblWarningStatement
+            // 
+            this.lblWarningStatement.Font = new System.Drawing.Font("MS UI Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblWarningStatement.Location = new System.Drawing.Point(287, 229);
+            this.lblWarningStatement.Name = "lblWarningStatement";
+            this.lblWarningStatement.Size = new System.Drawing.Size(292, 29);
+            this.lblWarningStatement.TabIndex = 10;
+            this.lblWarningStatement.Text = "5分間で3回間違えるとロックされます";
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblWarningStatement);
             this.Controls.Add(this.lblPwd);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.lblUserId);
@@ -107,5 +118,6 @@ namespace WindowsFormsApp2.View
         private System.Windows.Forms.Label lblUserId;
         private System.Windows.Forms.TextBox txtUserId;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Label lblWarningStatement;
     }
 }

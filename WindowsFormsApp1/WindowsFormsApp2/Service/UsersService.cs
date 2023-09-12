@@ -60,7 +60,7 @@ namespace WindowsFormsApp2.Service
             {
                 // 接続の確立
                 connection.Open();
-                MySqlDataReader reader = CommandCreationIdPwd(userId, loginPassword, connection).ExecuteReader();
+                MySqlDataReader reader = CommandCreationIdAndPwd(userId, loginPassword, connection).ExecuteReader();
                 if (reader.Read())
                 {
                     return true;
@@ -141,7 +141,7 @@ namespace WindowsFormsApp2.Service
         /// <param name="loginPassword">ログインパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationIdPwd(int userId, string loginPassword, MySqlConnection connection)
+        public MySqlCommand CommandCreationIdAndPwd(int userId, string loginPassword, MySqlConnection connection)
         {
             string query = $@"
                 SELECT

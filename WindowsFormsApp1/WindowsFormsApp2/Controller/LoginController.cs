@@ -34,11 +34,10 @@ namespace WindowsFormsApp2.Controller
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するコントローラー
         /// </summary>
-        /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessGetResultAndLoginTime(int userId)
+        public HistoryModel DBAccessLoginNotPossibleTime()
         {
-            return hs.DBAccessGetResultAndLoginTime(userId);
+            return hs.DBAccessLoginNotPossibleTime();
         }
         /// <summary>
         /// ログイン不可時の残り時間表示コントローラー
