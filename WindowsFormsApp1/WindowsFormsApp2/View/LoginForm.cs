@@ -39,7 +39,7 @@ namespace WindowsFormsApp2.View
 
             try
             {
-                HistoryModel history = lc.DBAccessLoginNotPossibleTime();
+                HistoryModel history = lc.DBAccessLoginNotPossibleTime(userId);
 
                 if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
                 {
@@ -57,11 +57,11 @@ namespace WindowsFormsApp2.View
                 if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NotMatchMessage);
-                    lc.DBAccessTimeStamp(ConstNumber.NgInMySql, dateTimeNow);
+                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
                     return;
                 }
 
-                lc.DBAccessTimeStamp(ConstNumber.OkInMySql, dateTimeNow);
+                lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
                 UserListForm usf = new UserListForm();
                 usf.ShowDialog();
             }

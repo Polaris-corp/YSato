@@ -14,27 +14,29 @@ namespace WindowsFormsApp2.Service
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すメソッド
         /// </summary>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="result">ログイン成否</param>
-        public void DBAccessTimeStamp(int result, DateTime dateTimeNow)
+        public void DBAccessTimeStamp(int userId, int result, DateTime dateTimeNow)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 connection.Open();
-                CommandCreationTime(result, connection, dateTimeNow).ExecuteNonQuery();
+                CommandCreationTime(userId, result, connection, dateTimeNow).ExecuteNonQuery();
             }
         }
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間を取得するメソッド
         /// </summary>
+        /// <param name="userId">ユーザーID</param>
         /// <returns>ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間</returns>
-        public HistoryModel DBAccessLoginNotPossibleTime()
+        public HistoryModel DBAccessLoginNotPossibleTime(int userId)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 HistoryModel resultAndLoginTime = new HistoryModel();
                 connection.Open();
 
-                MySqlDataReader reader = CommandCreationLoginNotPossibleTime(connection).ExecuteReader();
+                MySqlDataReader reader = CommandCreationLoginNotPossibleTime(userId, connection).ExecuteReader();
 
                 if (reader.Read())
                 {
@@ -57,25 +59,42 @@ namespace WindowsFormsApp2.Service
         /// <summary>
         /// ログイン履歴記録用SQLコマンド生成メソッド
         /// </summary>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="result">ログイン成否</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationTime(int result, MySqlConnection connection, DateTime dateTimeNow)
+        public MySqlCommand CommandCreationTime(int userId, int result, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
                 INSERT INTO
                     login_history
-                        (
-                        Datetime
-                        ,Rslt
-                        )
-                VALUES
                     (
-                    @dateTimeNow
+                        User_ID
+                        ,Datetime
+                        ,Rslt
+                    )
+                SELECT
+                    @userId
+                    ,@dateTimeNow
                     ,@rslt
-                    );
+                FROM
+                    users AS u
+                WHERE
+                    EXISTS
+                    ( 
+                        SELECT
+                            u.ID 
+                        FROM
+                            users
+                        WHERE
+                            u.ID = @userId 
+                            AND u.Deleted = 0
+                    ) 
+                    LIMIT
+                        1;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@dateTimeNow", dateTimeNow);
             command.Parameters.AddWithValue("@rslt", result);
             return command;
@@ -83,9 +102,10 @@ namespace WindowsFormsApp2.Service
         /// <summary>
         /// ログイン履歴(最大3件)のログイン成功回数と最新のログイン失敗時間と最後のログイン失敗時間の取得用SQLコマンド生成メソッド
         /// </summary>
+        /// <param name="userId">ユーザーID</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationLoginNotPossibleTime(MySqlConnection connection)
+        public MySqlCommand CommandCreationLoginNotPossibleTime(int userId, MySqlConnection connection)
         {
             string query = $@"
                 SELECT
@@ -107,6 +127,8 @@ namespace WindowsFormsApp2.Service
                         , l.Datetime
                     FROM
                         login_history as l
+                    WHERE
+                        l.User_ID = @userId
                     ORDER BY
                         l.Datetime DESC
                     LIMIT
@@ -116,6 +138,7 @@ namespace WindowsFormsApp2.Service
                     t.Rslt = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@userId", userId);
             return command;
         }
     }
