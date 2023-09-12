@@ -57,11 +57,11 @@ namespace WindowsFormsApp2.View
                 if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NotMatchMessage);
-                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
+                    lc.DBAccessTimeStamp(ConstNumber.NgInMySql, dateTimeNow);
                     return;
                 }
 
-                lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
+                lc.DBAccessTimeStamp(ConstNumber.OkInMySql, dateTimeNow);
                 UserListForm usf = new UserListForm();
                 usf.ShowDialog();
             }
