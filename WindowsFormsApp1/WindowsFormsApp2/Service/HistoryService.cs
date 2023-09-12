@@ -89,19 +89,32 @@ namespace WindowsFormsApp2.Service
         public MySqlCommand CommandCreationTime(int userId, int result, MySqlConnection connection, DateTime dateTimeNow)
         {
             string query = $@"
-                INSERT INTO 
+                INSERT INTO
                     login_history
                     (
                         User_ID
                         ,Datetime
                         ,Rslt
                     )
-                    VALUES
-                    (
-                        @userId
-                        ,@dateTimeNow
-                        ,@rslt
-                    );
+                SELECT
+                    @userId
+                    ,@dateTimeNow
+                    ,@rslt
+                FROM
+                    users AS u
+                WHERE
+                    EXISTS
+                    ( 
+                        SELECT
+                            u.ID 
+                        FROM
+                            users
+                        WHERE
+                            u.ID = @userId 
+                            AND u.Deleted = 0
+                    ) 
+                    LIMIT
+                        1;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
