@@ -11,24 +11,16 @@ namespace WindowsFormsApp2.Controller
     {
         Service.UsersService us = new Service.UsersService();
         Service.HistoryService hs = new Service.HistoryService();
+        
         /// <summary>
-        /// DBにログインIDと合致するUserIDが存在するか確認するコントローラー
-        /// </summary>
-        /// <param name="userId">ユーザーID</param>
-        /// <returns>合致するUserIDが存在するかの真偽</returns>
-        public bool DBAccessUserExistence(int userId)
-        {
-            return us.DBAccessUserExistence(userId);
-        }
-        /// <summary>
-        /// IDとPwdの紐づき確認コントローラー
+        /// IDとPwdの存在と紐づきの確認コントローラー
         /// </summary>
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>ユーザーIDとログインパスワードが紐づいているかの真偽</returns>
-        public bool DBAccessCheckPwd(int userId, string loginPassword)
+        public bool DBAccessCheckIdAndPwd(int userId, string loginPassword)
         {
-            return us.DBAccessCheckPwd(userId, loginPassword);
+            return us.DBAccessCheckIdAndPwd(userId, loginPassword);
         }
         /// <summary>
         /// DBのHistoryTable内にログイン履歴を残すコントローラー

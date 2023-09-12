@@ -39,13 +39,7 @@ namespace WindowsFormsApp2.View
 
             try
             {
-                if (!lc.DBAccessUserExistence(userId))
-                {
-                    MessageBox.Show(ConstString.NotMatchMessage);
-                    return;
-                }
-
-                if (!lc.DBAccessCheckPwd(userId, loginPassword))
+                if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NotMatchMessage);
                     lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
