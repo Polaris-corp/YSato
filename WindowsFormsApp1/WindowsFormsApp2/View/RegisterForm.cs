@@ -15,24 +15,23 @@ namespace WindowsFormsApp2
 {
     public partial class RegisterForm : Form
     {
-        public RegisterForm(RegistrationModel model, bool isChangeButton)
+        public RegisterForm(RegistrationModel model, bool isChange)
         {
             InitializeComponent();
-            if (isChangeButton)
+            if (isChange)
             {
                 btnExecute.Text = ConstString.ChangeString;
-                rbtAvailable.Checked = model.Deleted;
-                rbtNotAvailable.Checked = !model.Deleted;
             }
             else
             {
                 btnExecute.Text = ConstString.RegistrationString;
-                lblUserId.Visible = false;
-                txtUserId.Visible = false;
-                rbtAvailable.Visible = false;
-                rbtNotAvailable.Visible = false;
             }
-            this.isChangeExecuteButton = isChangeButton;
+            lblUserId.Visible = isChange;
+            txtUserId.Visible = isChange;
+            rbtAvailable.Checked = !model.Deleted;
+            rbtNotAvailable.Checked = model.Deleted;
+
+            this.isChangeExecuteButton = isChange;
             this.model = model;
         }
         RegistrationController rc = new RegistrationController();

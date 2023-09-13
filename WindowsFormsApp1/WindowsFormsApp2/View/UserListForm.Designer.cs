@@ -39,6 +39,7 @@ namespace WindowsFormsApp2
             // userListGridView
             // 
             this.userListGridView.AllowUserToAddRows = false;
+            this.userListGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.userListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.userListGridView.Location = new System.Drawing.Point(231, 56);
             this.userListGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
