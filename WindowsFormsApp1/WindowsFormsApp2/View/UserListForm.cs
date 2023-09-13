@@ -36,6 +36,7 @@ namespace WindowsFormsApp2
             RegistrationModel model = new RegistrationModel();
             RegisterForm registrationForm = new RegisterForm(model, isChangeButton);
             registrationForm.ShowDialog();
+            LoadUserData();
         }
 
         private void BtnChange_Click(object sender, EventArgs e)
@@ -50,10 +51,6 @@ namespace WindowsFormsApp2
             };
             RegisterForm registrationForm = new RegisterForm(model, isChangeButton);
             registrationForm.ShowDialog();
-        }
-
-        private void BtnRenewal_Click(object sender, EventArgs e)
-        {
             LoadUserData();
         }
 

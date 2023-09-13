@@ -32,7 +32,6 @@ namespace WindowsFormsApp2
             this.userListGridView = new System.Windows.Forms.DataGridView();
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnChange = new System.Windows.Forms.Button();
-            this.btnRenewal = new System.Windows.Forms.Button();
             this.cmbViewType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.userListGridView)).BeginInit();
             this.SuspendLayout();
@@ -54,7 +53,7 @@ namespace WindowsFormsApp2
             // 
             // btnRegister
             // 
-            this.btnRegister.Location = new System.Drawing.Point(41, 32);
+            this.btnRegister.Location = new System.Drawing.Point(41, 98);
             this.btnRegister.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(149, 109);
@@ -65,7 +64,7 @@ namespace WindowsFormsApp2
             // 
             // btnChange
             // 
-            this.btnChange.Location = new System.Drawing.Point(41, 169);
+            this.btnChange.Location = new System.Drawing.Point(41, 261);
             this.btnChange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnChange.Name = "btnChange";
             this.btnChange.Size = new System.Drawing.Size(149, 109);
@@ -73,17 +72,6 @@ namespace WindowsFormsApp2
             this.btnChange.Text = "変更";
             this.btnChange.UseVisualStyleBackColor = true;
             this.btnChange.Click += new System.EventHandler(this.BtnChange_Click);
-            // 
-            // btnRenewal
-            // 
-            this.btnRenewal.Location = new System.Drawing.Point(41, 306);
-            this.btnRenewal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRenewal.Name = "btnRenewal";
-            this.btnRenewal.Size = new System.Drawing.Size(149, 109);
-            this.btnRenewal.TabIndex = 3;
-            this.btnRenewal.Text = "更新";
-            this.btnRenewal.UseVisualStyleBackColor = true;
-            this.btnRenewal.Click += new System.EventHandler(this.BtnRenewal_Click);
             // 
             // cmbViewType
             // 
@@ -105,7 +93,6 @@ namespace WindowsFormsApp2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 451);
             this.Controls.Add(this.cmbViewType);
-            this.Controls.Add(this.btnRenewal);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.userListGridView);
@@ -123,7 +110,6 @@ namespace WindowsFormsApp2
         private System.Windows.Forms.DataGridView userListGridView;
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnChange;
-        private System.Windows.Forms.Button btnRenewal;
         private System.Windows.Forms.ComboBox cmbViewType;
     }
 }
