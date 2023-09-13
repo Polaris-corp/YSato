@@ -13,51 +13,43 @@ namespace WindowsFormsApp2.Service
     {
         public DataTable ReadUsersTable()
         {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
-            {
-                MySqlCommand command = CommandCreationUsersTable(connection);
-                DataTable dt = new DataTable();
-                connection.Open();
-                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                adapter.Fill(dt);
-                return dt;
-            }
+            return DBAccessReadTable(CommandCreationUsersTable());
         }
         public DataTable ReadUsersTable(int deletedType)
         {
+            return DBAccessReadTable(CommandCreationUsersTable(deletedType));
+        }
+        public void InsertAccount(string name, string pwd)
+        {
+            DBAccessExecuteNonQuery(CommandCreationInsertAccount(name, pwd));
+        }
+        public void UpdateAccount(int userId, string name, string pwd)
+        {
+            DBAccessExecuteNonQuery(CommandCreationUpdateAccount(userId, name, pwd));
+        }
+        public void DeleteAccount(int userId)
+        {
+            DBAccessExecuteNonQuery(CommandCreationDeleteAccount(userId));
+        }
+        private DataTable DBAccessReadTable(MySqlCommand command)
+        {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
-                MySqlCommand command = CommandCreationUsersTable(deletedType, connection);
+                command.Connection = connection;
                 DataTable dt = new DataTable();
                 connection.Open();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 adapter.Fill(dt);
                 return dt;
             }
-
         }
-        public void InsertAccount(string name, string pwd)
+        private void DBAccessExecuteNonQuery(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
+                command.Connection = connection;
                 connection.Open();
-                CommandCreationInsertAccount(name, pwd, connection).ExecuteNonQuery();
-            }
-        }
-        public void UpdateAccount(int userId, string name, string pwd)
-        {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
-            {
-                connection.Open();
-                CommandCreationUpdateAccount(userId, name, pwd, connection).ExecuteNonQuery();
-            }
-        }
-        public void DeleteAccount(int userId)
-        {
-            using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
-            {
-                connection.Open();
-                CommandCreationDeleteAccount(userId, connection).ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
         }
         /// <summary>
@@ -70,7 +62,6 @@ namespace WindowsFormsApp2.Service
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
-                // 接続の確立
                 connection.Open();
                 MySqlDataReader reader = CommandCreationIdAndPwd(userId, loginPassword, connection).ExecuteReader();
                 if (reader.Read())
@@ -80,7 +71,7 @@ namespace WindowsFormsApp2.Service
                 return false;
             }
         }
-        public MySqlCommand CommandCreationUsersTable(MySqlConnection connection)
+        private MySqlCommand CommandCreationUsersTable()
         {
             string query = $@"
                 SELECT
@@ -90,10 +81,10 @@ namespace WindowsFormsApp2.Service
                 FROM
                     users;
                 ";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(query);
             return command;
         }
-        public MySqlCommand CommandCreationUsersTable(int deletedType, MySqlConnection connection)
+        private MySqlCommand CommandCreationUsersTable(int deletedType)
         {
             string query = $@"
                 SELECT
@@ -105,11 +96,11 @@ namespace WindowsFormsApp2.Service
                 WHERE
                     Deleted = @deleted;
                 ";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@deleted", deletedType);
             return command;
         }
-        public MySqlCommand CommandCreationInsertAccount(string name, string pwd, MySqlConnection connection)
+        private MySqlCommand CommandCreationInsertAccount(string name, string pwd)
         {
             string query = $@"
                 INSERT INTO
@@ -124,12 +115,12 @@ namespace WindowsFormsApp2.Service
                         ,@pwd
                         );
                 ";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@pwd", pwd);
             return command;
         }
-        public MySqlCommand CommandCreationUpdateAccount(int userId, string name, string pwd, MySqlConnection connection)
+        private MySqlCommand CommandCreationUpdateAccount(int userId, string name, string pwd)
         {
             string query = $@"
                 UPDATE
@@ -140,13 +131,13 @@ namespace WindowsFormsApp2.Service
                 WHERE
                     ID = @userId;
                 ";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@pwd", pwd);
             return command;
         }
-        public MySqlCommand CommandCreationDeleteAccount(int userId, MySqlConnection connection)
+        private MySqlCommand CommandCreationDeleteAccount(int userId)
         {
             string query = $@"
                 UPDATE
@@ -156,7 +147,7 @@ namespace WindowsFormsApp2.Service
                 WHERE
                     ID = @userId;
                 ";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(query);
             command.Parameters.AddWithValue("@userId", userId);
             return command;
         }
@@ -167,7 +158,7 @@ namespace WindowsFormsApp2.Service
         /// <param name="loginPassword">ログインパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        public MySqlCommand CommandCreationIdAndPwd(int userId, string loginPassword, MySqlConnection connection)
+        private MySqlCommand CommandCreationIdAndPwd(int userId, string loginPassword, MySqlConnection connection)
         {
             string query = $@"
                 SELECT
