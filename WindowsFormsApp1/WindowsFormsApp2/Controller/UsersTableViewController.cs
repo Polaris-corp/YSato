@@ -16,9 +16,9 @@ namespace WindowsFormsApp2.Controller
         {
             return us.ReadUsersTable();
         }
-        public DataTable ReadUsersTable(int deletedType)
+        public DataTable ReadUsersTable(bool deletedUsers)
         {
-            return us.ReadUsersTable(deletedType);
+            return us.ReadUsersTable(deletedUsers);
         }
         public void InsertAccount(string name, string pwd)
         {

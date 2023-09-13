@@ -15,9 +15,9 @@ namespace WindowsFormsApp2.Service
         {
             return DBAccessReadTable(CommandCreationUsersTable());
         }
-        public DataTable ReadUsersTable(int deletedType)
+        public DataTable ReadUsersTable(bool deletedUsers)
         {
-            return DBAccessReadTable(CommandCreationUsersTable(deletedType));
+            return DBAccessReadTable(CommandCreationUsersTable(deletedUsers));
         }
         public void InsertAccount(string name, string pwd)
         {
@@ -58,12 +58,12 @@ namespace WindowsFormsApp2.Service
         /// <param name="userId">ユーザーID</param>
         /// <param name="loginPassword">ログインパスワード</param>
         /// <returns>ユーザーIDとログインパスワードが存在して、紐づいているかの真偽</returns>
-        public bool DBAccessCheckIdAndPwd(int userId, string loginPassword)
+        public bool DBAccessCheckIdAndPwd(int userId, string pwd)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
             {
                 connection.Open();
-                MySqlDataReader reader = CommandCreationIdAndPwd(userId, loginPassword, connection).ExecuteReader();
+                MySqlDataReader reader = CommandCreationIdAndPwd(userId, pwd, connection).ExecuteReader();
                 if (reader.Read())
                 {
                     return true;
@@ -84,7 +84,7 @@ namespace WindowsFormsApp2.Service
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }
-        private MySqlCommand CommandCreationUsersTable(int deletedType)
+        private MySqlCommand CommandCreationUsersTable(bool deletedUsers)
         {
             string query = $@"
                 SELECT
@@ -97,7 +97,7 @@ namespace WindowsFormsApp2.Service
                     Deleted = @deleted;
                 ";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@deleted", deletedType);
+            command.Parameters.AddWithValue("@deleted", deletedUsers);
             return command;
         }
         private MySqlCommand CommandCreationInsertAccount(string name, string pwd)
@@ -158,7 +158,7 @@ namespace WindowsFormsApp2.Service
         /// <param name="loginPassword">ログインパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
-        private MySqlCommand CommandCreationIdAndPwd(int userId, string loginPassword, MySqlConnection connection)
+        private MySqlCommand CommandCreationIdAndPwd(int userId, string pwd, MySqlConnection connection)
         {
             string query = $@"
                 SELECT
@@ -167,12 +167,12 @@ namespace WindowsFormsApp2.Service
                     users AS u
                 WHERE
                     u.ID = @userId
-                    AND u.Pwd = @loginPassword
+                    AND u.Pwd = @pwd
                     AND u.Deleted = 0;
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
-            command.Parameters.AddWithValue("@loginPassword", loginPassword);
+            command.Parameters.AddWithValue("@pwd", pwd);
             return command;
         }
     }

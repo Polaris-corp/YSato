@@ -26,7 +26,7 @@ namespace WindowsFormsApp2
 
         private void UserListForm_Load(object sender, EventArgs e)
         {
-            cmbViewType.SelectedIndex = ConstNumber.NormalDisplay;
+            cmbViewType.SelectedIndex = ConstNumber.UndeletedUsers;
             LoadUserData();
         }
 
@@ -56,13 +56,13 @@ namespace WindowsFormsApp2
 
         private void LoadUserData()
         {
-            if (cmbViewType.SelectedIndex == ConstNumber.NormalDisplay)
+            if (cmbViewType.SelectedIndex == ConstNumber.UndeletedUsers)
             {
-                dt = uc.ReadUsersTable(ConstNumber.NormalDisplay);
+                dt = uc.ReadUsersTable(!ConstOthers.DeletedUsers);
             }
-            else if (cmbViewType.SelectedIndex == ConstNumber.DeletedDisplay)
+            else if (cmbViewType.SelectedIndex == ConstNumber.DeletedUsers)
             {
-                dt = uc.ReadUsersTable(ConstNumber.DeletedDisplay);
+                dt = uc.ReadUsersTable(ConstOthers.DeletedUsers);
             }
             else
             {
