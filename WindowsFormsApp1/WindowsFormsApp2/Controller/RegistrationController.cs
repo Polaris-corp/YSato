@@ -14,13 +14,9 @@ namespace WindowsFormsApp2.Controller
         {
             us.InsertAccount(name, pwd);
         }
-        public void UpdateAccount(int userId, string name, string pwd)
+        public void UpdateAccount(int userId, string name, string pwd, bool deleted)
         {
-            us.UpdateAccount(userId, name, pwd);
-        }
-        public void DeleteAccount(int userId)
-        {
-            us.DeleteAccount(userId);
+            us.UpdateAccount(userId, name, pwd, deleted);
         }
     }
 }

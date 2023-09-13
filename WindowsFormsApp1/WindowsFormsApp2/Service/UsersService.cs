@@ -23,13 +23,9 @@ namespace WindowsFormsApp2.Service
         {
             DBAccessExecuteNonQuery(CommandCreationInsertAccount(name, pwd));
         }
-        public void UpdateAccount(int userId, string name, string pwd)
+        public void UpdateAccount(int userId, string name, string pwd, bool deleted)
         {
-            DBAccessExecuteNonQuery(CommandCreationUpdateAccount(userId, name, pwd));
-        }
-        public void DeleteAccount(int userId)
-        {
-            DBAccessExecuteNonQuery(CommandCreationDeleteAccount(userId));
+            DBAccessExecuteNonQuery(CommandCreationUpdateAccount(userId, name, pwd, deleted));
         }
         private DataTable DBAccessReadTable(MySqlCommand command)
         {
@@ -78,6 +74,7 @@ namespace WindowsFormsApp2.Service
                     ID
                     ,Name
                     ,Pwd
+                    ,Deleted
                 FROM
                     users;
                 ";
@@ -91,6 +88,7 @@ namespace WindowsFormsApp2.Service
                     ID
                     ,Name
                     ,Pwd
+                    ,Deleted
                 FROM
                     users
                 WHERE
@@ -120,7 +118,7 @@ namespace WindowsFormsApp2.Service
             command.Parameters.AddWithValue("@pwd", pwd);
             return command;
         }
-        private MySqlCommand CommandCreationUpdateAccount(int userId, string name, string pwd)
+        private MySqlCommand CommandCreationUpdateAccount(int userId, string name, string pwd, bool deleted)
         {
             string query = $@"
                 UPDATE
@@ -128,6 +126,7 @@ namespace WindowsFormsApp2.Service
                 SET
                     Name = @name
                     ,Pwd = @pwd
+                    ,Deleted = @deleted
                 WHERE
                     ID = @userId;
                 ";
@@ -135,20 +134,7 @@ namespace WindowsFormsApp2.Service
             command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@pwd", pwd);
-            return command;
-        }
-        private MySqlCommand CommandCreationDeleteAccount(int userId)
-        {
-            string query = $@"
-                UPDATE
-                    users 
-                SET
-                    Deleted = 1 
-                WHERE
-                    ID = @userId;
-                ";
-            MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@deleted", deleted);
             return command;
         }
         /// <summary>

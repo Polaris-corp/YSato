@@ -13,9 +13,11 @@ namespace WindowsFormsApp2.Model
             UserId = "";
             Name = "";
             Pwd = "";
+            Deleted = false;
         }
         public string UserId { get; set; }
         public string Name { get; set; }
         public string Pwd { get; set; }
+        public bool Deleted { get; set; }
     }
 }

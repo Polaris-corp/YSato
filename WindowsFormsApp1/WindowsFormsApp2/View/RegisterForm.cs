@@ -21,13 +21,16 @@ namespace WindowsFormsApp2
             if (isChangeButton)
             {
                 btnExecute.Text = ConstString.ChangeString;
-                btnDelete.Visible = isChangeButton;
+                rbtAvailable.Checked = model.Deleted;
+                rbtNotAvailable.Checked = !model.Deleted;
             }
             else
             {
                 btnExecute.Text = ConstString.RegistrationString;
                 lblUserId.Visible = false;
                 txtUserId.Visible = false;
+                rbtAvailable.Visible = false;
+                rbtNotAvailable.Visible = false;
             }
             this.isChangeExecuteButton = isChangeButton;
             this.model = model;
@@ -48,22 +51,21 @@ namespace WindowsFormsApp2
         {
             string name = txtName.Text;
             string pwd = txtPwd.Text;
+            bool deleted = rbtNotAvailable.Checked;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(pwd))
+            {
+                MessageBox.Show(ConstString.EmptyMessage);
+                return;
+            }
             if (isChangeExecuteButton)
             {
                 int userId = Convert.ToInt32(txtUserId.Text);
-                rc.UpdateAccount(userId, name, pwd);
+                rc.UpdateAccount(userId, name, pwd, deleted);
             }
             else
             {
                 rc.InsertAccount(name, pwd);
             }
-            this.Close();
-        }
-
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            int userId = Convert.ToInt32(txtUserId.Text);
-            rc.DeleteAccount(userId);
             this.Close();
         }
     }

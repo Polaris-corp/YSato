@@ -47,7 +47,8 @@ namespace WindowsFormsApp2
             {
                 UserId = selectedRow.Cells["ID"].Value.ToString(),
                 Name = selectedRow.Cells["Name"].Value.ToString(),
-                Pwd = selectedRow.Cells["Pwd"].Value.ToString()
+                Pwd = selectedRow.Cells["Pwd"].Value.ToString(),
+                Deleted = Convert.ToBoolean(selectedRow.Cells["Deleted"].Value)
             };
             RegisterForm registrationForm = new RegisterForm(model, isChangeButton);
             registrationForm.ShowDialog();

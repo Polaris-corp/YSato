@@ -20,18 +20,6 @@ namespace WindowsFormsApp2.Controller
         {
             return us.ReadUsersTable(deletedUsers);
         }
-        public void InsertAccount(string name, string pwd)
-        {
-            us.InsertAccount(name, pwd);
-        }
-        public void UpdateAccount(int userId, string name, string pwd)
-        {
-            us.UpdateAccount(userId, name, pwd);
-        }
-        public void DeleteAccount(int userId)
-        {
-            us.DeleteAccount(userId);
-        }
         public bool DBAccessCheckIdAndPwd(int userId, string pwd)
         {
             return us.DBAccessCheckIdAndPwd(userId, pwd);
