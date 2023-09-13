@@ -73,25 +73,12 @@ namespace WindowsFormsApp2.Service
                         ,Datetime
                         ,Rslt
                     )
-                SELECT
-                    @userId
-                    ,@dateTimeNow
-                    ,@rslt
-                FROM
-                    users AS u
-                WHERE
-                    EXISTS
-                    ( 
-                        SELECT
-                            u.ID 
-                        FROM
-                            users
-                        WHERE
-                            u.ID = @userId 
-                            AND u.Deleted = 0
-                    ) 
-                    LIMIT
-                        1;
+                    VALUES
+                    (
+                        @userId
+                        ,@dateTimeNow
+                        ,@rslt
+                    )
                 ";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@userId", userId);
@@ -110,29 +97,21 @@ namespace WindowsFormsApp2.Service
             string query = $@"
                 SELECT
                     count(*) as cnt
-                    ,IFNULL
-                        (
-                        MAX(t.Datetime)
-                        , CURRENT_TIMESTAMP()
-                        ) as new
-                    ,IFNULL
-                        (
-                        MIN(t.Datetime)
-                        , CURRENT_TIMESTAMP()
-                        ) as old
+                    ,IFNULL(MAX(t.Datetime), CURRENT_TIMESTAMP()) as new
+                    ,IFNULL(MIN(t.Datetime), CURRENT_TIMESTAMP()) as old
                 FROM
                     (
-                    SELECT
-                        l.Rslt
-                        , l.Datetime
-                    FROM
-                        login_history as l
-                    WHERE
-                        l.User_ID = @userId
-                    ORDER BY
-                        l.Datetime DESC
-                    LIMIT
-                        3
+                        SELECT
+                            l.Rslt
+                            , l.Datetime
+                        FROM
+                            login_history as l
+                        WHERE
+                            l.User_ID = @userId
+                        ORDER BY
+                            l.Datetime DESC
+                        LIMIT
+                            3
                     ) as t
                 WHERE
                     t.Rslt = 0;
