@@ -75,7 +75,7 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\RegistrationController.cs" />
-    <Compile Include="Controller\UsersTableViewController.cs" />
+    <Compile Include="Controller\UsersListController.cs" />
     <Compile Include="Model\HistoryModel.cs" />
     <Compile Include="Model\RegistrationModel.cs" />
     <Compile Include="Service\HistoryService.cs" />

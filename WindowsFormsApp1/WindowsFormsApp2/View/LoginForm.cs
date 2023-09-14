@@ -62,7 +62,7 @@ namespace WindowsFormsApp2.View
                 }
 
                 lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
-                UserListForm usf = new UserListForm();
+                UsersListForm usf = new UsersListForm();
                 usf.ShowDialog();
             }
 

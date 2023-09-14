@@ -6,27 +6,50 @@ using System.Threading.Tasks;
 using System.Data;
 using MySqlConnector;
 using WindowsFormsApp2.Common;
+using WindowsFormsApp2.Model;
 
 namespace WindowsFormsApp2.Service
 {
     public class UsersService
     {
+        /// <summary>
+        /// ユーザー一覧をDataTableで取得するメソッド
+        /// </summary>
+        /// <returns>ユーザー一覧のDataTable</returns>
         public DataTable ReadUsersTable()
         {
             return DBAccessReadTable(CommandCreationUsersTable());
         }
+        /// <summary>
+        /// ユーザー一覧をDataTableで取得するメソッド
+        /// </summary>
+        /// <param name="deletedUsers">削除済みユーザーかどうかの真偽</param>
+        /// <returns>ユーザー一覧のDataTable</returns>
         public DataTable ReadUsersTable(bool deletedUsers)
         {
             return DBAccessReadTable(CommandCreationUsersTable(deletedUsers));
         }
-        public void InsertAccount(string name, string pwd)
+        /// <summary>
+        /// ユーザー情報登録メソッド
+        /// </summary>
+        /// <param name="model">ユーザー情報</param>
+        public void InsertAccount(RegistrationModel model)
         {
-            DBAccessExecuteNonQuery(CommandCreationInsertAccount(name, pwd));
+            DBAccessExecuteNonQuery(CommandCreationInsertAccount(model));
         }
-        public void UpdateAccount(int userId, string name, string pwd, bool deleted)
+        /// <summary>
+        /// ユーザー情報変更メソッド
+        /// </summary>
+        /// <param name="model">ユーザー情報</param>
+        public void UpdateAccount(RegistrationModel model)
         {
-            DBAccessExecuteNonQuery(CommandCreationUpdateAccount(userId, name, pwd, deleted));
+            DBAccessExecuteNonQuery(CommandCreationUpdateAccount(model));
         }
+        /// <summary>
+        /// DBへ接続し、値をDataTableに格納するメソッド
+        /// </summary>
+        /// <param name="command">SQLコマンド</param>
+        /// <returns>ユーザー一覧のDataTable</returns>
         private DataTable DBAccessReadTable(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
@@ -39,6 +62,10 @@ namespace WindowsFormsApp2.Service
                 return dt;
             }
         }
+        /// <summary>
+        /// DBへ接続し、値の追加か変更を行うメソッド
+        /// </summary>
+        /// <param name="command">SQLコマンド</param>
         private void DBAccessExecuteNonQuery(MySqlCommand command)
         {
             using (MySqlConnection connection = new MySqlConnection(ConstString.ConnectionString))
@@ -67,6 +94,10 @@ namespace WindowsFormsApp2.Service
                 return false;
             }
         }
+        /// <summary>
+        /// ユーザー一覧取得用コマンド生成メソッド
+        /// </summary>
+        /// <returns>ユーザー一覧取得用コマンド</returns>
         private MySqlCommand CommandCreationUsersTable()
         {
             string query = $@"
@@ -81,6 +112,11 @@ namespace WindowsFormsApp2.Service
             MySqlCommand command = new MySqlCommand(query);
             return command;
         }
+        /// <summary>
+        /// ユーザー一覧取得用コマンド生成メソッド
+        /// </summary>
+        /// <param name="deletedUsers">削除済みユーザーかどうかの真偽</param>
+        /// <returns>ユーザー一覧取得用コマンド</returns>
         private MySqlCommand CommandCreationUsersTable(bool deletedUsers)
         {
             string query = $@"
@@ -98,7 +134,12 @@ namespace WindowsFormsApp2.Service
             command.Parameters.AddWithValue("@deleted", deletedUsers);
             return command;
         }
-        private MySqlCommand CommandCreationInsertAccount(string name, string pwd)
+        /// <summary>
+        /// ユーザー情報登録用コマンド生成メソッド
+        /// </summary>
+        /// <param name="model">ユーザー情報</param>
+        /// <returns>SQLコマンド</returns>
+        private MySqlCommand CommandCreationInsertAccount(RegistrationModel model)
         {
             string query = $@"
                 INSERT INTO
@@ -106,19 +147,27 @@ namespace WindowsFormsApp2.Service
                         (
                         Name
                         ,Pwd
+                        ,Deleted
                         )
                     VALUE
                         (
                         @name
                         ,@pwd
+                        ,@deleted
                         );
                 ";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@pwd", pwd);
+            command.Parameters.AddWithValue("@name", model.Name);
+            command.Parameters.AddWithValue("@pwd", model.Pwd);
+            command.Parameters.AddWithValue("@deleted", model.Deleted);
             return command;
         }
-        private MySqlCommand CommandCreationUpdateAccount(int userId, string name, string pwd, bool deleted)
+        /// <summary>
+        /// ユーザー情報変更用コマンド生成メソッド
+        /// </summary>
+        /// <param name="model">ユーザー情報</param>
+        /// <returns>SQLコマンド</returns>
+        private MySqlCommand CommandCreationUpdateAccount(RegistrationModel model)
         {
             string query = $@"
                 UPDATE
@@ -131,17 +180,17 @@ namespace WindowsFormsApp2.Service
                     ID = @userId;
                 ";
             MySqlCommand command = new MySqlCommand(query);
-            command.Parameters.AddWithValue("@userId", userId);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@pwd", pwd);
-            command.Parameters.AddWithValue("@deleted", deleted);
+            command.Parameters.AddWithValue("@userId", int.Parse(model.UserId));
+            command.Parameters.AddWithValue("@name", model.Name);
+            command.Parameters.AddWithValue("@pwd", model.Pwd);
+            command.Parameters.AddWithValue("@deleted", model.Deleted);
             return command;
         }
         /// <summary>
         /// UserIDとPwdの紐づき確認用SQLコマンド生成メソッド
         /// </summary>
         /// <param name="userId">ユーザーID</param>
-        /// <param name="loginPassword">ログインパスワード</param>
+        /// <param name="pwd">ユーザーパスワード</param>
         /// <param name="connection">MySqlConnectionクラスのインスタンス</param>
         /// <returns>SQLコマンド</returns>
         private MySqlCommand CommandCreationIdAndPwd(int userId, string pwd, MySqlConnection connection)

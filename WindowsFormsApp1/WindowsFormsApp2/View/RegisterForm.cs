@@ -28,42 +28,41 @@ namespace WindowsFormsApp2
             }
             lblUserId.Visible = isChange;
             txtUserId.Visible = isChange;
-            rbtAvailable.Checked = !model.Deleted;
-            rbtNotAvailable.Checked = model.Deleted;
-
             this.isChangeExecuteButton = isChange;
             this.model = model;
         }
+
         RegistrationController rc = new RegistrationController();
         RegistrationModel model;
         bool isChangeExecuteButton;
-
 
         public void RegisterForm_Load(object sender, EventArgs e)
         {
             txtUserId.Text = model.UserId;
             txtName.Text = model.Name;
             txtPwd.Text = model.Pwd;
+            rbtAvailable.Checked = !model.Deleted;
+            rbtNotAvailable.Checked = model.Deleted;
         }
 
         private void BtnExecute_Click(object sender, EventArgs e)
         {
-            string name = txtName.Text;
-            string pwd = txtPwd.Text;
-            bool deleted = rbtNotAvailable.Checked;
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(pwd))
+            model.Name = txtName.Text;
+            model.Pwd = txtPwd.Text;
+            model.Deleted = rbtNotAvailable.Checked;
+            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Pwd))
             {
                 MessageBox.Show(ConstString.EmptyMessage);
                 return;
             }
             if (isChangeExecuteButton)
             {
-                int userId = Convert.ToInt32(txtUserId.Text);
-                rc.UpdateAccount(userId, name, pwd, deleted);
+                model.UserId = txtUserId.Text;
+                rc.UpdateAccount(model);
             }
             else
             {
-                rc.InsertAccount(name, pwd);
+                rc.InsertAccount(model);
             }
             this.Close();
         }

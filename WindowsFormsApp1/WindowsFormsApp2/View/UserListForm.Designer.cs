@@ -1,7 +1,7 @@
 ﻿
 namespace WindowsFormsApp2
 {
-    partial class UserListForm
+    partial class UsersListForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -39,25 +39,29 @@ namespace WindowsFormsApp2
             // userListGridView
             // 
             this.userListGridView.AllowUserToAddRows = false;
+            this.userListGridView.AllowUserToDeleteRows = false;
+            this.userListGridView.AllowUserToResizeColumns = false;
+            this.userListGridView.AllowUserToResizeRows = false;
             this.userListGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.userListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.userListGridView.Location = new System.Drawing.Point(231, 56);
-            this.userListGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.userListGridView.Location = new System.Drawing.Point(173, 45);
+            this.userListGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.userListGridView.MultiSelect = false;
             this.userListGridView.Name = "userListGridView";
+            this.userListGridView.ReadOnly = true;
             this.userListGridView.RowHeadersVisible = false;
             this.userListGridView.RowHeadersWidth = 51;
             this.userListGridView.RowTemplate.Height = 24;
             this.userListGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.userListGridView.Size = new System.Drawing.Size(505, 358);
+            this.userListGridView.Size = new System.Drawing.Size(379, 286);
             this.userListGridView.TabIndex = 0;
             // 
             // btnRegister
             // 
-            this.btnRegister.Location = new System.Drawing.Point(41, 98);
-            this.btnRegister.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRegister.Location = new System.Drawing.Point(31, 78);
+            this.btnRegister.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(149, 109);
+            this.btnRegister.Size = new System.Drawing.Size(112, 87);
             this.btnRegister.TabIndex = 1;
             this.btnRegister.Text = "登録";
             this.btnRegister.UseVisualStyleBackColor = true;
@@ -65,10 +69,10 @@ namespace WindowsFormsApp2
             // 
             // btnChange
             // 
-            this.btnChange.Location = new System.Drawing.Point(41, 261);
-            this.btnChange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnChange.Location = new System.Drawing.Point(31, 209);
+            this.btnChange.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(149, 109);
+            this.btnChange.Size = new System.Drawing.Size(112, 87);
             this.btnChange.TabIndex = 2;
             this.btnChange.Text = "変更";
             this.btnChange.UseVisualStyleBackColor = true;
@@ -82,22 +86,23 @@ namespace WindowsFormsApp2
             "通常表示",
             "削除済み",
             "全件表示"});
-            this.cmbViewType.Location = new System.Drawing.Point(615, 28);
+            this.cmbViewType.Location = new System.Drawing.Point(461, 22);
+            this.cmbViewType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cmbViewType.Name = "cmbViewType";
-            this.cmbViewType.Size = new System.Drawing.Size(121, 23);
+            this.cmbViewType.Size = new System.Drawing.Size(92, 20);
             this.cmbViewType.TabIndex = 4;
             this.cmbViewType.SelectedIndexChanged += new System.EventHandler(this.CmbViewType_SelectedIndexChanged);
             // 
             // UserListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 451);
+            this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.cmbViewType);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.userListGridView);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "UserListForm";
             this.Text = "ユーザー情報一覧";
             this.Load += new System.EventHandler(this.UserListForm_Load);

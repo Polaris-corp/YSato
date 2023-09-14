@@ -14,13 +14,13 @@ using WindowsFormsApp2.Model;
 
 namespace WindowsFormsApp2
 {
-    public partial class UserListForm : Form
+    public partial class UsersListForm : Form
     {
-        public UserListForm()
+        public UsersListForm()
         {
             InitializeComponent();
         }
-        UsersTableViewController uc = new UsersTableViewController();
+        UsersListController uc = new UsersListController();
         DataTable dt = new DataTable();
         bool isChangeButton = false;
 
