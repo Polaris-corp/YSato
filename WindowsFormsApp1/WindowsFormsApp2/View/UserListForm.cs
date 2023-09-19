@@ -42,6 +42,11 @@ namespace WindowsFormsApp2
         private void BtnChange_Click(object sender, EventArgs e)
         {
             isChangeButton = true;
+            if (userListGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(ConstString.NotSelectedRowMessage);
+                return;
+            }
             DataGridViewRow selectedRow = userListGridView.SelectedRows[0];
             RegistrationModel model = new RegistrationModel
             {

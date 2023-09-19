@@ -20,5 +20,6 @@ namespace WindowsFormsApp2.Common
         public const string ErrorDirectoryPath = @".\ErrorLogs";
         public const string ErrorFileName = "ErrorLogs.log";
         public const string ErrorInfo = "ERRORMESSAGE:{0}\r\nSTACKTRACE:{1}";
+        public const string NotSelectedRowMessage = "データを選択してください";
     }
 }
