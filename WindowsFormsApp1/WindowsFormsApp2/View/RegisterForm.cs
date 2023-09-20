@@ -52,7 +52,7 @@ namespace WindowsFormsApp2
             model.Deleted = rbtNotAvailable.Checked;
             if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Pwd))
             {
-                MessageBox.Show(ConstString.EmptyMessage);
+                MessageBox.Show(ConstString.NameEmptyMessage);
                 return;
             }
             if (isChangeExecuteButton)

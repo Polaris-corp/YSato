@@ -28,7 +28,7 @@ namespace WindowsFormsApp2.View
 
             if (string.IsNullOrEmpty(loginId) || string.IsNullOrEmpty(loginPassword))
             {
-                MessageBox.Show(ConstString.EmptyMessage);
+                MessageBox.Show(ConstString.IdEmptyMessage);
                 return;
             }
             if (!int.TryParse(loginId, out int userId))

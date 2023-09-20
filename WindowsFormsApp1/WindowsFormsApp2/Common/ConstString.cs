@@ -11,7 +11,7 @@ namespace WindowsFormsApp2.Common
         public const string ConnectionString = "Server=localhost;User ID=root;Password=1105;Database=login_test";
         public const string RegistrationString = "登録";
         public const string ChangeString = "変更";
-        public const string EmptyMessage = "IDかPasswordが空です";
+        public const string IdEmptyMessage = "IDかPasswordが空です";
         public const string NotIdNumberMessage = "数字を入力してください";
         public const string NotMatchMessage = "IDかパスワードが間違っています";
         public const string LoginMessage = "ログインしました";
@@ -21,5 +21,6 @@ namespace WindowsFormsApp2.Common
         public const string ErrorFileName = "ErrorLogs.log";
         public const string ErrorInfo = "ERRORMESSAGE:{0}\r\nSTACKTRACE:{1}";
         public const string NotSelectedRowMessage = "データを選択してください";
+        public const string NameEmptyMessage = "NAMEかPASSWORDが空です";
     }
 }
