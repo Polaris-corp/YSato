@@ -41,17 +41,11 @@ namespace WindowsFormsApp2.View
             {
                 HistoryModel history = lc.DBAccessLoginNotPossibleTime(userId);
 
-                if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
+                if (IsLoginLock(history, dateTimeNow))
                 {
-                    if (history.NewestTimes - history.OldestTimes <= ConstOthers.LoginFailureThreshold)
-                    {
-                        if (dateTimeNow - history.NewestTimes <= ConstOthers.LoginFailureThreshold)
-                        {
-                            TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes, dateTimeNow);
-                            MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
-                            return;
-                        }
-                    }
+                    TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes, dateTimeNow);
+                    MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
+                    return;
                 }
 
                 if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
@@ -72,6 +66,20 @@ namespace WindowsFormsApp2.View
                 logger.LogOutput(ex, dateTimeNow);
                 MessageBox.Show(ConstString.ErrorMessage);
             }
+        }
+        private bool IsLoginLock(HistoryModel history, DateTime dateTimeNow)
+        {
+            if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
+            {
+                if (history.NewestTimes - history.OldestTimes <= ConstOthers.LoginFailureThreshold)
+                {
+                    if (dateTimeNow - history.NewestTimes <= ConstOthers.LoginFailureThreshold)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
