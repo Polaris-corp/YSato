@@ -11,14 +11,14 @@ namespace WindowsFormsApp2.Controller
 {
     public class UsersListController
     {
-        UsersService us = new UsersService();
+        UsersService usersService = new UsersService();
         /// <summary>
         /// ユーザー一覧をDataTableで取得するコントローラー
         /// </summary>
         /// <returns>ユーザー一覧のDataTable</returns>
         public DataTable ReadUsersTable()
         {
-            return us.ReadUsersTable();
+            return usersService.ReadUsersTable();
         }
         /// <summary>
         /// ユーザー一覧をDataTableで取得するコントローラー
@@ -27,7 +27,7 @@ namespace WindowsFormsApp2.Controller
         /// <returns>ユーザー一覧のDataTable</returns>
         public DataTable ReadUsersTable(bool deletedUsers)
         {
-            return us.ReadUsersTable(deletedUsers);
+            return usersService.ReadUsersTable(deletedUsers);
         }
     }
 }

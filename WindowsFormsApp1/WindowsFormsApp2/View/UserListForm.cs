@@ -20,7 +20,7 @@ namespace WindowsFormsApp2
         {
             InitializeComponent();
         }
-        UsersListController uc = new UsersListController();
+        UsersListController usersListController = new UsersListController();
         DataTable dt = new DataTable();
         bool isChangeButton = false;
 
@@ -64,15 +64,15 @@ namespace WindowsFormsApp2
         {
             if (cmbViewType.SelectedIndex == ConstNumber.ShowUndeletedUser)
             {
-                dt = uc.ReadUsersTable(!ConstOthers.IsDeletedUser);
+                dt = usersListController.ReadUsersTable(!ConstOthers.IsDeletedUser);
             }
             else if (cmbViewType.SelectedIndex == ConstNumber.ShowDeletedUser)
             {
-                dt = uc.ReadUsersTable(ConstOthers.IsDeletedUser);
+                dt = usersListController.ReadUsersTable(ConstOthers.IsDeletedUser);
             }
             else
             {
-                dt = uc.ReadUsersTable();
+                dt = usersListController.ReadUsersTable();
             }
             userListGridView.DataSource = dt;
         }

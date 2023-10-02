@@ -18,7 +18,7 @@ namespace WindowsFormsApp2.View
         {
             InitializeComponent();
         }
-        Controller.LoginController lc = new Controller.LoginController();
+        Controller.LoginController loginController = new Controller.LoginController();
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
@@ -39,23 +39,23 @@ namespace WindowsFormsApp2.View
 
             try
             {
-                HistoryModel history = lc.DBAccessLoginNotPossibleTime(userId);
+                HistoryModel history = loginController.DBAccessLoginNotPossibleTime(userId);
 
-                if (IsLoginLock(history, dateTimeNow))
+                if (loginController.IsLoginLock(history, dateTimeNow))
                 {
-                    TimeSpan unLockTime = lc.LoginUnLockTime(history.NewestTimes, dateTimeNow);
+                    TimeSpan unLockTime = loginController.LoginUnLockTime(history.NewestTimes, dateTimeNow);
                     MessageBox.Show(string.Format(ConstString.LoginImpossible, unLockTime.ToString(@"mm\分ss\秒")));
                     return;
                 }
 
-                if (!lc.DBAccessCheckIdAndPwd(userId, loginPassword))
+                if (!loginController.DBAccessCheckIdAndPwd(userId, loginPassword))
                 {
                     MessageBox.Show(ConstString.NotMatchMessage);
-                    lc.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
+                    loginController.DBAccessTimeStamp(userId, ConstNumber.NgInMySql, dateTimeNow);
                     return;
                 }
 
-                lc.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
+                loginController.DBAccessTimeStamp(userId, ConstNumber.OkInMySql, dateTimeNow);
                 UsersListForm usf = new UsersListForm();
                 usf.ShowDialog();
             }
@@ -66,20 +66,6 @@ namespace WindowsFormsApp2.View
                 logger.LogOutput(ex, dateTimeNow);
                 MessageBox.Show(ConstString.ErrorMessage);
             }
-        }
-        private bool IsLoginLock(HistoryModel history, DateTime dateTimeNow)
-        {
-            if (history.LoginFailureCount == ConstNumber.MaxLoginFailures)
-            {
-                if (history.NewestTimes - history.OldestTimes <= ConstOthers.LoginFailureThreshold)
-                {
-                    if (dateTimeNow - history.NewestTimes <= ConstOthers.LoginFailureThreshold)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

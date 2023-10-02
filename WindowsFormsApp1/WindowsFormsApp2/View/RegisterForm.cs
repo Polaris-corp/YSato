@@ -32,7 +32,7 @@ namespace WindowsFormsApp2
             this.model = model;
         }
 
-        RegistrationController rc = new RegistrationController();
+        RegistrationController registrationController = new RegistrationController();
         RegistrationModel model;
         bool isChangeExecuteButton;
 
@@ -58,11 +58,11 @@ namespace WindowsFormsApp2
             if (isChangeExecuteButton)
             {
                 model.UserId = txtUserId.Text;
-                rc.UpdateAccount(model);
+                registrationController.UpdateAccount(model);
             }
             else
             {
-                rc.InsertAccount(model);
+                registrationController.InsertAccount(model);
             }
             this.Close();
         }

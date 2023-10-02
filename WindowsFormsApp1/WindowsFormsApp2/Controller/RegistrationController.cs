@@ -10,14 +10,14 @@ namespace WindowsFormsApp2.Controller
 {
     public class RegistrationController
     {
-        UsersService us = new UsersService();
+        UsersService usersService = new UsersService();
         /// <summary>
         /// ユーザー情報登録用コントローラー
         /// </summary>
         /// <param name="model">ユーザー情報</param>
         public void InsertAccount(RegistrationModel model)
         {
-            us.InsertAccount(model);
+            usersService.InsertAccount(model);
         }
         /// <summary>
         /// ユーザー情報変更用コントローラー
@@ -25,7 +25,7 @@ namespace WindowsFormsApp2.Controller
         /// <param name="model">ユーザー情報</param>
         public void UpdateAccount(RegistrationModel model)
         {
-            us.UpdateAccount(model);
+            usersService.UpdateAccount(model);
         }
     }
 }
