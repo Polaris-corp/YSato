@@ -22,13 +22,15 @@ namespace Shisensho
             public int row { get; set; }
             public int col { get; set; }
         }
+
         public Shisensho()
         {
             InitializeComponent();
             buttons = new Button[maxrow + 2, maxcol + 2];
             this.MinimumSize = this.Size;
             this.MaximumSize = this.Size;
-            this.BackColor = Color.DarkGreen;
+            TileColor tileColor = new TileColor();
+            tilePairs = tileColor.TilePairs;
         }
 
         int maxrow = 8;
@@ -37,6 +39,9 @@ namespace Shisensho
         Button[,] buttons;
         Button firstTimeClickButton;
         bool iSFirstTimeClick = true;
+        Dictionary<string, Color> tilePairs;
+        Dictionary<string, List<Coordinate>> CoordinatePairs = new Dictionary<string, List<Coordinate>>();
+        List<Coordinate> hintList = new List<Coordinate>();
 
         List<string> textItem = new List<string>();
 
@@ -65,7 +70,6 @@ namespace Shisensho
             textItem.Add("發");
             textItem.Add("中");
             textItem = textItem.Concat(textItem).Concat(textItem).Concat(textItem).ToList();
-            ShuffleList(textItem);
 
         }
 
@@ -80,6 +84,7 @@ namespace Shisensho
                     buttons[i, j].Tag = new Point(j, i);
                     buttons[i, j].Name = "btn" + i + "-" + j;
                     buttons[i, j].Size = new Size(60, 76);
+                    buttons[i, j].BackColor = Color.White;
                     buttons[i, j].TabIndex = 0;
                     buttons[i, j].Text = "";
                     buttons[i, j].TabStop = false;
@@ -97,13 +102,31 @@ namespace Shisensho
             }
         }
 
-        private void buttonText_set()
+        private void buttonText_set(List<string> item)
         {
+            int ind = 0;
+            CoordinatePairs.Clear();
             for (int i = 1; i <= maxrow; i++)
             {
                 for (int j = 1; j <= maxcol; j++)
                 {
-                    buttons[i, j].Text = textItem[(i - 1) * maxcol + (j - 1)];
+                    if (!buttons[i, j].Visible)
+                    {
+                        continue;
+                    }
+                    buttons[i, j].Text = item[ind];
+                    buttons[i, j].ForeColor = tilePairs[buttons[i, j].Text];
+                    string t = buttons[i, j].Text;
+                    if (CoordinatePairs.ContainsKey(t))
+                    {
+                        CoordinatePairs[t].Add(new Coordinate(i, j));
+                    }
+                    else
+                    {
+                        CoordinatePairs.Add(t, new List<Coordinate>() { new Coordinate(i, j) });
+                    }
+
+                    ind++;
                 }
             }
         }
@@ -122,6 +145,17 @@ namespace Shisensho
             }
         }
 
+        private void ChangeTileVisible()
+        {
+            for (int i = 1; i <= maxrow; i++)
+            {
+                for (int j = 1; j <= maxcol; j++)
+                {
+                    buttons[i, j].Visible = true;
+                }
+            }
+        }
+
         #endregion
 
         #region イベント
@@ -129,7 +163,8 @@ namespace Shisensho
         {
             button_set();
             textItem_set();
-            buttonText_set();
+            ShuffleList(textItem);
+            buttonText_set(textItem);
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -155,7 +190,51 @@ namespace Shisensho
                 }
             }
             iSFirstTimeClick = !iSFirstTimeClick;
+            foreach (var item in hintList)
+            {
+                buttons[item.row, item.col].BackColor = Color.White;
+            }
+            hintList.Clear();
+        }
 
+        private void reStartButton_Click(object sender, EventArgs e)
+        {
+            ChangeTileVisible();
+            ShuffleList(textItem);
+            buttonText_set(textItem);
+        }
+
+        private void btnHint_Click(object sender, EventArgs e)
+        {
+            foreach (var item in CoordinatePairs)
+            {
+                string text = item.Key;
+                for (int i = 0; i < 4; i++)
+                {
+                    Coordinate xy1 = item.Value[i];
+                    if (!buttons[xy1.row, xy1.col].Visible)
+                    {
+                        continue;
+                    }
+                    for (int j = i + 1; j < 4; j++)
+                    {
+                        Coordinate xy2 = item.Value[j];
+                        if (!buttons[xy2.row, xy2.col].Visible)
+                        {
+                            continue;
+                        }
+                        if (TileCheck(buttons[xy1.row, xy1.col], buttons[xy2.row, xy2.col]))
+                        {
+                            buttons[xy1.row, xy1.col].BackColor = Color.Yellow;
+                            buttons[xy2.row, xy2.col].BackColor = Color.Yellow;
+                            hintList.Add(xy1);
+                            hintList.Add(xy2);
+                            return;
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("これ以上消せる組み合わせはありません。");
         }
 
         #endregion
@@ -317,6 +396,9 @@ namespace Shisensho
             return false;
         }
 
+
         #endregion
+
+        
     }
 }
