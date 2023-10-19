@@ -89,7 +89,6 @@ namespace Shisensho
                     buttons[i, j].Text = "";
                     buttons[i, j].TabStop = false;
                     buttons[i, j].Font = new Font("Meiryo UI", 20);
-                    buttons[i, j].UseVisualStyleBackColor = true;
                     buttons[i, j].Click += new EventHandler(this.button_Click);
 
                     if (i == 0 || i == maxrow + 1 || j == 0 || j == maxcol + 1)
@@ -156,6 +155,15 @@ namespace Shisensho
             }
         }
 
+        private void ClearHintList()
+        {
+            foreach (var item in hintList)
+            {
+                buttons[item.row, item.col].BackColor = Color.White;
+            }
+            hintList.Clear();
+        }
+
         #endregion
 
         #region イベント
@@ -174,15 +182,18 @@ namespace Shisensho
             if (iSFirstTimeClick)
             {
                 firstTimeClickButton = clickedButton;
-                firstTimeClickButton.FlatAppearance.BorderColor = Color.Red;
+                firstTimeClickButton.BackColor = Color.Yellow;
+                hintList.Add(GetCoordinate(firstTimeClickButton));
             }
             else
             {
+                ClearHintList();
                 if (clickedButton != firstTimeClickButton && TileCheck(firstTimeClickButton, clickedButton))
                 {
                     // クリックされたボタンを非表示にする
                     clickedButton.Visible = false;
                     firstTimeClickButton.Visible = false;
+
                 }
                 else
                 {
@@ -190,15 +201,14 @@ namespace Shisensho
                 }
             }
             iSFirstTimeClick = !iSFirstTimeClick;
-            foreach (var item in hintList)
-            {
-                buttons[item.row, item.col].BackColor = Color.White;
-            }
-            hintList.Clear();
+
         }
 
         private void reStartButton_Click(object sender, EventArgs e)
         {
+            ClearHintList();
+            firstTimeClickButton = null;
+            iSFirstTimeClick = true;
             ChangeTileVisible();
             ShuffleList(textItem);
             buttonText_set(textItem);
@@ -206,6 +216,9 @@ namespace Shisensho
 
         private void btnHint_Click(object sender, EventArgs e)
         {
+            ClearHintList();
+            firstTimeClickButton = null;
+            iSFirstTimeClick = true;
             foreach (var item in CoordinatePairs)
             {
                 string text = item.Key;
@@ -399,6 +412,6 @@ namespace Shisensho
 
         #endregion
 
-        
+
     }
 }
