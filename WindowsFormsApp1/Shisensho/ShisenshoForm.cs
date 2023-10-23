@@ -12,15 +12,18 @@ namespace Shisensho
 {
     public partial class Shisensho : Form
     {
+        #region 変更宣言
         public class Coordinate
         {
-            public Coordinate(int r = 0, int c = 0)
+            public Coordinate(int r = 0, int c = 0, int d = 0)
             {
                 row = r;
                 col = c;
+                dir = d;
             }
             public int row { get; set; }
             public int col { get; set; }
+            public int dir { get; set; }
         }
 
         public Shisensho()
@@ -44,6 +47,7 @@ namespace Shisensho
         List<Coordinate> hintList = new List<Coordinate>();
 
         List<string> textItem = new List<string>();
+        #endregion
 
         #region 初期設定
         private void textItem_set()
@@ -193,7 +197,6 @@ namespace Shisensho
                     // クリックされたボタンを非表示にする
                     clickedButton.Visible = false;
                     firstTimeClickButton.Visible = false;
-
                 }
                 else
                 {
@@ -259,24 +262,6 @@ namespace Shisensho
             return new Coordinate(xy.Y, xy.X);
         }
 
-        private (Coordinate, Coordinate) ConvertLeftSide(Coordinate xy1, Coordinate xy2)
-        {
-            if (xy1.col > xy2.col)
-            {
-                var tmp = xy1;
-                xy1 = xy2;
-                xy2 = tmp;
-            }
-            else if (xy1.col == xy2.col)
-            {
-                int min = Math.Min(xy1.row, xy2.row);
-                int max = Math.Max(xy1.row, xy2.row);
-                xy1.row = min;
-                xy2.row = max;
-            }
-            return (xy1, xy2);
-        }
-
         #endregion
 
         #region チェック関数
@@ -288,130 +273,78 @@ namespace Shisensho
             }
             Coordinate xy1 = GetCoordinate(firstClickButton);
             Coordinate xy2 = GetCoordinate(secondClickButton);
-            (xy1, xy2) = ConvertLeftSide(xy1, xy2);
-            if (StraightCheck(xy1, xy2))
-            {
-                return true;
-            }
-            if (LShapeCheck(xy1, xy2))
-            {
-                return true;
-            }
-            if (ZShapeCheck(xy1, xy2))
-            {
-                return true;
-            }
-            return false;
-        }
 
-        private bool StraightCheck(Coordinate xy1, Coordinate xy2)
-        {
-            return VerticalCheck(xy1, xy2) || HorizontalCheck(xy1, xy2);
+            return BFS(xy1, xy2);
         }
-
-        private bool VerticalCheck(Coordinate xy1, Coordinate xy2)
+        private bool BFS(Coordinate xy1, Coordinate xy2)
         {
-            if (xy1.col == xy2.col)
+            int[] dx = new int[] { 1, 0, -1, 0 };
+            int[] dy = new int[] { 0, -1, 0, 1 };
+            List<List<List<int>>> cost = new List<List<List<int>>>();
+            for (int i = 0; i <= maxrow + 1; i++)
             {
-                int min = Math.Min(xy1.row, xy2.row) + 1;
-                int max = Math.Max(xy1.row, xy2.row);
-                for (int row = min; row < max; row++)
+                cost.Add(new List<List<int>>());
+                for (int j = 0; j <= maxcol + 1; j++)
                 {
-                    if (buttons[row, xy1.col].Visible == true)
+                    cost[i].Add(new List<int>());
+                    for (int k = 0; k < 4; k++)
                     {
-                        return false;
+                        cost[i][j].Add(int.MaxValue);
                     }
                 }
-                return true;
             }
-            return false;
-        }
+            cost[xy1.row][xy1.col][0] = 0;
+            cost[xy1.row][xy1.col][1] = 0;
+            cost[xy1.row][xy1.col][2] = 0;
+            cost[xy1.row][xy1.col][3] = 0;
 
-        private bool HorizontalCheck(Coordinate xy1, Coordinate xy2)
-        {
-            if (xy1.row == xy2.row)
+
+            Queue<Coordinate> q = new Queue<Coordinate>();
+            q.Enqueue(new Coordinate(xy1.row, xy1.col, 0));
+            q.Enqueue(new Coordinate(xy1.row, xy1.col, 1));
+            q.Enqueue(new Coordinate(xy1.row, xy1.col, 2));
+            q.Enqueue(new Coordinate(xy1.row, xy1.col, 3));
+            while (q.Any())
             {
-                int min = Math.Min(xy1.col, xy2.col) + 1;
-                int max = Math.Max(xy1.col, xy2.col);
-                for (int col = min; col < max; col++)
-                {
-                    if (buttons[xy1.row, col].Visible == true)
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private bool RelayPointCheck(Coordinate xy1, Coordinate xy2)
-        {
-            Coordinate relay = new Coordinate(xy1.row, xy2.col);
-            if (!buttons[relay.row, relay.col].Visible)
-            {
-                return HorizontalCheck(xy1, relay) && VerticalCheck(relay, xy2);
-            }
-            return false;
-        }
-
-        private bool LShapeCheck(Coordinate xy1, Coordinate xy2)
-        {
-            return RelayPointCheck(xy1, xy2) || RelayPointCheck(xy2, xy1);
-        }
-
-        private bool ColumRelayPointCheck(Coordinate xy1, Coordinate xy2, int pn)
-        {
-            Coordinate relay = new Coordinate(xy1.row, xy1.col);
-            for (int col = xy1.col + pn; 0 <= col && col < maxcol + 2; col += pn)
-            {
-                relay.col = col;
-                if (buttons[relay.row, relay.col].Visible)
-                {
-                    break;
-                }
-                if (LShapeCheck(relay, xy2))
+                Coordinate p = q.Dequeue();
+                if (p.row == xy2.row && p.col == xy2.col)
                 {
                     return true;
                 }
-            }
-            return false;
-        }
-
-        private bool RowRelayPointCheck(Coordinate xy1, Coordinate xy2, int pn)
-        {
-            Coordinate relay = new Coordinate(xy1.row, xy1.col);
-            for (int row = xy1.row + pn; 0 <= row && row < maxrow + 2; row += pn)
-            {
-                relay.row = row;
-                if (buttons[relay.row, relay.col].Visible)
+                if (buttons[p.row, p.col].Visible)
                 {
-                    break;
+                    if (!(p.row == xy1.row && p.col == xy1.col))
+                    {
+                        continue;
+                    }
                 }
-                if (LShapeCheck(relay, xy2))
+                int ldir = (p.dir + 1) % 4;
+                if (cost[p.row][p.col][p.dir] + 1 < cost[p.row][p.col][ldir] && cost[p.row][p.col][p.dir] + 1 < 3)
                 {
-                    return true;
+                    q.Enqueue(new Coordinate(p.row, p.col, ldir));
+                    cost[p.row][p.col][ldir] = cost[p.row][p.col][p.dir] + 1;
                 }
+                int rdir = (p.dir + 3) % 4;
+                if (cost[p.row][p.col][p.dir] + 1 < cost[p.row][p.col][rdir] && cost[p.row][p.col][p.dir] + 1 < 3)
+                {
+                    q.Enqueue(new Coordinate(p.row, p.col, rdir));
+                    cost[p.row][p.col][rdir] = cost[p.row][p.col][p.dir] + 1;
+                }
+
+                int ty = p.row + dy[p.dir];
+                int tx = p.col + dx[p.dir];
+                int tc = cost[p.row][p.col][p.dir];
+                if (maxrow + 2 <= ty || ty < 0 || maxcol + 2 <= tx || tx < 0 || 2 < tc)
+                {
+                    continue;
+                }
+                q.Enqueue(new Coordinate(ty, tx, p.dir));
+                cost[ty][tx][p.dir] = tc;
             }
             return false;
         }
-
-        private bool ZShapeCheck(Coordinate xy1, Coordinate xy2)
-        {
-            if (ColumRelayPointCheck(xy1, xy2, 1) || ColumRelayPointCheck(xy1, xy2, -1))
-            {
-                return true;
-            }
-            if (RowRelayPointCheck(xy1, xy2, 1) || RowRelayPointCheck(xy1, xy2, -1))
-            {
-                return true;
-            }
-            return false;
-        }
-
 
         #endregion
-
 
     }
 }
