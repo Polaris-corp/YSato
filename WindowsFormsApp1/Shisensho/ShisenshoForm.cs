@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace Shisensho
 {
     public partial class Shisensho : Form
     {
-        #region 変更宣言
+        #region 変数宣言
         public class Coordinate
         {
             public Coordinate(int r = 0, int c = 0, int d = 0)
@@ -34,10 +37,13 @@ namespace Shisensho
             this.MaximumSize = this.Size;
             TileColor tileColor = new TileColor();
             tilePairs = tileColor.TilePairs;
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            timer.Tick += new EventHandler(TimerMethod);
         }
 
         int maxrow = 8;
         int maxcol = 17;
+        int DeletedPairs = 0;
 
         Button[,] buttons;
         Button firstTimeClickButton;
@@ -46,6 +52,9 @@ namespace Shisensho
         Dictionary<string, List<Coordinate>> CoordinatePairs = new Dictionary<string, List<Coordinate>>();
         List<Coordinate> hintList = new List<Coordinate>();
 
+        Stopwatch stopwatch = new Stopwatch();
+        TimeSpan timeSpan = new TimeSpan();
+        DispatcherTimer timer = new DispatcherTimer();
         List<string> textItem = new List<string>();
         #endregion
 
@@ -98,8 +107,8 @@ namespace Shisensho
                     if (i == 0 || i == maxrow + 1 || j == 0 || j == maxcol + 1)
                     {
                         buttons[i, j].Visible = false;
-                    }
 
+                    }
                     this.Controls.Add(buttons[i, j]);
                 }
             }
@@ -134,7 +143,7 @@ namespace Shisensho
             }
         }
 
-        private void ShuffleList(List<string> list)
+        private List<string> ShuffleList(List<string> list)
         {
             Random random = new Random();
             int n = list.Count;
@@ -146,6 +155,7 @@ namespace Shisensho
                 list[k] = list[n];
                 list[n] = value;
             }
+            return list;
         }
 
         private void ChangeTileVisible()
@@ -168,6 +178,53 @@ namespace Shisensho
             hintList.Clear();
         }
 
+        private void SetNewTimer()
+        {
+            timeSpan = stopwatch.Elapsed;
+            stopwatch.Start();
+            timer.Start();
+        }
+
+        private void ClearTimer()
+        {
+            lblTimer.Text = "";
+            stopwatch.Reset();
+        }
+
+        private void StopTimer()
+        {
+            stopwatch.Stop();
+            timer.Stop();
+        }
+
+        private void OutPutFile(DateTime dateTimeNow)
+        {
+            string directoryPath = @".\Shisensho_score";
+            string fileName = "score.csv";
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            string filePath = Path.Combine(directoryPath, fileName);
+            using (StreamWriter writer = new StreamWriter(filePath, true, Encoding.UTF8))
+            {
+                writer.WriteLine(CreateOutPutText(dateTimeNow));
+            }
+        }
+
+        private string CreateOutPutText(DateTime dateTimeNow)
+        {
+            List<string> item = new List<string>();
+            item.Add(lblTimer.Text);
+            item.Add(YYYYMMDDToString(dateTimeNow));
+            return string.Join(",", item);
+        }
+
+        private string YYYYMMDDToString(DateTime date)
+        {
+            return date.Year.ToString("0000") + "/" + date.Month.ToString("00") + "/" + date.Day.ToString("00");
+        }
+
         #endregion
 
         #region イベント
@@ -175,8 +232,9 @@ namespace Shisensho
         {
             button_set();
             textItem_set();
-            ShuffleList(textItem);
-            buttonText_set(textItem);
+            buttonText_set(ShuffleList(textItem));
+            stopwatch.Reset();
+            SetNewTimer();
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -197,6 +255,17 @@ namespace Shisensho
                     // クリックされたボタンを非表示にする
                     clickedButton.Visible = false;
                     firstTimeClickButton.Visible = false;
+                    DeletedPairs++;
+                    if (DeletedPairs == 68)
+                    {
+                        StopTimer();
+                        DialogResult result = MessageBox.Show("Game Clear!!\r\n\r\n" + lblTimer.Text + "\r\n\r\nスコアを記録しますか？", "Result", MessageBoxButtons.YesNo);
+                        if (result == DialogResult.Yes)
+                        {
+                            OutPutFile(DateTime.Now);
+                        }
+                        btnHint.Enabled = false;
+                    }
                 }
                 else
                 {
@@ -212,9 +281,12 @@ namespace Shisensho
             ClearHintList();
             firstTimeClickButton = null;
             iSFirstTimeClick = true;
+            btnHint.Enabled = true;
+            DeletedPairs = 0;
             ChangeTileVisible();
-            ShuffleList(textItem);
-            buttonText_set(textItem);
+            buttonText_set(ShuffleList(textItem));
+            ClearTimer();
+            SetNewTimer();
         }
 
         private void btnHint_Click(object sender, EventArgs e)
@@ -225,14 +297,14 @@ namespace Shisensho
             foreach (var item in CoordinatePairs)
             {
                 string text = item.Key;
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < item.Value.Count; i++)
                 {
                     Coordinate xy1 = item.Value[i];
                     if (!buttons[xy1.row, xy1.col].Visible)
                     {
                         continue;
                     }
-                    for (int j = i + 1; j < 4; j++)
+                    for (int j = i + 1; j < item.Value.Count; j++)
                     {
                         Coordinate xy2 = item.Value[j];
                         if (!buttons[xy2.row, xy2.col].Visible)
@@ -250,16 +322,43 @@ namespace Shisensho
                     }
                 }
             }
-            MessageBox.Show("これ以上消せる組み合わせはありません。");
+            MessageBox.Show("これ以上消せる組み合わせはありません。\r\n再配置します。");
+            buttonText_set(ShuffleList(GetTilesText()));
+        }
+
+        private void TimerMethod(object sender, EventArgs e)
+        {
+            lblTimer.Text = TimeSpanToString(stopwatch.Elapsed);
         }
 
         #endregion
 
-        #region 座標取得関数
+        #region 値取得関数
         private Coordinate GetCoordinate(Button button)
         {
             Point xy = (Point)button.Tag;
             return new Coordinate(xy.Y, xy.X);
+        }
+
+        private string TimeSpanToString(TimeSpan span)
+        {
+            return span.Hours.ToString("00") + ":" + span.Minutes.ToString("00") + ":" + span.Seconds.ToString("00");
+        }
+
+        private List<string> GetTilesText()
+        {
+            List<string> list = new List<string>();
+            for (int i = 1; i <= maxrow; i++)
+            {
+                for (int j = 1; j <= maxcol; j++)
+                {
+                    if (buttons[i, j].Visible)
+                    {
+                        list.Add(buttons[i, j].Text);
+                    }
+                }
+            }
+            return list;
         }
 
         #endregion

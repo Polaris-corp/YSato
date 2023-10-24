@@ -31,6 +31,7 @@ namespace Shisensho
         {
             this.reStartButton = new System.Windows.Forms.Button();
             this.btnHint = new System.Windows.Forms.Button();
+            this.lblTimer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // reStartButton
@@ -53,12 +54,23 @@ namespace Shisensho
             this.btnHint.UseVisualStyleBackColor = true;
             this.btnHint.Click += new System.EventHandler(this.btnHint_Click);
             // 
+            // lblTimer
+            // 
+            this.lblTimer.AutoEllipsis = true;
+            this.lblTimer.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.lblTimer.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblTimer.Location = new System.Drawing.Point(512, -1);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(106, 27);
+            this.lblTimer.TabIndex = 2;
+            // 
             // Shisensho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(1140, 761);
+            this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.btnHint);
             this.Controls.Add(this.reStartButton);
             this.Name = "Shisensho";
@@ -73,6 +85,7 @@ namespace Shisensho
 
         private System.Windows.Forms.Button reStartButton;
         private System.Windows.Forms.Button btnHint;
+        private System.Windows.Forms.Label lblTimer;
     }
 }
 
