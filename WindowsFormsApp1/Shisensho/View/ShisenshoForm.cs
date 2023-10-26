@@ -289,7 +289,7 @@ namespace Shisensho
                 }
             }
             MessageBox.Show("これ以上消せる組み合わせはありません。\r\n再配置します。");
-            buttonText_set(ShuffleList(GetTilesText()));
+            buttonText_set(ShuffleList(GetTilesList()));
         }
 
         private void TimerMethod(object sender, EventArgs e)
@@ -300,23 +300,43 @@ namespace Shisensho
         #endregion
 
         #region 値取得関数
+
+        /// <summary>
+        /// 座標取得メソッド
+        /// </summary>
+        /// <param name="button">座標を取得したいボタン</param>
+        /// <returns>引数のボタンの座標</returns>
         private Coordinate GetCoordinate(Button button)
         {
             Point xy = (Point)button.Tag;
             return new Coordinate(xy.Y, xy.X);
         }
 
+        /// <summary>
+        /// DateTime型をstring型(年月日)へ変換するメソッド
+        /// </summary>
+        /// <param name="date">DateTime型変数</param>
+        /// <returns>string型の年月日</returns>
         private string YYYYMMDDToString(DateTime date)
         {
             return date.Year.ToString("0000") + "/" + date.Month.ToString("00") + "/" + date.Day.ToString("00");
         }
 
+        /// <summary>
+        /// TimeSpan型をstring型(HH:MM:SS)へ変換するメソッド
+        /// </summary>
+        /// <param name="span">TimeSpan型変数</param>
+        /// <returns>string型の時間(HH:MM:SS)</returns>
         private string TimeSpanToString(TimeSpan span)
         {
             return span.Hours.ToString("00") + ":" + span.Minutes.ToString("00") + ":" + span.Seconds.ToString("00");
         }
 
-        private List<string> GetTilesText()
+        /// <summary>
+        /// 図柄リスト取得メソッド
+        /// </summary>
+        /// <returns>図柄のリスト</returns>
+        private List<string> GetTilesList()
         {
             List<string> list = new List<string>();
             for (int i = 1; i <= maxrow; i++)
@@ -335,6 +355,13 @@ namespace Shisensho
         #endregion
 
         #region チェック関数
+
+        /// <summary>
+        /// 図柄チェックメソッド
+        /// </summary>
+        /// <param name="firstClickButton">一回目に押されたボタン</param>
+        /// <param name="secondClickButton">二回目に押されたボタン</param>
+        /// <returns>二角で取れるかどうかの真偽値</returns>
         private bool TileCheck(Button firstClickButton, Button secondClickButton)
         {
             if (firstClickButton.Text != secondClickButton.Text)
@@ -346,6 +373,13 @@ namespace Shisensho
 
             return BFS(xy1, xy2);
         }
+
+        /// <summary>
+        /// 幅優先探索を用いた図柄チェックメソッド
+        /// </summary>
+        /// <param name="xy1">ボタンの座標</param>
+        /// <param name="xy2">ボタンの座標</param>
+        /// <returns>二角で繋げられるかの真偽値</returns>
         private bool BFS(Coordinate xy1, Coordinate xy2)
         {
             int[] dx = new int[] { 1, 0, -1, 0 };

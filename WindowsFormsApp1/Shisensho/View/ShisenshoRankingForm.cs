@@ -79,16 +79,18 @@ namespace Shisensho
 
         #region 値の取得と出力
 
+        /// <summary>
+        /// ランキング記録読み取りメソッド
+        /// </summary>
         private void InPutFile()
         {
             FileCreater();
 
-            using (TextFieldParser textFieldParser = new TextFieldParser(FilePath))
+            using (StreamReader streamReader = new StreamReader(FilePath))
             {
-                textFieldParser.SetDelimiters(",");
-                while (!textFieldParser.EndOfData)
+                while (!streamReader.EndOfStream)
                 {
-                    string[] values = textFieldParser.ReadFields();
+                    string[] values = streamReader.ReadLine().Split(',');
                     if (values is null)
                     {
                         continue;
@@ -102,6 +104,12 @@ namespace Shisensho
             }
         }
 
+        /// <summary>
+        /// ランキング記録メソッド
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="time">クリアタイム</param>
+        /// <param name="date">クリア日時</param>
         private void OutPutFile(string name, string time, DateTime date)
         {
             Score newScore = new Score();
@@ -117,6 +125,10 @@ namespace Shisensho
             }
         }
 
+        /// <summary>
+        /// スコアを名前、時間、日付の順に一行にして改行区切りに変換するメソッド
+        /// </summary>
+        /// <returns>改行区切りのstring型スコア</returns>
         private string CreateOutPutText()
         {
             List<string> item = new List<string>();
@@ -128,11 +140,19 @@ namespace Shisensho
             return string.Join("\r\n", item);
         }
 
+        /// <summary>
+        /// DateTime型をstring型(年月日)へ変換するメソッド
+        /// </summary>
+        /// <param name="date">DateTime型変数</param>
+        /// <returns>string型の年月日</returns>
         private string YYYYMMDDToString(DateTime date)
         {
             return date.Year.ToString("0000") + "/" + date.Month.ToString("00") + "/" + date.Day.ToString("00");
         }
 
+        /// <summary>
+        /// ランキング表示メソッド
+        /// </summary>
         private void SetRankingText()
         {
             labels[0] = lblRanking1st;
@@ -145,9 +165,11 @@ namespace Shisensho
             {
                 labels[i].Text = string.Join(" ", scoreList[i].Name, scoreList[i].Time, scoreList[i].Date);
             }
-
         }
 
+        /// <summary>
+        /// ディレクトリ生成メソッド
+        /// </summary>
         private void FileCreater()
         {
             if (!Directory.Exists(DirectoryPath))
@@ -156,10 +178,14 @@ namespace Shisensho
             }
             if (!File.Exists(FilePath))
             {
-                using (File.Create(FilePath)) { }
+                File.Create(FilePath).Close();
             }
         }
 
+        /// <summary>
+        /// 新記録かどうかの判定メソッド
+        /// </summary>
+        /// <returns>新記録かどうかの真偽値</returns>
         private bool IsNewRecord()
         {
             if (scoreList.Count < 5)
@@ -174,8 +200,6 @@ namespace Shisensho
             }
             return false;
         }
-
-
 
         #endregion
 
