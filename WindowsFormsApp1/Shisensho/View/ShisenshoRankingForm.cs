@@ -66,6 +66,10 @@ namespace Shisensho
 
         private void btnRegistration_Click(object sender, EventArgs e)
         {
+            if (txtNameInputField.Text.Contains(","))
+            {
+                MessageBox.Show("「,」は入力出来ません");
+            }
             OutPutFile(txtNameInputField.Text, time, DateTime.Now);
             this.Close();
         }
@@ -132,7 +136,7 @@ namespace Shisensho
         private string CreateOutPutText()
         {
             List<string> item = new List<string>();
-            for (int i = 0; i < scoreList.Count; i++)
+            for (int i = 0; i < Math.Min(5, scoreList.Count); i++)
             {
                 item.Add(string.Join(",", scoreList[i].Name, scoreList[i].Time, scoreList[i].Date));
             }
@@ -161,7 +165,7 @@ namespace Shisensho
             labels[3] = lblRanking4th;
             labels[4] = lblRanking5th;
 
-            for (int i = 0; i < scoreList.Count; i++)
+            for (int i = 0; i < Math.Min(5, scoreList.Count); i++)
             {
                 labels[i].Text = string.Join(" ", scoreList[i].Name, scoreList[i].Time, scoreList[i].Date);
             }

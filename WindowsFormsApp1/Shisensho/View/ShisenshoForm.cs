@@ -37,7 +37,7 @@ namespace Shisensho
             this.MaximumSize = this.Size;
             TileColor tileColor = new TileColor();
             tilePairs = tileColor.TilePairs;
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             timer.Tick += new EventHandler(TimerMethod);
         }
 
@@ -261,6 +261,7 @@ namespace Shisensho
             ClearHintList();
             firstTimeClickButton = null;
             iSFirstTimeClick = true;
+
             foreach (var item in CoordinatePairs)
             {
                 for (int i = 0; i < item.Value.Count; i++)
