@@ -53,7 +53,6 @@ namespace Shisensho
         List<Coordinate> hintList = new List<Coordinate>();
 
         Stopwatch stopwatch = new Stopwatch();
-        TimeSpan timeSpan = new TimeSpan();
         DispatcherTimer timer = new DispatcherTimer();
         List<string> textItem = new List<string>();
         #endregion
@@ -107,7 +106,6 @@ namespace Shisensho
                     if (i == 0 || i == maxrow + 1 || j == 0 || j == maxcol + 1)
                     {
                         buttons[i, j].Visible = false;
-
                     }
                     this.Controls.Add(buttons[i, j]);
                 }
@@ -180,7 +178,6 @@ namespace Shisensho
 
         private void SetNewTimer()
         {
-            timeSpan = stopwatch.Elapsed;
             stopwatch.Start();
             timer.Start();
         }
@@ -195,34 +192,6 @@ namespace Shisensho
         {
             stopwatch.Stop();
             timer.Stop();
-        }
-
-        private void OutPutFile(DateTime dateTimeNow)
-        {
-            string directoryPath = @".\Shisensho_score";
-            string fileName = "score.csv";
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-            string filePath = Path.Combine(directoryPath, fileName);
-            using (StreamWriter writer = new StreamWriter(filePath, true, Encoding.UTF8))
-            {
-                writer.WriteLine(CreateOutPutText(dateTimeNow));
-            }
-        }
-
-        private string CreateOutPutText(DateTime dateTimeNow)
-        {
-            List<string> item = new List<string>();
-            item.Add(lblTimer.Text);
-            item.Add(YYYYMMDDToString(dateTimeNow));
-            return string.Join(",", item);
-        }
-
-        private string YYYYMMDDToString(DateTime date)
-        {
-            return date.Year.ToString("0000") + "/" + date.Month.ToString("00") + "/" + date.Day.ToString("00");
         }
 
         #endregion
@@ -259,11 +228,9 @@ namespace Shisensho
                     if (DeletedPairs == 68)
                     {
                         StopTimer();
-                        DialogResult result = MessageBox.Show("Game Clear!!\r\n\r\n" + lblTimer.Text + "\r\n\r\nスコアを記録しますか？", "Result", MessageBoxButtons.YesNo);
-                        if (result == DialogResult.Yes)
-                        {
-                            OutPutFile(DateTime.Now);
-                        }
+                        ShisenshoRankingForm result = new ShisenshoRankingForm(lblTimer.Text);
+                        result.StartPosition = FormStartPosition.CenterParent;
+                        result.ShowDialog();
                         btnHint.Enabled = false;
                     }
                 }
@@ -296,7 +263,6 @@ namespace Shisensho
             iSFirstTimeClick = true;
             foreach (var item in CoordinatePairs)
             {
-                string text = item.Key;
                 for (int i = 0; i < item.Value.Count; i++)
                 {
                     Coordinate xy1 = item.Value[i];
@@ -338,6 +304,11 @@ namespace Shisensho
         {
             Point xy = (Point)button.Tag;
             return new Coordinate(xy.Y, xy.X);
+        }
+
+        private string YYYYMMDDToString(DateTime date)
+        {
+            return date.Year.ToString("0000") + "/" + date.Month.ToString("00") + "/" + date.Day.ToString("00");
         }
 
         private string TimeSpanToString(TimeSpan span)
