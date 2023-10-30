@@ -32,6 +32,8 @@ namespace Shisensho
             this.reStartButton = new System.Windows.Forms.Button();
             this.btnHint = new System.Windows.Forms.Button();
             this.lblTimer = new System.Windows.Forms.Label();
+            this.rbtNormalMode = new System.Windows.Forms.RadioButton();
+            this.rbtBeginnerMode = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // reStartButton
@@ -64,12 +66,38 @@ namespace Shisensho
             this.lblTimer.Size = new System.Drawing.Size(106, 27);
             this.lblTimer.TabIndex = 2;
             // 
+            // rbtNormalMode
+            // 
+            this.rbtNormalMode.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.rbtNormalMode.Checked = true;
+            this.rbtNormalMode.Location = new System.Drawing.Point(902, 10);
+            this.rbtNormalMode.Name = "rbtNormalMode";
+            this.rbtNormalMode.Size = new System.Drawing.Size(95, 16);
+            this.rbtNormalMode.TabIndex = 3;
+            this.rbtNormalMode.TabStop = true;
+            this.rbtNormalMode.Text = "NormalMode";
+            this.rbtNormalMode.UseVisualStyleBackColor = false;
+            // 
+            // rbtBeginnerMode
+            // 
+            this.rbtBeginnerMode.AutoSize = true;
+            this.rbtBeginnerMode.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.rbtBeginnerMode.Location = new System.Drawing.Point(902, 32);
+            this.rbtBeginnerMode.Name = "rbtBeginnerMode";
+            this.rbtBeginnerMode.Size = new System.Drawing.Size(95, 16);
+            this.rbtBeginnerMode.TabIndex = 4;
+            this.rbtBeginnerMode.TabStop = true;
+            this.rbtBeginnerMode.Text = "BeginnerMode";
+            this.rbtBeginnerMode.UseVisualStyleBackColor = false;
+            // 
             // Shisensho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(1140, 761);
+            this.Controls.Add(this.rbtBeginnerMode);
+            this.Controls.Add(this.rbtNormalMode);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.btnHint);
             this.Controls.Add(this.reStartButton);
@@ -78,6 +106,7 @@ namespace Shisensho
             this.Text = "四川省";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -86,6 +115,8 @@ namespace Shisensho
         private System.Windows.Forms.Button reStartButton;
         private System.Windows.Forms.Button btnHint;
         private System.Windows.Forms.Label lblTimer;
+        private System.Windows.Forms.RadioButton rbtNormalMode;
+        private System.Windows.Forms.RadioButton rbtBeginnerMode;
     }
 }
 

@@ -44,6 +44,7 @@ namespace Shisensho
         int maxrow = 8;
         int maxcol = 17;
         int DeletedPairs = 0;
+        int ClearPairs = 68;
 
         Button[,] buttons;
         Button firstTimeClickButton;
@@ -81,8 +82,7 @@ namespace Shisensho
             textItem.Add("白");
             textItem.Add("發");
             textItem.Add("中");
-            textItem = textItem.Concat(textItem).Concat(textItem).Concat(textItem).ToList();
-
+            textItem = textItem.Concat(textItem).ToList();
         }
 
         private void button_set()
@@ -124,8 +124,18 @@ namespace Shisensho
                     {
                         continue;
                     }
+
                     buttons[i, j].Text = item[ind];
+
+                    if (item[ind] == "")
+                    {
+                        ind++;
+                        buttons[i, j].Visible = false;
+                        continue;
+                    }
+
                     buttons[i, j].ForeColor = tilePairs[buttons[i, j].Text];
+
                     string t = buttons[i, j].Text;
                     if (CoordinatePairs.ContainsKey(t))
                     {
@@ -156,13 +166,13 @@ namespace Shisensho
             return list;
         }
 
-        private void ChangeTileVisible()
+        private void ChangeTileVisible(bool val)
         {
             for (int i = 1; i <= maxrow; i++)
             {
                 for (int j = 1; j <= maxcol; j++)
                 {
-                    buttons[i, j].Visible = true;
+                    buttons[i, j].Visible = val;
                 }
             }
         }
@@ -201,7 +211,8 @@ namespace Shisensho
         {
             button_set();
             textItem_set();
-            buttonText_set(ShuffleList(textItem));
+            var list = new List<string>(textItem.Concat(textItem).ToList());
+            buttonText_set(ShuffleList(list));
             stopwatch.Reset();
             SetNewTimer();
         }
@@ -225,13 +236,13 @@ namespace Shisensho
                     clickedButton.Visible = false;
                     firstTimeClickButton.Visible = false;
                     DeletedPairs++;
-                    if (DeletedPairs == 68)
+                    if (DeletedPairs == ClearPairs)
                     {
                         StopTimer();
-                        ShisenshoRankingForm result = new ShisenshoRankingForm(lblTimer.Text);
+                        btnHint.Enabled = false;
+                        ShisenshoRankingForm result = new ShisenshoRankingForm(lblTimer.Text, rbtNormalMode.Checked);
                         result.StartPosition = FormStartPosition.CenterParent;
                         result.ShowDialog();
-                        btnHint.Enabled = false;
                     }
                 }
                 else
@@ -250,8 +261,21 @@ namespace Shisensho
             iSFirstTimeClick = true;
             btnHint.Enabled = true;
             DeletedPairs = 0;
-            ChangeTileVisible();
-            buttonText_set(ShuffleList(textItem));
+            ChangeTileVisible(false);
+            var list = new List<string>(textItem);
+            if (rbtNormalMode.Checked)
+            {
+                list = list.Concat(textItem).ToList();
+                maxrow = 8;
+                ClearPairs = 68;
+            }
+            else
+            {
+                list = list.Concat(Enumerable.Repeat("", 68)).ToList();
+                ClearPairs = 34;
+            }
+            ChangeTileVisible(true);
+            buttonText_set(ShuffleList(list));
             ClearTimer();
             SetNewTimer();
         }

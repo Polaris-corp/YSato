@@ -15,18 +15,21 @@ namespace Shisensho
 {
     public partial class ShisenshoRankingForm : Form
     {
-        public ShisenshoRankingForm(string time)
+        public ShisenshoRankingForm(string time, bool isNormalMode)
         {
             InitializeComponent();
             this.time = time;
+            this.isNormalMode = isNormalMode;
+            FilePath = Path.Combine(DirectoryPath, dic[isNormalMode]+ FileName);
         }
         string time;
+        bool isNormalMode;
         private static string DirectoryPath = @".\Shisensho_score";
         private static string FileName = "score.csv";
-        private static string FilePath = Path.Combine(DirectoryPath, FileName);
+        private static string FilePath;
         List<Score> scoreList = new List<Score>();
         Label[] labels = new Label[5];
-
+        Dictionary<bool, string> dic = new Dictionary<bool, string>() { { true, "" }, { false, "Begginer" } };
 
         #region イベント
 
@@ -69,6 +72,7 @@ namespace Shisensho
             if (txtNameInputField.Text.Contains(","))
             {
                 MessageBox.Show("「,」は入力出来ません");
+                return;
             }
             OutPutFile(txtNameInputField.Text, time, DateTime.Now);
             this.Close();
@@ -89,6 +93,7 @@ namespace Shisensho
         private void InPutFile()
         {
             FileCreater();
+            scoreList.Clear();
 
             using (StreamReader streamReader = new StreamReader(FilePath))
             {

@@ -116,7 +116,6 @@ namespace Shisensho
             this.lblRanking5th.Name = "lblRanking5th";
             this.lblRanking5th.Size = new System.Drawing.Size(257, 23);
             this.lblRanking5th.TabIndex = 16;
-            this.lblRanking5th.Text = "test";
             this.lblRanking5th.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblRanking4th
@@ -126,7 +125,6 @@ namespace Shisensho
             this.lblRanking4th.Name = "lblRanking4th";
             this.lblRanking4th.Size = new System.Drawing.Size(257, 23);
             this.lblRanking4th.TabIndex = 15;
-            this.lblRanking4th.Text = "test";
             this.lblRanking4th.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblRanking3rd
@@ -136,7 +134,6 @@ namespace Shisensho
             this.lblRanking3rd.Name = "lblRanking3rd";
             this.lblRanking3rd.Size = new System.Drawing.Size(257, 23);
             this.lblRanking3rd.TabIndex = 14;
-            this.lblRanking3rd.Text = "test";
             this.lblRanking3rd.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblRanking2nd
@@ -146,7 +143,6 @@ namespace Shisensho
             this.lblRanking2nd.Name = "lblRanking2nd";
             this.lblRanking2nd.Size = new System.Drawing.Size(257, 23);
             this.lblRanking2nd.TabIndex = 13;
-            this.lblRanking2nd.Text = "test";
             this.lblRanking2nd.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblRanking1st
@@ -156,7 +152,6 @@ namespace Shisensho
             this.lblRanking1st.Name = "lblRanking1st";
             this.lblRanking1st.Size = new System.Drawing.Size(257, 23);
             this.lblRanking1st.TabIndex = 12;
-            this.lblRanking1st.Text = "test";
             this.lblRanking1st.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtNameInputField
