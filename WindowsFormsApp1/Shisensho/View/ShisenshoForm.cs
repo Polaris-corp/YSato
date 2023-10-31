@@ -45,6 +45,7 @@ namespace Shisensho
         int maxcol = 17;
         int DeletedPairs = 0;
         int ClearPairs = 68;
+        TimeSpan PenaltyTime = new TimeSpan();
 
         Button[,] buttons;
         Button firstTimeClickButton;
@@ -261,6 +262,7 @@ namespace Shisensho
             iSFirstTimeClick = true;
             btnHint.Enabled = true;
             DeletedPairs = 0;
+            PenaltyTime = new TimeSpan();
             ChangeTileVisible(false);
             var list = new List<string>(textItem);
             if (rbtNormalMode.Checked)
@@ -285,6 +287,7 @@ namespace Shisensho
             ClearHintList();
             firstTimeClickButton = null;
             iSFirstTimeClick = true;
+            PenaltyTime += TimeSpan.FromSeconds(10);
 
             foreach (var item in CoordinatePairs)
             {
@@ -319,7 +322,7 @@ namespace Shisensho
 
         private void TimerMethod(object sender, EventArgs e)
         {
-            lblTimer.Text = TimeSpanToString(stopwatch.Elapsed);
+            lblTimer.Text = TimeSpanToString(stopwatch.Elapsed + PenaltyTime);
         }
 
         #endregion
