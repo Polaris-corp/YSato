@@ -48,7 +48,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="common\Tile.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Score.cs" />
+    <Compile Include="View\ModeSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ModeSelect.Designer.cs">
+      <DependentUpon>ModeSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\ShisenshoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +72,9 @@
       <DependentUpon>ShisenshoRankingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="common\TileColor.cs" />
+    <EmbeddedResource Include="View\ModeSelect.resx">
+      <DependentUpon>ModeSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\ShisenshoForm.resx">
       <DependentUpon>ShisenshoForm.cs</DependentUpon>
       <SubType>Designer</SubType>

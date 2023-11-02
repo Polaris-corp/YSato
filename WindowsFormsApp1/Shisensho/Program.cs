@@ -16,7 +16,7 @@ namespace Shisensho
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Shisensho());
+            Application.Run(new ShisenshoForm());
         }
     }
 }

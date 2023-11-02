@@ -1,7 +1,7 @@
 ﻿
 namespace Shisensho
 {
-    partial class Shisensho
+    partial class ShisenshoForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -34,6 +34,9 @@ namespace Shisensho
             this.lblTimer = new System.Windows.Forms.Label();
             this.rbtNormalMode = new System.Windows.Forms.RadioButton();
             this.rbtBeginnerMode = new System.Windows.Forms.RadioButton();
+            this.lblMessageOrder = new System.Windows.Forms.Label();
+            this.lblPlayerCount = new System.Windows.Forms.Label();
+            this.txtPlayerCount = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // reStartButton
@@ -90,18 +93,52 @@ namespace Shisensho
             this.rbtBeginnerMode.Text = "BeginnerMode";
             this.rbtBeginnerMode.UseVisualStyleBackColor = false;
             // 
-            // Shisensho
+            // lblMessageOrder
+            // 
+            this.lblMessageOrder.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.lblMessageOrder.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblMessageOrder.Location = new System.Drawing.Point(477, 32);
+            this.lblMessageOrder.Name = "lblMessageOrder";
+            this.lblMessageOrder.Size = new System.Drawing.Size(172, 23);
+            this.lblMessageOrder.TabIndex = 5;
+            this.lblMessageOrder.Text = "Player1の番です";
+            this.lblMessageOrder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblPlayerCount
+            // 
+            this.lblPlayerCount.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.lblPlayerCount.Font = new System.Drawing.Font("MS UI Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblPlayerCount.Location = new System.Drawing.Point(12, 9);
+            this.lblPlayerCount.Name = "lblPlayerCount";
+            this.lblPlayerCount.Size = new System.Drawing.Size(71, 17);
+            this.lblPlayerCount.TabIndex = 6;
+            this.lblPlayerCount.Text = "プレイ人数";
+            // 
+            // txtPlayerCount
+            // 
+            this.txtPlayerCount.Font = new System.Drawing.Font("MS UI Gothic", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.txtPlayerCount.Location = new System.Drawing.Point(12, 32);
+            this.txtPlayerCount.Name = "txtPlayerCount";
+            this.txtPlayerCount.Size = new System.Drawing.Size(71, 22);
+            this.txtPlayerCount.TabIndex = 7;
+            this.txtPlayerCount.Text = "1";
+            this.txtPlayerCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // ShisenshoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(1140, 761);
+            this.Controls.Add(this.txtPlayerCount);
+            this.Controls.Add(this.lblPlayerCount);
+            this.Controls.Add(this.lblMessageOrder);
             this.Controls.Add(this.rbtBeginnerMode);
             this.Controls.Add(this.rbtNormalMode);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.btnHint);
             this.Controls.Add(this.reStartButton);
-            this.Name = "Shisensho";
+            this.Name = "ShisenshoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "四川省";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -117,6 +154,9 @@ namespace Shisensho
         private System.Windows.Forms.Label lblTimer;
         private System.Windows.Forms.RadioButton rbtNormalMode;
         private System.Windows.Forms.RadioButton rbtBeginnerMode;
+        private System.Windows.Forms.Label lblMessageOrder;
+        private System.Windows.Forms.Label lblPlayerCount;
+        private System.Windows.Forms.TextBox txtPlayerCount;
     }
 }
 

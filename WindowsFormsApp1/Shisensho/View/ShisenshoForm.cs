@@ -13,7 +13,7 @@ using System.Windows.Threading;
 
 namespace Shisensho
 {
-    public partial class Shisensho : Form
+    public partial class ShisenshoForm : Form
     {
         #region 変数宣言
         public class Coordinate
@@ -29,10 +29,10 @@ namespace Shisensho
             public int dir { get; set; }
         }
 
-        public Shisensho()
+        public ShisenshoForm()
         {
             InitializeComponent();
-            buttons = new Button[maxrow + 2, maxcol + 2];
+            buttons = new Button[MaxRow + 2, MaxCol + 2];
             this.MinimumSize = this.Size;
             this.MaximumSize = this.Size;
             TileColor tileColor = new TileColor();
@@ -41,10 +41,11 @@ namespace Shisensho
             timer.Tick += new EventHandler(TimerMethod);
         }
 
-        int maxrow = 8;
-        int maxcol = 17;
+        int MaxRow = 8;
+        int MaxCol = 17;
         int DeletedPairs = 0;
         int ClearPairs = 68;
+        int WhoTurn = 0;
         TimeSpan PenaltyTime = new TimeSpan();
 
         Button[,] buttons;
@@ -57,6 +58,7 @@ namespace Shisensho
         Stopwatch stopwatch = new Stopwatch();
         DispatcherTimer timer = new DispatcherTimer();
         List<string> textItem = new List<string>();
+
         #endregion
 
         #region 初期設定
@@ -88,9 +90,9 @@ namespace Shisensho
 
         private void button_set()
         {
-            for (int i = 0; i < maxrow + 2; i++)
+            for (int i = 0; i < MaxRow + 2; i++)
             {
-                for (int j = 0; j < maxcol + 2; j++)
+                for (int j = 0; j < MaxCol + 2; j++)
                 {
                     buttons[i, j] = new Button();
                     buttons[i, j].Location = new Point(60 * j, 76 * i);
@@ -104,7 +106,7 @@ namespace Shisensho
                     buttons[i, j].Font = new Font("Meiryo UI", 20);
                     buttons[i, j].Click += new EventHandler(this.button_Click);
 
-                    if (i == 0 || i == maxrow + 1 || j == 0 || j == maxcol + 1)
+                    if (i == 0 || i == MaxRow + 1 || j == 0 || j == MaxCol + 1)
                     {
                         buttons[i, j].Visible = false;
                     }
@@ -117,9 +119,9 @@ namespace Shisensho
         {
             int ind = 0;
             CoordinatePairs.Clear();
-            for (int i = 1; i <= maxrow; i++)
+            for (int i = 1; i <= MaxRow; i++)
             {
-                for (int j = 1; j <= maxcol; j++)
+                for (int j = 1; j <= MaxCol; j++)
                 {
                     if (!buttons[i, j].Visible)
                     {
@@ -169,9 +171,9 @@ namespace Shisensho
 
         private void ChangeTileVisible(bool val)
         {
-            for (int i = 1; i <= maxrow; i++)
+            for (int i = 1; i <= MaxRow; i++)
             {
-                for (int j = 1; j <= maxcol; j++)
+                for (int j = 1; j <= MaxCol; j++)
                 {
                     buttons[i, j].Visible = val;
                 }
@@ -205,6 +207,11 @@ namespace Shisensho
             timer.Stop();
         }
 
+        private string WhoTurnNow()
+        {
+            return "Player" + (WhoTurn % int.Parse(txtPlayerCount.Text) + 1) + "の番です。";
+        }
+
         #endregion
 
         #region イベント
@@ -216,6 +223,7 @@ namespace Shisensho
             buttonText_set(ShuffleList(list));
             stopwatch.Reset();
             SetNewTimer();
+            lblMessageOrder.Text = WhoTurnNow();
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -237,6 +245,9 @@ namespace Shisensho
                     clickedButton.Visible = false;
                     firstTimeClickButton.Visible = false;
                     DeletedPairs++;
+                    WhoTurn++;
+                    lblMessageOrder.Text = WhoTurnNow();
+
                     if (DeletedPairs == ClearPairs)
                     {
                         StopTimer();
@@ -268,7 +279,7 @@ namespace Shisensho
             if (rbtNormalMode.Checked)
             {
                 list = list.Concat(textItem).ToList();
-                maxrow = 8;
+                MaxRow = 8;
                 ClearPairs = 68;
             }
             else
@@ -300,6 +311,7 @@ namespace Shisensho
                     }
                     for (int j = i + 1; j < item.Value.Count; j++)
                     {
+
                         Coordinate xy2 = item.Value[j];
                         if (!buttons[xy2.row, xy2.col].Visible)
                         {
@@ -307,6 +319,7 @@ namespace Shisensho
                         }
                         if (TileCheck(buttons[xy1.row, xy1.col], buttons[xy2.row, xy2.col]))
                         {
+
                             buttons[xy1.row, xy1.col].BackColor = Color.Yellow;
                             buttons[xy2.row, xy2.col].BackColor = Color.Yellow;
                             hintList.Add(xy1);
@@ -367,9 +380,9 @@ namespace Shisensho
         private List<string> GetTilesList()
         {
             List<string> list = new List<string>();
-            for (int i = 1; i <= maxrow; i++)
+            for (int i = 1; i <= MaxRow; i++)
             {
-                for (int j = 1; j <= maxcol; j++)
+                for (int j = 1; j <= MaxCol; j++)
                 {
                     if (buttons[i, j].Visible)
                     {
@@ -413,10 +426,10 @@ namespace Shisensho
             int[] dx = new int[] { 1, 0, -1, 0 };
             int[] dy = new int[] { 0, -1, 0, 1 };
             List<List<List<int>>> cost = new List<List<List<int>>>();
-            for (int i = 0; i <= maxrow + 1; i++)
+            for (int i = 0; i <= MaxRow + 1; i++)
             {
                 cost.Add(new List<List<int>>());
-                for (int j = 0; j <= maxcol + 1; j++)
+                for (int j = 0; j <= MaxCol + 1; j++)
                 {
                     cost[i].Add(new List<int>());
                     for (int k = 0; k < 4; k++)
@@ -466,7 +479,7 @@ namespace Shisensho
                 int ty = p.row + dy[p.dir];
                 int tx = p.col + dx[p.dir];
                 int tc = cost[p.row][p.col][p.dir];
-                if (maxrow + 2 <= ty || ty < 0 || maxcol + 2 <= tx || tx < 0 || 2 < tc)
+                if (MaxRow + 2 <= ty || ty < 0 || MaxCol + 2 <= tx || tx < 0 || 2 < tc)
                 {
                     continue;
                 }
